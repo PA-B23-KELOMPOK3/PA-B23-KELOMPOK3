@@ -102,7 +102,7 @@ _Database program ini dirancang menggunakan struktur MySQL dengan 5 entitas utam
 
 ## Struktur Program
 
-### 1. Halaman Log in
+### Halaman Log in
 - *Proses Memilih Masuk/Mendaftar sebagai user*
   ![Flowchart Capstone-Halaman-1 (1) (2) (3)](https://github.com/aqiyahzh/nyoba/assets/144746779/91e5ea95-909e-4f04-a9a7-69590e930f5e)
 
@@ -118,31 +118,34 @@ _Database program ini dirancang menggunakan struktur MySQL dengan 5 entitas utam
 - *Proses kembali ke menu sebelumnya*
 ![Flowchart Capstone-Halaman-1 (3) (2)](https://github.com/aqiyahzh/nyoba/assets/144746779/52a9ad5b-fc95-485b-8ec5-ae889982bdfd)
 
+- *Proses Registrasi*
+![register](https://github.com/aqiyahzh/nyoba/assets/144746779/961bb501-5aab-489c-9a12-a142409f4aae)
+
 - *Proses keluar dari program*
 ![Flowchart Capstone-Halaman-1 (4) (1)](https://github.com/aqiyahzh/nyoba/assets/144746779/06ddb02c-e02a-45f3-ac0b-94e379918378)
 
 
-### 2. Halaman Menu Admin
+### Halaman Menu Admin
 - *Proses memilih mengelola lowongan, user, perusahaan, atau lamaran*
 ![Flowchart Capstone-Halaman-2 1](https://github.com/aqiyahzh/nyoba/assets/144746779/8d1f4c8d-703a-4912-b01b-77faea39caa3)
 
 - *Proses mengelola lowongan*
-![Flowchart Capstone-Halaman-2 2](https://github.com/aqiyahzh/nyoba/assets/144746779/158afe05-d5d6-4704-b5d5-9a97ff055ac0)
+![mengelola lowongan](https://github.com/aqiyahzh/nyoba/assets/144746779/bd519e18-62a2-4b4b-a1ad-cdc217b3c321)
 
 - *Proses mengelola user*
-![Flowchart Capstone-Halaman-2 3](https://github.com/aqiyahzh/nyoba/assets/144746779/0499552c-e094-4db8-ad70-f1bee363ee68)
+![mengelola user](https://github.com/aqiyahzh/nyoba/assets/144746779/4c696743-7755-44b4-bd37-c166f77782d6)
 
 - *Proses mengelola perusahaan*
-![Flowchart Capstone-Halaman-2 4](https://github.com/aqiyahzh/nyoba/assets/144746779/2ac0cbe8-99b1-4cc8-89db-66469dba67ac)
+![mengelola perusahaan](https://github.com/aqiyahzh/nyoba/assets/144746779/f86b0398-c96f-4fde-8adb-0fa8e938d564)
 
 - *Proses mengelola lamaran*
-![Flowchart Capstone-Halaman-2 5](https://github.com/aqiyahzh/nyoba/assets/144746779/5b2c54ab-2ad5-4377-9b33-bfc27072ef08)
+![mengelola lamaran](https://github.com/aqiyahzh/nyoba/assets/144746779/5d7a5b96-0e09-4302-877f-7dbd831e75e4)
 
-- *Proses kembali ke menu log in*
-![Flowchart Capstone-Halaman-2 6](https://github.com/aqiyahzh/nyoba/assets/144746779/d931aeeb-913a-44c1-ac3e-3b7f5f5751fc)
+- *Proses Admin kembali ke menu log in*
+![admin kembali ke menu](https://github.com/aqiyahzh/nyoba/assets/144746779/008a2e35-ae5a-4694-b02f-8b52fbb60dae)
 
 
-### 3. Halaman Menu User
+### Halaman Menu User
 - *Proses user memilih lowongan*
 ![Flowchart Capstone-Halaman-3(1) 1](https://github.com/aqiyahzh/nyoba/assets/144746779/f47e689e-e87b-4040-8f68-1891aa22474e)
 
@@ -153,21 +156,21 @@ _Database program ini dirancang menggunakan struktur MySQL dengan 5 entitas utam
 ![Flowchart Capstone-Halaman-3(1) 3](https://github.com/aqiyahzh/nyoba/assets/144746779/d21848f3-4094-44d7-820d-e5492ca8e6d5)
 
 
-### 4. Halaman Menu Perusahaan
+### Halaman Menu Perusahaan
 - *Proses memilih melihat profil perusahaan, lihat lamaran atau lihat lowongan*
 ![Flowchart Capstone-Halaman-4 1](https://github.com/aqiyahzh/nyoba/assets/144746779/47a8f297-4e39-45e7-b7b8-fa85303602dc)
 
 - *Proses perusahaan mengedit profil perusahaan*
-![Flowchart Capstone-Halaman-4 2](https://github.com/aqiyahzh/nyoba/assets/144746779/e5361aa8-730c-41dd-b7c0-73ff7c545aaa)
+![perusahaan mengeidt profil](https://github.com/aqiyahzh/nyoba/assets/144746779/8c00fc45-d787-42cf-a439-ef1c700c07a7)
 
 - *Proses melihat daftar lamaran dan menghapus data lamaran*
-![Flowchart Capstone-Halaman-4 3](https://github.com/aqiyahzh/nyoba/assets/144746779/4ff9f00a-475c-4a30-8b43-86718114c201)
+![daftar lamaran dan menghapus](https://github.com/aqiyahzh/nyoba/assets/144746779/8aeeaa32-3f5e-4ba8-b35b-24aac530516b)
 
 - *Proses melihat daftar lowongan, memilih lowongan untuk dihapus atau diedit*
-![Flowchart Capstone-Halaman-4 4](https://github.com/aqiyahzh/nyoba/assets/144746779/7e0daa20-36e3-474a-8c57-096db851ab6a)
+![melihat daftar lowongan](https://github.com/aqiyahzh/nyoba/assets/144746779/c7ed6778-1973-4a49-aa84-44a19485bfd1)
 
 - *Proses perusahaan submit lowongan baru, kembali ke menu sebelumnya*
-![Flowchart Capstone-Halaman-4 5](https://github.com/aqiyahzh/nyoba/assets/144746779/a4b22088-d2ee-4e58-9476-eea0cf1b29ac)
+![perusahaan submit lowongan baru](https://github.com/aqiyahzh/nyoba/assets/144746779/6a2edf1b-2882-48b7-b59d-f3a053bda12c)
 
 - *Proses perusahaan memilih keluar ke menu log in*
-![Flowchart Capstone-Halaman-4 6](https://github.com/aqiyahzh/nyoba/assets/144746779/20865e21-2750-436a-970b-54235650f0b5)
+![perusahaan keluar ke menu log in](https://github.com/aqiyahzh/nyoba/assets/144746779/0358dc29-4a0f-4dac-8f22-4d9e7a340547)
