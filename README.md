@@ -103,9 +103,6 @@ _Database program ini dirancang menggunakan struktur MySQL dengan 5 entitas utam
 ## Struktur Program
 
 ### Halaman Log in
-- *Proses Memilih Masuk/Mendaftar sebagai user*
-  ![Flowchart Capstone-Halaman-1 (1) (2) (3)](./res/login1.jpg)
-
 - *Proses Memilih Log in sebagai Admin*
 ![Flowchart Capstone-Halaman-1 (1)](./res/login2.jpg)
 
@@ -118,11 +115,11 @@ _Database program ini dirancang menggunakan struktur MySQL dengan 5 entitas utam
 - *Proses kembali ke menu sebelumnya*
 ![Flowchart Capstone-Halaman-1 (3) (2)](./res/login5.jpg)
 
-- *Proses Registrasi*
+- *Proses Registrasi sebagai user*
 ![register](./res/login6.jpg)
 
 - *Proses keluar dari program*
-![Flowchart Capstone-Halaman-1 (4) (1)](./res/login1.jpg)
+![Flowchart Capstone-Halaman-1 (4) (1)](./res/login7.jpg)
 
 ### Halaman Menu Admin
 - *Proses memilih mengelola lowongan, user, perusahaan, atau lamaran*
