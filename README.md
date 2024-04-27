@@ -162,18 +162,23 @@ Fitur Lamaran cepat, template lamaran yang sudah disediakan dari program. jadi u
 ### Halaman Menu Perusahaan
 - *Proses memilih melihat profil perusahaan, lihat lamaran atau lihat lowongan*
 ![Flowchart Capstone-Halaman-4 1](./res/perusahaan1.jpg)
+Pada halaman menu perusahaan memiliki fitur mengedit menghapus dan melihat data tertentu.
 
 - *Proses perusahaan mengedit profil perusahaan*
 ![perusahaan mengeidt profil](./res/perusahaan2.jpg)
+Pada fitur Profil perusahaan, perusahaan dapat mengedit biodatanya.
 
 - *Proses melihat daftar lamaran dan menghapus data lamaran*
 ![daftar lamaran dan menghapus](./res/perusahaan3.jpg)
+Pada fitur Lihat lamaran, perusahaan dapat menghapus lamaran.
 
 - *Proses melihat daftar lowongan, memilih lowongan untuk dihapus atau diedit*
 ![melihat daftar lowongan](./res/perusahaan4.jpg)
+Pada fitur Lowongan, perusahaan dapat mengedit dan menghapus lowongan yang sebelumnya sudah terdaftar dalam program. perusahaan juga dapat menambahkan lowongan baru.
 
 - *Proses perusahaan submit lowongan baru, kembali ke menu sebelumnya*
 ![perusahaan submit lowongan baru](./res/perusahaan5.jpg)
+Pada fitur Submit lowongan baru, perusahaan dapat menambahkan lowongan kerja dalam program namun lowongan baru tersebut tidak bisa langsung ditampilkan, harus disetujui oleh admin terlebih dahulu untuk ditampilkan.
 
 - *Proses perusahaan memilih keluar ke menu log in*
 ![perusahaan keluar ke menu log in](./res/perusahaan6.jpg)
