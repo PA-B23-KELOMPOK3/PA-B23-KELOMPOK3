@@ -99,7 +99,7 @@ class Admin:
                         "Keluar"
                     ])
                     if pil == '1':
-                        None #kontol
+                        None
                     elif pil == '2':
                         break
                     else:
