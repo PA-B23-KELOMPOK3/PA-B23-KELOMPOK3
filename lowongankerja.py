@@ -1,6 +1,6 @@
 # built-in
 import os
-
+os.system("")
 # external
 import mysql.connector
 from pwinput import pwinput
@@ -82,6 +82,7 @@ class Admin:
         print(f"ID: {admin_data['id_admin']}")
 
     def menu():
+        global admin_data
         while True:
             pil = choices([
                 "Profil",
@@ -105,33 +106,58 @@ class Admin:
                     else:
                         print("Pilihan tidak valid")
             elif pil == '2':
+                status = 'all'
                 while True:
-                    Lowongan.list()
+                    # status yang kiri itu nama parameter, yang kanan variable
+                    Lowongan.list(status=status)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
                         "Cari",
+                        "List berdasarkan status",
                         "Kembali"
                     ])
                     if pil == '1':
                         Lowongan.pilih()
                         while True:
-                            pil = choices([
-                                "Kembali",
-                                color("Hapus lowongan", "red")
-                            ])
-                            if pil == '1':
-                                break
-                            elif pil == '2':
-                                None
-                        break
+                            if job["id_admin"] is not None:
+                                pil = choices([
+                                    "Kembali",
+                                    color("Hapus lowongan", "red")
+                                ])
+                                if pil == '1':
+                                    break
+                                elif pil == '2':
+                                    None
+                            else:
+                                pil = choices([
+                                    "Setujui",
+                                    "Kembali",
+                                    color("Hapus lowongan", "red")
+                                ])
+                                if pil == '1':
+                                    cursor.execute(f"UPDATE lowongan SET id_admin = {admin_data['id_admin']} WHERE id_lowongan = {job['id_lowongan']}")
+                                    db.commit()
+                                    clear()
+                                    print(color("Lowongan berhasil disetujui", "green"))
+                                    break
+                                elif pil == '2':
+                                    break
+                                elif pil == '3':
+                                    None
                     elif pil == '2':
                         None
                     elif pil == '3':
                         None
                     elif pil == '4':
+                        print("Pilih status")
+                        status = choices([
+                            "all",
+                            "disetujui",
+                            "pending",
+                        ],"opt")
+                    elif pil == '5':
                         break
-                    break
 
                         
             elif pil == '3':
@@ -222,7 +248,6 @@ class Admin:
 
             
             elif pil == '6':
-                global admin_data
                 admin_data = {}
                 break
         
@@ -242,6 +267,7 @@ class User:
                 while True:
                     password = inputhandler("password: ", "pw")
                     if password == user_data["password"]:
+                        clear()
                         print(f"Selamat datang {user_data['nama']}!")
                         User.menu()
                         return
@@ -332,7 +358,7 @@ class User:
                         print("Pilihan tidak valid")
             elif pil == '2':
                 while True:
-                    Lowongan.list()
+                    Lowongan.list(status="disetujui")
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -440,6 +466,7 @@ class Perusahaan:
                 print("Nomor tidak valid")
 
     def menu():
+        global perusahaan_data
         while True:
             pil = choices([
                 "Cek lamaran",
@@ -517,27 +544,44 @@ class Perusahaan:
                     elif pil == '3':
                         None
                     elif pil == '4':
-                        None
+                        posisi = inputhandler("Posisi pekerjaan: ", max=50)
+                        klasifikasi = inputhandler("Klasifikasi pekerjaan: ", max=100)
+                        tipe = choices([
+                            "Full time",
+                            "Paruh waktu",
+                            "Kontrak"
+                        ], 'opt')
+                        deskripsi = inputhandler("Deskripsi pekerjaan: ", max=500)
+                        ketentuan = inputhandler("ketentuan pekerjaan: ", max=500)
+                        gaji = inputhandler("Gaji pekerjaan: ", "int", 11)
+
+                        cursor.execute(f"insert into lowongan values (NULL, '{perusahaan_data['id_perusahaan']}', NULL, '{klasifikasi}', '{tipe}', '{deskripsi}', '{posisi}', '{ketentuan}', '{gaji}')")
+                        db.commit()
+                        print("berhasil keknya")
                     elif pil == '5':
                         break
             
             elif pil == '4':
-                global perusahaan_data
                 perusahaan_data = {}
                 break
             else:
                 print("Pilihan tidak valid")
 
 class Lowongan:
-    def list(id_perusahaan=None):
+    def list(id_perusahaan=None, status='all'):
         global jobs
         global job
-        if id_perusahaan:
+        if id_perusahaan is not None:
             cursor.execute(f"SELECT * FROM lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan INNER JOIN admin ON lowongan.id_admin = admin.id_admin WHERE id_perusahaan = {id_perusahaan}")
         elif not perusahaan_data:
-            cursor.execute("select * from lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan")
+            if status == "all":
+                cursor.execute("select * from lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan LEFT JOIN admin ON lowongan.id_admin = admin.id_admin")
+            elif status == "disetujui":
+                cursor.execute("select * from lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan INNER JOIN admin ON lowongan.id_admin = admin.id_admin")
+            elif status == "pending":
+                cursor.execute("select * from lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan WHERE lowongan.id_admin IS NULL")
         else:
-            cursor.execute(f"select * from lowongan where id_perusahaan = {perusahaan_data['id_perusahaan']}")
+            cursor.execute(f"select * from lowongan LEFT JOIN admin ON lowongan.id_admin = admin.id_admin where id_perusahaan = {perusahaan_data['id_perusahaan']}")
 
         rows = cursor.fetchall()
         columns = [column[0] for column in cursor.description]
@@ -557,20 +601,28 @@ class Lowongan:
                 print('-'*30)
         elif perusahaan_data:
             # PrettyTable for perusahaan_data
-            table = PrettyTable(["#", "ID", "Posisi", "Tipe"])
+            table = PrettyTable(["#", "ID", "Posisi", "Tipe", "Status"])
             table.align["Posisi"] = "l" 
 
             for i, job in enumerate(jobs, start=1):
-                table.add_row([i, job['id_lowongan'], job['posisi'], job['tipe']])
+                if job['id_admin'] is not None:
+                    status = color("Disetujui", "green")
+                else:
+                    status = color("Pending", "yellow")
+                table.add_row([i, job['id_lowongan'], job['posisi'], job['tipe'], status])
             
             print(table)
         else:
             # PrettyTable for other cases
-            table = PrettyTable(["#", "ID", "Posisi", "Perusahaan", "Tipe"])
+            table = PrettyTable(["#", "ID", "Posisi", "Perusahaan", "Status"])
             table.align["Posisi"] = "l" 
 
             for i, job in enumerate(jobs, start=1):
-                table.add_row([i, job['id_lowongan'], job['posisi'], job['nama_perusahaan'], job['tipe']])
+                if job['id_admin'] is not None:
+                    status = color("Disetujui", "green")
+                else:
+                    status = color("Pending", "yellow")
+                table.add_row([i, job['id_lowongan'], job['posisi'], job['nama_perusahaan'], status])
         
             print(table)
 
@@ -590,9 +642,12 @@ class Lowongan:
                 print(f"\nDeskripsi:\n{job['deskripsi']}")
                 print(f"\nKetentuan:\n{job['ketentuan']}")
                 if admin_data:
-                    print(f"ID lowongan: {job['id_lowongan']}")
+                    print(f"\nID lowongan: {job['id_lowongan']}")
                     print(f"ID perusahaan: {job['id_lowongan']}")
-                    print(f"Disetujui oleh: {job['username']} ({job['id_admin']})")
+                    if job['id_admin'] is not None:
+                        print(f"Disetujui oleh: {job['username']} ({job['id_admin']})")
+                    else:
+                        print(color("Menunggu persetujuan", "yellow"))
                 return
         print("Gaada")
 
@@ -689,7 +744,7 @@ def clear():
     os.system("cls")
 
 # handle inputs
-def inputhandler(prompt, inputtype="str"):
+def inputhandler(prompt, inputtype="str", max=None):
     while True:
         try:
             if inputtype == "str":
@@ -700,9 +755,14 @@ def inputhandler(prompt, inputtype="str"):
                 userinput = input(prompt)
                 if not userinput.isdigit():
                     print("Input hanya bisa berupa angka\n")
-                    inputhandler(prompt, 'digit')
+                    continue
             elif inputtype == "pw":
                 userinput = pwinput(prompt)
+            
+            if max is not None and len(str(userinput)) > max:
+                print(f"Input terlalu panjang. Maksimum panjang adalah {max} karakter.\n")
+                continue
+
             return userinput
         except KeyboardInterrupt:
             print("Terdeteksi interupsi\n")
@@ -751,7 +811,20 @@ def choices(options, re='num'):
             elif re == 'opt':
                 return options[int(choice)-1]
         else:
-            print("Pilihan tidak valid")
+            print(color("Pilihan tidak valid", "red"))
+
+# buat bikin banner (judul) biar serasi
+def banner(text):
+    # definisikan panjang banner
+    banner_length = 65
+    text_length = len(text)
+    # hitung berapa karakter '=' yang diperlukan
+    padding = banner_length - text_length
+    # dibagi jadi dua untuk kanan kiri
+    left_padding = padding // 2
+    right_padding = padding - left_padding
+    # tinggal dikalikan pakai jumlah kanan kiri
+    return f"{'=' * left_padding} {text} {'=' * right_padding}"
 
 # connect
 db = mysql.connector.connect(
@@ -770,7 +843,7 @@ perusahaan_data = {}
 # Login
 def login():
     while True:
-        print("\n========================== LOGIN ================================")
+        print(f"\n{banner('LOGIN')}")
         pil = choices([
             "Login admin",
             "Login user",
@@ -783,14 +856,12 @@ def login():
             User.login()
         elif pil == '3':
             Perusahaan.login()
-        else:
-            print("Pilihan tidak valid")
-            
+        
 #Regist
 
 #main
 while True:
-    print ("\n\n=============== PROGRAM LOWONGAN KERJA UNTUK SEMUA ===============\n")
+    print(f"\n{banner('PROGRAM LOWONGAN KERJA UNTUK SEMUA')}")
     pil = choices([
         "Login",
         "Register",
@@ -803,5 +874,4 @@ while True:
         None #belum ada 
     elif pil == '3':
         break
-    else:
-        print ("Pilihan tidak valid")
+    
