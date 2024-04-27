@@ -767,21 +767,41 @@ user_data = {}
 admin_data = {}
 perusahaan_data = {}
 
-# main
+# Login
+def login():
+    while True:
+        print("\n========================== LOGIN ================================")
+        pil = choices([
+            "Login admin",
+            "Login user",
+            "Login menggunakan akun perusahaan"
+        ])
+
+        if pil == '1':
+            Admin.login()
+        elif pil == '2':
+            User.login()
+        elif pil == '3':
+            Perusahaan.login()
+        else:
+            print("Pilihan tidak valid")
+            
+#Regist
+
+#main
 while True:
-    print("Pilihan awal gtw")
+    print ("\n\n=============== PROGRAM LOWONGAN KERJA UNTUK SEMUUA ===============\n")
     pil = choices([
-        "Login admin",
-        "Login user",
-        "Login menggunakan akun perusahaan"
+        "Login",
+        "Register",
+        "Keluar"
     ])
 
     if pil == '1':
-        Admin.login()
+        login()
     elif pil == '2':
-        User.login()
+        None #belum ada 
     elif pil == '3':
-        Perusahaan.login()
+        break
     else:
-        print("Pilihan tidak valid")
-
+        print ("Inputan tidak valid")
