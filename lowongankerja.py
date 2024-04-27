@@ -804,4 +804,4 @@ while True:
     elif pil == '3':
         break
     else:
-        print ("Inputan tidak valid")
+        print ("Pilihan tidak valid")
