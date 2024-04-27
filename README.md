@@ -117,6 +117,7 @@ _Database program ini dirancang menggunakan struktur MySQL dengan 5 entitas utam
 
 - *Proses Registrasi sebagai user*
 ![register](./res/login6.jpg)
+Jika pengguna belum memiliki akun, program menyediakan opsi registrasi. pengguna menginputkan data-data yang dibutuhkan oleh program sebelum masuk ke dalam menu utama.
 
 - *Proses keluar dari program*
 ![Flowchart Capstone-Halaman-1 (4) (1)](./res/login7.jpg)
@@ -124,18 +125,23 @@ _Database program ini dirancang menggunakan struktur MySQL dengan 5 entitas utam
 ### Halaman Menu Admin
 - *Proses memilih mengelola lowongan, user, perusahaan, atau lamaran*
 ![Flowchart Capstone-Halaman-2 1](./res/admin1.jpg)
+Di dalam menu admin, admin mempunyai fitur untuk mengedit dan menghapus pada lowongan,user,perusahaan, atau lamaran. 
 
 - *Proses mengelola lowongan*
 ![mengelola lowongan](./res/admin2.jpg)
+Pada fitur mengelola lowongan, admin dapat menerima atau menolak request lowongan yang diajukan oleh perusahaan.
 
 - *Proses mengelola user*
 ![mengelola user](./res/admin3.jpg)
+Pada fitur ini, admin dapat menghapus user dalam program ini.
 
 - *Proses mengelola perusahaan*
 ![mengelola perusahaan](./res/admin4.jpg)
+Sama halnya dengan fitur user, admin dapat menghapus perusahaan dalam program ini.
 
 - *Proses mengelola lamaran*
 ![mengelola lamaran](./res/admin5.jpg)
+Begitu juga dengan fitur lamaran, admin dapat menghapus lamaran dalam program ini.
 
 - *Proses Admin kembali ke menu log in*
 ![admin kembali ke menu](./res/admin6.jpg)
@@ -143,9 +149,11 @@ _Database program ini dirancang menggunakan struktur MySQL dengan 5 entitas utam
 ### Halaman Menu User
 - *Proses user memilih lowongan*
 ![Flowchart Capstone-Halaman-3(1) 1](./res/1.jpg)
+Pada halaman menu user memiliki fitur Lamaran cepat.
 
 - *Proses user mengisi lamaran cepat dan di bawahnya keluar kemenu sebelumnya*
 ![Flowchart Capstone-Halaman-3(1) 2](./res/2.jpg)
+Fitur Lamaran cepat, template lamaran yang sudah disediakan dari program. jadi user hanya perlu menginputkan data yang diperlukan oleh program.
 
 - *Proses user memilih keluar ke menu log in*
 ![Flowchart Capstone-Halaman-3(1) 3](./res/3.jpg)
