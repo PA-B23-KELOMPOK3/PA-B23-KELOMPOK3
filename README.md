@@ -119,6 +119,7 @@ _Database program ini dirancang menggunakan struktur MySQL dengan 5 entitas utam
 ![register](./res/login6.jpg)
 Jika pengguna belum memiliki akun, program menyediakan opsi registrasi. pengguna menginputkan data-data yang dibutuhkan oleh program sebelum masuk ke dalam menu utama.
 
+
 - *Proses keluar dari program*
 ![Flowchart Capstone-Halaman-1 (4) (1)](./res/login7.jpg)
 
