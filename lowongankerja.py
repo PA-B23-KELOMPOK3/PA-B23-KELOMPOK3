@@ -790,7 +790,7 @@ def login():
 
 #main
 while True:
-    print ("\n\n=============== PROGRAM LOWONGAN KERJA UNTUK SEMUUA ===============\n")
+    print ("\n\n=============== PROGRAM LOWONGAN KERJA UNTUK SEMUA ===============\n")
     pil = choices([
         "Login",
         "Register",
