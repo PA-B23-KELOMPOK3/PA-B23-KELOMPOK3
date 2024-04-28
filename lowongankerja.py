@@ -146,7 +146,28 @@ class Admin:
                                 elif pil == '3':
                                     None
                     elif pil == '2':
-                        None
+                        print("\nUrut berdasarkan:")
+                        key = choices([
+                            "Posisi",
+                            "Klasifikasi",
+                            "ID lowongan",
+                            "Rata-rata gaji"
+                        ])
+                        if key == '1':
+                            sort_key = "posisi"
+                        elif key == '2':
+                            sort_key = "klasifikasi"
+                        elif key == '3':
+                            sort_key = "id_lowongan"
+                        elif key == '4':
+                            sort_key = "gaji"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
                     elif pil == '3':
                         None
                     elif pil == '4':
@@ -161,8 +182,10 @@ class Admin:
 
                         
             elif pil == '3':
+                sort_key = "nama"
+                sort_order = "asc"
                 while True:
-                    User.list()
+                    User.list(sort_key=sort_key, sort_order=sort_order)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -183,15 +206,30 @@ class Admin:
                         break
                     
                     elif pil == '2':
-                        None
+                        print("\nUrut berdasarkan:")
+                        key = choices(["Nama user", "ID User"])
+                        if key == '1':
+                            sort_key = "nama"
+                        elif key == '2':
+                            sort_key = "id_user"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
+                        
                     elif pil == '3':
                         None
                     elif pil == '4':
                         break
                         
             elif pil == '4':
+                sort_key = "id_perusahaan"
+                sort_order = "desc"
                 while True:
-                    Perusahaan.list()
+                    Perusahaan.list(sort_key=sort_key, sort_order=sort_order)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -211,7 +249,25 @@ class Admin:
                                 None
                         
                     elif pil == '2':
-                        None
+                        print("\nUrut berdasarkan:")
+                        key = choices([
+                            "Nama perusahaan",
+                            "Alamat perusahaan",
+                            "ID perusahaan"
+                        ])
+                        if key == '1':
+                            sort_key = "nama_perusahaan"
+                        elif key == '2':
+                            sort_key = "alamat_perusahaan"
+                        elif key == '3':
+                            sort_key = "id_perusahaan"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
                     elif pil == '3':
                         None
                     elif pil == '4':
@@ -219,8 +275,10 @@ class Admin:
 
             
             elif pil == '5':
+                sort_key = 'id_lamaran'
+                sort_order = 'desc'
                 while True:
-                    Lamaran.list()
+                    Lamaran.list(sort_key=sort_key, sort_order=sort_order)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -240,7 +298,38 @@ class Admin:
                                 None
 
                     elif pil == '2':
-                        None
+                        print("\nUrut berdasarkan:")
+                        key = choices([
+                            "Nama pelamar",
+                            "Nama perusahaan",
+                            "Posisi pekerjaan",
+                            "ID lamaran",
+                            "ID user",
+                            "ID perusahaan",
+                            "ID lowongan"
+                        ])
+                        if key == '1':
+                            sort_key = "nama"
+                        elif key == '2':
+                            sort_key = "nama_perusahaan"
+                        elif key == '3':
+                            sort_key = "posisi"
+                        elif key == '4':
+                            sort_key = "id_lamaran"
+                        elif key == '5':
+                            sort_key = "id_user"
+                        elif key == '6':
+                            sort_key = "id_perusahaan"
+                        elif key == '7':
+                            sort_key = "id_lowongan"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
+                        print(sort_key, sort_order)
                     elif pil == '3':
                         None
                     elif pil == '4':
@@ -307,7 +396,7 @@ class User:
         print(f"Pengalaman:\n{user_data['pengalaman']}")
         print(f"Keahlian:\n{user_data['keahlian']}")
     
-    def list():
+    def list(sort_key="id_user", sort_order='asc'):
         global users
         global user
         cursor.execute("select * from user")
@@ -315,17 +404,22 @@ class User:
         columns = [column[0] for column in cursor.description]
         users = LinkedList()
 
-        # ubah datanya jadi dictionary
+        # ubah data tiap user jadi dictionary
         for row in rows:
             # bikin dictionary dari row data pakai nama kolom
             row_data = dict(zip(columns, row))
+            # append dictionary ke list
             users.append(row_data)
+        
+        users = quicksort(users, sort_key, sort_order)
+
+        # PrettyTable for perusahaan_data
+        table = PrettyTable(["#", "Nama", "Email", "ID"])
 
         for i, user in enumerate(users, start=1):
-            print(f"[{color(i, 'orange')}] {color(user['nama'], 'cyan')}")
-            print(f"    {user['email']}")
-            print(f"    ID: {user['id_user']}")
-            print('-'*30)
+            table.add_row([color(i, 'orange'), user['nama'], user['email'], user['id_user']])
+        
+        print(table)
         
     def pilih():
         while True:
@@ -357,8 +451,10 @@ class User:
                     else:
                         print("Pilihan tidak valid")
             elif pil == '2':
+                sort_key = "id_lowongan"
+                sort_order = "desc"
                 while True:
-                    Lowongan.list(status="disetujui")
+                    Lowongan.list(status="disetujui", sort_key=sort_key, sort_order=sort_order)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -380,7 +476,29 @@ class User:
                             else:
                                 print(color("Pilihan tidak valid\n", "red"))
                     elif pil == '2':
-                        None
+                        # 'Waktu ditambahkan' itu pakai ID hehe
+                        print("\nUrut berdasarkan:")
+                        key = choices([
+                            "Posisi",
+                            "Klasifikasi",
+                            "Waktu ditambahkan",
+                            "Rata-rata gaji"
+                        ])
+                        if key == '1':
+                            sort_key = "posisi"
+                        elif key == '2':
+                            sort_key = "klasifikasi"
+                        elif key == '3':
+                            sort_key = "id_lowongan"
+                        elif key == '4':
+                            sort_key = "gaji"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
                     elif pil == '3':
                         None
                     elif pil == '4':
@@ -435,7 +553,7 @@ class Perusahaan:
         print(f"email: {perusahaan_data['email_perusahaan']}")
         print(f"nomor telepon: {perusahaan_data['no_telp']}")
 
-    def list():
+    def list(sort_key='id_perusahaan', sort_order='desc'):
         global companies
         global perusahaan
         
@@ -449,6 +567,8 @@ class Perusahaan:
             # bikin dictionary dari row data pakai nama kolom
             row_data = dict(zip(columns, row))
             companies.append(row_data)
+        
+        companies = quicksort(companies, sort_key, sort_order)
 
         for i, perusahaan in enumerate(companies, start=1):
             print(f"[{color(i, 'orange')}] {color(perusahaan['nama_perusahaan'], 'cyan')}")
@@ -475,8 +595,10 @@ class Perusahaan:
                 "Keluar"
             ])
             if pil == '1':
+                sort_key = 'id_lamaran'
+                sort_order = 'desc'
                 while True:
-                    Lamaran.list()
+                    Lamaran.list(sort_key=sort_key, order=sort_order)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -495,7 +617,25 @@ class Perusahaan:
                             elif pil == '2':
                                 None
                     elif pil == '2':
-                        None
+                        print("\nUrut berdasarkan:")
+                        key = choices([
+                            "Nama pelamar",
+                            "Posisi pekerjaan",
+                            "Waktu melamar"
+                        ])
+                        if key == '1':
+                            sort_key = "nama"
+                        elif key == '2':
+                            sort_key = "posisi"
+                        elif key == '3':
+                            sort_key = "id_lamaran"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
                     elif pil == '3':
                         None
                     elif pil == '4':
@@ -540,7 +680,28 @@ class Perusahaan:
                                 None
                             
                     elif pil == '2':
-                        None
+                        print("\nUrut berdasarkan:")
+                        key = choices([
+                            "Posisi",
+                            "Klasifikasi",
+                            "Waktu ditambahkan",
+                            "Rata-rata gaji"
+                        ])
+                        if key == '1':
+                            sort_key = "posisi"
+                        elif key == '2':
+                            sort_key = "klasifikasi"
+                        elif key == '3':
+                            sort_key = "id_lowongan"
+                        elif key == '4':
+                            sort_key = "gaji"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
                     elif pil == '3':
                         None
                     elif pil == '4':
@@ -568,7 +729,7 @@ class Perusahaan:
                 print("Pilihan tidak valid")
 
 class Lowongan:
-    def list(id_perusahaan=None, status='all'):
+    def list(id_perusahaan=None, status='all', sort_key='id_lowongan', sort_order='desc'):
         global jobs
         global job
         if id_perusahaan is not None:
@@ -592,6 +753,8 @@ class Lowongan:
             row_data = dict(zip(columns, row))
             jobs.append(row_data)
 
+        jobs = quicksort(jobs, sort_key, sort_order)
+
         if user_data:
             # Output for user
             for i, job in enumerate(jobs, start=1):
@@ -613,7 +776,7 @@ class Lowongan:
             
             print(table)
         else:
-            # PrettyTable for other cases
+            # PrettyTable for admin
             table = PrettyTable(["#", "ID", "Posisi", "Perusahaan", "Status"])
             table.align["Posisi"] = "l" 
 
@@ -662,7 +825,7 @@ class Lowongan:
     
 
 class Lamaran:
-    def list(id_perusahaan=None):
+    def list(id_perusahaan=None, sort_key='id_lamaran', sort_order='desc'):
         global lamarans
         if id_perusahaan:
             query = f"SELECT lamaran.*, user.*, perusahaan.*, lowongan.posisi FROM lamaran JOIN user ON lamaran.id_user = user.id_user JOIN lowongan ON lamaran.id_lowongan = lowongan.id_lowongan JOIN perusahaan ON lamaran.id_perusahaan = perusahaan.id_perusahaan WHERE perusahaan.id_perusahaan = {id_perusahaan}"
@@ -680,6 +843,8 @@ class Lamaran:
             row_data = dict(zip(columns, row))
             lamarans.append(row_data)
 
+        lamarans = quicksort(lamarans, sort_key, sort_order)
+        
         table = PrettyTable(["No", "ID Lamaran", "Pelamar", "Perusahaan", "Posisi"])
         table.align["Posisi"] = "l" 
 
@@ -732,16 +897,31 @@ class Lamaran:
             'Lainnya'
         ], 'opt')
 
-        pengalaman_relevan = inputhandler("\nPegalaman relevan:\n")
-        deskripsi = inputhandler("\nDeskripsi:\n")
+        pengalaman_relevan = inputhandler("\nPegalaman relevan:\n", max=500)
+        deskripsi = inputhandler("\nDeskripsi:\n", max=1500)
 
         cursor.execute(f"insert into lamaran values (NULL, {job['id_perusahaan']}, {user_data['id_user']}, {job['id_lowongan']}, '{sumber}', '{pengalaman_relevan}', '{deskripsi}')")
         db.commit()
         
         print("Lamaran berhasil disubmit. Silahkan cek email anda secara berkala")
 
+# Global functions
 def clear():
     os.system("cls")
+
+def quicksort(arr, key, order='desc'):
+    if len(arr) <= 1:
+        return arr
+    else:
+        pivot = arr[len(arr) // 2][key]
+        less = [x for x in arr if x[key] < pivot]
+        equal = [x for x in arr if x[key] == pivot]
+        greater = [x for x in arr if x[key] > pivot]
+
+        if order == 'desc':
+            return quicksort(greater, key, order) + equal + quicksort(less, key, order)
+        else:
+            return quicksort(less, key, order) + equal + quicksort(greater, key, order)
 
 # handle inputs
 def inputhandler(prompt, inputtype="str", max=None):
@@ -762,7 +942,7 @@ def inputhandler(prompt, inputtype="str", max=None):
             if max is not None and len(str(userinput)) > max:
                 print(f"Input terlalu panjang. Maksimum panjang adalah {max} karakter.\n")
                 continue
-
+                
             return userinput
         except KeyboardInterrupt:
             print("Terdeteksi interupsi\n")
