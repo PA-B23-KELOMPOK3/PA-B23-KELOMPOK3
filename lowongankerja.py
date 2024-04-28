@@ -544,7 +544,6 @@ class Perusahaan:
 
     def profil(perusahaan_id=None):
         global perusahaan_data
-        print(perusahaan_data)
         
         if perusahaan_id is None:
             # jaga-jaga
@@ -615,7 +614,7 @@ class Perusahaan:
                 sort_order = 'desc'
                 keyword = None
                 while True:
-                    Lamaran.list(sort_key=sort_key, order=sort_order, keyword=keyword)
+                    Lamaran.list(sort_key=sort_key, sort_order=sort_order, keyword=keyword)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -895,6 +894,9 @@ class Lamaran:
                 JOIN lowongan ON lamaran.id_lowongan = lowongan.id_lowongan 
                 JOIN perusahaan ON lamaran.id_perusahaan = perusahaan.id_perusahaan 
                 '''
+        if perusahaan_data:
+            id_perusahaan = perusahaan_data['id_perusahaan']
+
         if id_perusahaan:
             query += f"WHERE perusahaan.id_perusahaan = {id_perusahaan}"
 
@@ -913,13 +915,22 @@ class Lamaran:
         if keyword:
             lamarans = jumpsearch(lamarans, keyword)
 
-        table = PrettyTable(["No", "ID Lamaran", "Pelamar", "Perusahaan", "Posisi"])
-        table.align["Posisi"] = "l" 
+        if perusahaan_data:
+            table = PrettyTable(["No", "ID Lamaran", "Pelamar", "Posisi"])
+            table.align["Posisi"] = "l" 
 
-        for i, lamaran in enumerate(lamarans, start=1):
-            table.add_row([i, lamaran['id_lamaran'], lamaran['nama'], lamaran['nama_perusahaan'], lamaran['posisi']])
+            for i, lamaran in enumerate(lamarans, start=1):
+                table.add_row([i, lamaran['id_lamaran'], lamaran['nama'], lamaran['posisi']])
 
-        print(table)
+            print(table)
+        else:
+            table = PrettyTable(["No", "ID Lamaran", "Pelamar", "Perusahaan", "Posisi"])
+            table.align["Posisi"] = "l" 
+
+            for i, lamaran in enumerate(lamarans, start=1):
+                table.add_row([i, lamaran['id_lamaran'], lamaran['nama'], lamaran['nama_perusahaan'], lamaran['posisi']])
+
+            print(table)
     
     def pilih():
         while True:
