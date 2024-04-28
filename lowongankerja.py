@@ -1,6 +1,7 @@
 # built-in
 import os
-os.system("")
+import math
+
 # external
 import mysql.connector
 from pwinput import pwinput
@@ -107,9 +108,12 @@ class Admin:
                         print("Pilihan tidak valid")
             elif pil == '2':
                 status = 'all'
+                sort_key = 'id_lowongan'
+                sort_order = 'desc'
+                keyword = None
                 while True:
                     # status yang kiri itu nama parameter, yang kanan variable
-                    Lowongan.list(status=status)
+                    Lowongan.list(status=status, sort_key=sort_key, sort_order=sort_order, keyword=keyword)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -169,7 +173,7 @@ class Admin:
                         elif order == '2':
                             sort_order = "desc"
                     elif pil == '3':
-                        None
+                        keyword = inputhandler("Masukkan keyword: ")
                     elif pil == '4':
                         print("Pilih status")
                         status = choices([
@@ -184,8 +188,9 @@ class Admin:
             elif pil == '3':
                 sort_key = "nama"
                 sort_order = "asc"
+                keyword = None
                 while True:
-                    User.list(sort_key=sort_key, sort_order=sort_order)
+                    User.list(sort_key=sort_key, sort_order=sort_order, keyword=keyword)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -221,15 +226,16 @@ class Admin:
                             sort_order = "desc"
                         
                     elif pil == '3':
-                        None
+                        keyword = inputhandler("Masukkan keyword: ")
                     elif pil == '4':
                         break
                         
             elif pil == '4':
                 sort_key = "id_perusahaan"
                 sort_order = "desc"
+                keyword = None
                 while True:
-                    Perusahaan.list(sort_key=sort_key, sort_order=sort_order)
+                    Perusahaan.list(sort_key=sort_key, sort_order=sort_order, keyword=keyword)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -269,7 +275,7 @@ class Admin:
                         elif order == '2':
                             sort_order = "desc"
                     elif pil == '3':
-                        None
+                        keyword = inputhandler("Masukkan keyword: ")
                     elif pil == '4':
                         break
 
@@ -277,8 +283,9 @@ class Admin:
             elif pil == '5':
                 sort_key = 'id_lamaran'
                 sort_order = 'desc'
+                keyword = None
                 while True:
-                    Lamaran.list(sort_key=sort_key, sort_order=sort_order)
+                    Lamaran.list(sort_key=sort_key, sort_order=sort_order, keyword=keyword)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -331,7 +338,7 @@ class Admin:
                             sort_order = "desc"
                         print(sort_key, sort_order)
                     elif pil == '3':
-                        None
+                        keyword = inputhandler("Masukkan keyword: ")
                     elif pil == '4':
                         break
 
@@ -396,10 +403,10 @@ class User:
         print(f"Pengalaman:\n{user_data['pengalaman']}")
         print(f"Keahlian:\n{user_data['keahlian']}")
     
-    def list(sort_key="id_user", sort_order='asc'):
+    def list(sort_key="id_user", sort_order='asc', keyword=None):
         global users
         global user
-        cursor.execute("select * from user")
+        cursor.execute("select u.nama, u.email, u.id_user from user as u")
         rows = cursor.fetchall()
         columns = [column[0] for column in cursor.description]
         users = LinkedList()
@@ -412,6 +419,8 @@ class User:
             users.append(row_data)
         
         users = quicksort(users, sort_key, sort_order)
+        if keyword:
+            users = jumpsearch(users, keyword)
 
         # PrettyTable for perusahaan_data
         table = PrettyTable(["#", "Nama", "Email", "ID"])
@@ -453,8 +462,9 @@ class User:
             elif pil == '2':
                 sort_key = "id_lowongan"
                 sort_order = "desc"
+                keyword = None
                 while True:
-                    Lowongan.list(status="disetujui", sort_key=sort_key, sort_order=sort_order)
+                    Lowongan.list(status="disetujui", sort_key=sort_key, sort_order=sort_order, keyword=keyword)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -500,7 +510,8 @@ class User:
                         elif order == '2':
                             sort_order = "desc"
                     elif pil == '3':
-                        None
+                        keyword = inputhandler("Keyword: ")
+                        
                     elif pil == '4':
                         break
             elif pil == '3':
@@ -534,14 +545,14 @@ class Perusahaan:
     def profil(perusahaan_id=None):
         global perusahaan_data
         print(perusahaan_data)
-        # jaga-jaga
+        
         if perusahaan_id is None:
+            # jaga-jaga
             if not perusahaan_data:
                 print("Tidak ada perusahaan yang terdaftar. Silakan login terlebih dahulu.")
                 return
             else:
                 perusahaan_id = perusahaan_data['id_perusahaan']
-        print("id", perusahaan_id)
 
         cursor.execute(f"SELECT * FROM perusahaan WHERE id_perusahaan = {perusahaan_id}")
         row = cursor.fetchone()
@@ -553,11 +564,14 @@ class Perusahaan:
         print(f"email: {perusahaan_data['email_perusahaan']}")
         print(f"nomor telepon: {perusahaan_data['no_telp']}")
 
-    def list(sort_key='id_perusahaan', sort_order='desc'):
+    def list(sort_key='id_perusahaan', sort_order='desc', keyword=None):
         global companies
         global perusahaan
         
-        cursor.execute("select * from perusahaan")
+        cursor.execute('''
+            select p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan
+            from perusahaan as p
+        ''')
         rows = cursor.fetchall()
         columns = [column[0] for column in cursor.description]
         companies = LinkedList()
@@ -569,6 +583,8 @@ class Perusahaan:
             companies.append(row_data)
         
         companies = quicksort(companies, sort_key, sort_order)
+        if keyword:
+            companies = jumpsearch(companies, keyword)
 
         for i, perusahaan in enumerate(companies, start=1):
             print(f"[{color(i, 'orange')}] {color(perusahaan['nama_perusahaan'], 'cyan')}")
@@ -597,8 +613,9 @@ class Perusahaan:
             if pil == '1':
                 sort_key = 'id_lamaran'
                 sort_order = 'desc'
+                keyword = None
                 while True:
-                    Lamaran.list(sort_key=sort_key, order=sort_order)
+                    Lamaran.list(sort_key=sort_key, order=sort_order, keyword=keyword)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -637,7 +654,7 @@ class Perusahaan:
                         elif order == '2':
                             sort_order = "desc"
                     elif pil == '3':
-                        None
+                        keyword = inputhandler("Masukkan keyword: ")
                     elif pil == '4':
                         break
 
@@ -655,8 +672,11 @@ class Perusahaan:
                     else:
                         print("Pilihan tidak valid")
             elif pil == '3':
+                sort_key = 'id_lowongan'
+                sort_order = 'desc'
+                keyword = None
                 while True:
-                    Lowongan.list()
+                    Lowongan.list(sort_key=sort_key, sort_order=sort_order, keyword=keyword)
                     pil = choices([
                         "Pilih",
                         "Urutkan",
@@ -703,7 +723,7 @@ class Perusahaan:
                         elif order == '2':
                             sort_order = "desc"
                     elif pil == '3':
-                        None
+                        keyword = inputhandler("Masukkan keyword: ")
                     elif pil == '4':
                         posisi = inputhandler("Posisi pekerjaan: ", max=50)
                         klasifikasi = inputhandler("Klasifikasi pekerjaan: ", max=100)
@@ -729,20 +749,59 @@ class Perusahaan:
                 print("Pilihan tidak valid")
 
 class Lowongan:
-    def list(id_perusahaan=None, status='all', sort_key='id_lowongan', sort_order='desc'):
+    def list(id_perusahaan=None, status='all', sort_key='id_lowongan', sort_order='desc', keyword=None):
         global jobs
         global job
+        # admin
         if id_perusahaan is not None:
-            cursor.execute(f"SELECT * FROM lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan INNER JOIN admin ON lowongan.id_admin = admin.id_admin WHERE id_perusahaan = {id_perusahaan}")
+            cursor.execute(
+                f'''
+                SELECT lowongan.*, p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan, a.id_admin, a.username
+                FROM lowongan 
+                INNER JOIN perusahaan AS p ON lowongan.id_perusahaan = p.id_perusahaan
+                INNER JOIN admin AS a ON lowongan.id_admin = a.id_admin 
+                WHERE id_perusahaan = {id_perusahaan}
+                '''
+            )
+        # admin/user
         elif not perusahaan_data:
             if status == "all":
-                cursor.execute("select * from lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan LEFT JOIN admin ON lowongan.id_admin = admin.id_admin")
+                cursor.execute(
+                    '''
+                    select lowongan.*, p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan, a.id_admin, a.username
+                    from lowongan
+                    INNER JOIN perusahaan AS p ON lowongan.id_perusahaan = p.id_perusahaan 
+                    LEFT JOIN admin AS a ON lowongan.id_admin = a.id_admin
+                    '''
+                )
             elif status == "disetujui":
-                cursor.execute("select * from lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan INNER JOIN admin ON lowongan.id_admin = admin.id_admin")
+                cursor.execute(
+                    '''
+                    select lowongan.*, p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan, a.id_admin, a.username
+                    from lowongan 
+                    INNER JOIN perusahaan AS p ON lowongan.id_perusahaan = p.id_perusahaan 
+                    INNER JOIN admin AS a ON lowongan.id_admin = a.id_admin
+                    '''
+                )
             elif status == "pending":
-                cursor.execute("select * from lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan WHERE lowongan.id_admin IS NULL")
+                cursor.execute(
+                    '''
+                    select lowongan.*, p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan
+                    from lowongan 
+                    INNER JOIN perusahaan AS p ON lowongan.id_perusahaan = p.id_perusahaan 
+                    WHERE lowongan.id_admin IS NULL
+                    '''
+                )
+        # perusahaan
         else:
-            cursor.execute(f"select * from lowongan LEFT JOIN admin ON lowongan.id_admin = admin.id_admin where id_perusahaan = {perusahaan_data['id_perusahaan']}")
+            cursor.execute(
+                f'''
+                select lowongan.*, a.id_admin, a.username
+                from lowongan 
+                LEFT JOIN admin AS a ON lowongan.id_admin = a.id_admin 
+                where id_perusahaan = {perusahaan_data['id_perusahaan']}
+                '''
+            )
 
         rows = cursor.fetchall()
         columns = [column[0] for column in cursor.description]
@@ -754,6 +813,8 @@ class Lowongan:
             jobs.append(row_data)
 
         jobs = quicksort(jobs, sort_key, sort_order)
+        if keyword:
+            jobs = jumpsearch(jobs, keyword)
 
         if user_data:
             # Output for user
@@ -825,12 +886,17 @@ class Lowongan:
     
 
 class Lamaran:
-    def list(id_perusahaan=None, sort_key='id_lamaran', sort_order='desc'):
+    def list(id_perusahaan=None, sort_key='id_lamaran', sort_order='desc', keyword=None):
         global lamarans
+        query = f'''
+                SELECT lamaran.*, user.nama, perusahaan.nama_perusahaan, lowongan.posisi 
+                FROM lamaran 
+                JOIN user ON lamaran.id_user = user.id_user 
+                JOIN lowongan ON lamaran.id_lowongan = lowongan.id_lowongan 
+                JOIN perusahaan ON lamaran.id_perusahaan = perusahaan.id_perusahaan 
+                '''
         if id_perusahaan:
-            query = f"SELECT lamaran.*, user.*, perusahaan.*, lowongan.posisi FROM lamaran JOIN user ON lamaran.id_user = user.id_user JOIN lowongan ON lamaran.id_lowongan = lowongan.id_lowongan JOIN perusahaan ON lamaran.id_perusahaan = perusahaan.id_perusahaan WHERE perusahaan.id_perusahaan = {id_perusahaan}"
-        else:
-            query = "SELECT lamaran.*, user.*, perusahaan.*, lowongan.posisi FROM lamaran JOIN user ON lamaran.id_user = user.id_user JOIN lowongan ON lamaran.id_lowongan = lowongan.id_lowongan JOIN perusahaan ON lamaran.id_perusahaan = perusahaan.id_perusahaan"
+            query += f"WHERE perusahaan.id_perusahaan = {id_perusahaan}"
 
         cursor.execute(query)
         rows = cursor.fetchall()
@@ -844,7 +910,9 @@ class Lamaran:
             lamarans.append(row_data)
 
         lamarans = quicksort(lamarans, sort_key, sort_order)
-        
+        if keyword:
+            lamarans = jumpsearch(lamarans, keyword)
+
         table = PrettyTable(["No", "ID Lamaran", "Pelamar", "Perusahaan", "Posisi"])
         table.align["Posisi"] = "l" 
 
@@ -863,12 +931,19 @@ class Lamaran:
                 print("Nomor tidak valid")
 
     def lihat(id_lamaran=None):
-        cursor.execute(f"SELECT lamaran.*, user.*, perusahaan.*, lowongan.posisi FROM lamaran JOIN user ON lamaran.id_user = user.id_user JOIN lowongan ON lamaran.id_lowongan = lowongan.id_lowongan JOIN perusahaan ON lamaran.id_perusahaan = perusahaan.id_perusahaan WHERE id_lamaran = {id_lamaran}")
+        cursor.execute(f'''
+            SELECT lamaran.*, user.*, perusahaan.*, lowongan.posisi 
+            FROM lamaran 
+            JOIN user ON lamaran.id_user = user.id_user 
+            JOIN lowongan ON lamaran.id_lowongan = lowongan.id_lowongan 
+            JOIN perusahaan ON lamaran.id_perusahaan = perusahaan.id_perusahaan 
+            WHERE id_lamaran = {id_lamaran}
+        ''')
         row = cursor.fetchone()
         columns = [column[0] for column in cursor.description]
         lamaran_data = dict(zip(columns, row))
         
-        if not perusahaan_data:
+        if admin_data:
             print(f"Nama perusahaan: {lamaran_data['nama_perusahaan']}")
             print(f"Posisi: {lamaran_data['posisi']}")
             print(f"Nama Pelamar: {color(lamaran_data['nama'], 'cyan')}")
@@ -922,6 +997,52 @@ def quicksort(arr, key, order='desc'):
             return quicksort(greater, key, order) + equal + quicksort(less, key, order)
         else:
             return quicksort(less, key, order) + equal + quicksort(greater, key, order)
+
+# custom jumpsearch pakai list dict dan bisa nyari per-kata
+def jumpsearch(entries, keyword):
+    # pecah entries per-kata jadi items, bikin list tuple yang isinya index entry sama items, cth: [(0: hi), (0: guys), (1: hello)]
+    items = []
+    for idx, entry_dict in enumerate(entries):
+        for key, entry in entry_dict.items():
+            for item in str(entry).lower().split():  # Convert to lowercase
+                items.append((idx, item))
+
+    # urutkan items
+    items.sort(key=lambda x: x[1])
+
+    result = []
+    step = int(math.sqrt(len(items)))  # size untuk step, pakai akar dari panjang items
+    
+    targets = keyword.strip().split()
+    for target in targets:
+        target = target.lower()
+        for i in range(len(items)):
+            current_index = i
+            if current_index < len(items):
+                current_item = items[current_index][1]
+            else:
+                break
+            
+            # maju sampai current_item lebih besar dari target
+            while current_item < target and current_index < len(items) - step:
+                current_index += step
+                if current_index < len(items):
+                    current_item = items[current_index][1]
+                else:
+                    break
+            
+            # mundur 1 langkah sampai current_item kurang atau sama dengan target
+            while current_item >= target and current_index >= 0:
+                if current_item == target:
+                    result.append(items[current_index][0])
+                current_index -= 1
+                if current_index >= 0 and current_index < len(items):
+                    current_item = items[current_index][1]
+                else:
+                    break
+    
+    # hilangin duplikat, return semua entry yang cocok
+    return [entries[i] for i in set(result)]
 
 # handle inputs
 def inputhandler(prompt, inputtype="str", max=None):
@@ -1040,6 +1161,8 @@ def login():
 #Regist
 
 #main
+os.system("") # entah kenapa kalau gak pakai ini warna teksnya gak muncul di beberapa device
+
 while True:
     print(f"\n{banner('PROGRAM LOWONGAN KERJA UNTUK SEMUA')}")
     pil = choices([
