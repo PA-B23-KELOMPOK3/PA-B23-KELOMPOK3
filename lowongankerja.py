@@ -81,6 +81,26 @@ class Admin:
     def profil():
         print(f"\n{admin_data['username']}")
         print(f"ID: {admin_data['id_admin']}")
+        print(f"Jabatan: {admin_data['jabatan']}")
+        print("Hak akses: ")
+        if admin_data['jabatan'] == 'admin1':
+            print(color("Hapus user", "green"))
+            print(color("Hapus perusahaan", "green"))
+            print(color("Hapus lowongan", "green"))
+            print(color("Hapus lamaran", "green"))
+            print(color("Setujui request lowongan", "green"))
+        elif admin_data['jabatan'] == 'admin2':
+            print(color("Hapus user", "red"))
+            print(color("Hapus perusahaan", "red"))
+            print(color("Hapus lowongan", "green"))
+            print(color("Hapus lamaran", "green"))
+            print(color("Setujui request lowongan", "green"))
+        elif admin_data['jabatan'] == 'admin3':
+            print(color("Hapus user", "red"))
+            print(color("Hapus perusahaan", "red"))
+            print(color("Hapus lowongan", "red"))
+            print(color("Hapus lamaran", "red"))
+            print(color("Setujui request lowongan", "green"))
 
     def menu():
         global admin_data
@@ -129,6 +149,7 @@ class Admin:
                     if pil == '1':
                         Lowongan.pilih()
                         while True:
+                            Lowongan.lihat(selected_lowongan)
                             if job["id_admin"] is not None:
                                 pil = choices([
                                     "Kembali",
@@ -137,13 +158,17 @@ class Admin:
                                 if pil == '1':
                                     break
                                 elif pil == '2':
-                                    if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
-                                        cursor.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
-                                        db.commit()
-                                        print("Berhasil menghapus lowongan.")
-                                        break
+                                    if admin_data['jabatan'] != 'admin3':
+                                        if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                            cursor.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
+                                            db.commit()
+                                            print("Berhasil menghapus lowongan.")
+                                            break
+                                        else:
+                                            break
                                     else:
-                                        break
+                                        clear()
+                                        print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
                             else:
                                 pil = choices([
                                     "Setujui",
@@ -159,13 +184,17 @@ class Admin:
                                 elif pil == '2':
                                     break
                                 elif pil == '3':
-                                    if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
-                                        cursor.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
-                                        db.commit()
-                                        print("Berhasil menghapus lowongan.")
-                                        break
+                                    if admin_data['jabatan'] != 'admin3':
+                                        if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                            cursor.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
+                                            db.commit()
+                                            print("Berhasil menghapus lowongan.")
+                                            break
+                                        else:
+                                            break
                                     else:
-                                        break
+                                        clear()
+                                        print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
                     elif pil == '2':
                         print("\nUrut berdasarkan:")
                         key = choices([
@@ -217,6 +246,7 @@ class Admin:
                     if pil == '1':
                         User.pilih()
                         while True:
+                            User.profil(selected_user)
                             pil = choices([
                                 "Kembali",
                                 color("Hapus user", "red")
@@ -224,13 +254,17 @@ class Admin:
                             if pil == '1':
                                 break
                             elif pil == '2':
-                                if inputhandler(f"Apakah anda yakin ingin menghapus user ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
-                                    cursor.execute(f"delete from user where id_user = {user_data['id_user']}")
-                                    db.commit()
-                                    print("Berhasil menghapus user.")
-                                    break
+                                if admin_data['jabatan'] == 'admin1':
+                                    if inputhandler(f"Apakah anda yakin ingin menghapus user ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                        cursor.execute(f"delete from user where id_user = {user_data['id_user']}")
+                                        db.commit()
+                                        print("Berhasil menghapus user.")
+                                        break
+                                    else:
+                                        break
                                 else:
-                                    break
+                                    clear()
+                                    print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
                         # supaya gak ke-overwrite jadi akun user
                         user_data ={}
                     
@@ -269,6 +303,7 @@ class Admin:
                     if pil == '1':
                         Perusahaan.pilih()
                         while True:
+                            Perusahaan.profil(selected_perusahaan)
                             pil = choices([
                                 "Kembali",
                                 color("Hapus perusahaan", "red")
@@ -276,13 +311,17 @@ class Admin:
                             if pil == '1':
                                 break
                             elif pil == '2':
-                                if inputhandler(f"Apakah anda yakin ingin menghapus perusahaan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
-                                    cursor.execute(f"delete from perusahaan where id_perusahaan = {perusahaan_data['id_perusahaan']}")
-                                    db.commit()
-                                    print("Berhasil menghapus perusahaan.")
-                                    break
+                                if admin_data['jabatan'] == 'admin1':
+                                    if inputhandler(f"Apakah anda yakin ingin menghapus perusahaan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                        cursor.execute(f"delete from perusahaan where id_perusahaan = {perusahaan_data['id_perusahaan']}")
+                                        db.commit()
+                                        print("Berhasil menghapus perusahaan.")
+                                        break
+                                    else:
+                                        break
                                 else:
-                                    break
+                                    clear()
+                                    print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
                         # supaya gak ke-overwrite jadi akun perusahaan
                         perusahaan_data = {}
                         
@@ -327,6 +366,7 @@ class Admin:
                     if pil == '1':
                         Lamaran.pilih()
                         while True:
+                            Lamaran.lihat(selected_lamaran)
                             pil = choices([
                                 "Kembali",
                                 color("Hapus lamaran", "red")
@@ -334,13 +374,17 @@ class Admin:
                             if pil == '1':
                                 break
                             elif pil == '2':
-                                if inputhandler(f"Apakah anda yakin ingin menghapus lamaran ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
-                                    cursor.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
-                                    db.commit()
-                                    print("Berhasil menghapus lamaran.")
-                                    break
+                                if admin_data['jabatan'] != 'admin3':
+                                    if inputhandler(f"Apakah anda yakin ingin menghapus lamaran ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                        cursor.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
+                                        db.commit()
+                                        print("Berhasil menghapus lamaran.")
+                                        break
+                                    else:
+                                        break
                                 else:
-                                    break
+                                    clear()
+                                    print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
 
                     elif pil == '2':
                         print("\nUrut berdasarkan:")
@@ -460,19 +504,23 @@ class User:
         if keyword:
             users = jumpsearch(users, keyword)
 
-        # PrettyTable for perusahaan_data
-        table = PrettyTable(["#", "Nama", "Email", "ID"])
+        if len(users) > 0:
+            # PrettyTable for perusahaan_data
+            table = PrettyTable(["#", "Nama", "Email", "ID"])
 
-        for i, user in enumerate(users, start=1):
-            table.add_row([color(i, 'orange'), user['nama'], user['email'], user['id_user']])
-        
-        print(table)
+            for i, user in enumerate(users, start=1):
+                table.add_row([color(i, 'orange'), user['nama'], user['email'], user['id_user']])
+            
+            print(table)
+        else:
+            print("Tidak ada user untuk ditampilkan")
         
     def pilih():
+        global selected_user
         while True:
             idx = inputhandler("Pilih: ", "int")-1
             if idx < len(users):
-                User.profil(users[idx]['id_user'])
+                selected_user = users[idx]['id_user']
                 break
             else:
                 print("Nomor tidak valid")
@@ -511,6 +559,7 @@ class User:
                     ])
                     if pil == '1':
                         Lowongan.pilih()
+                        Lowongan.lihat(selected_lowongan)
                         while True:
                             pil = choices([
                                 "Lamaran cepat",
@@ -623,17 +672,21 @@ class Perusahaan:
         if keyword:
             companies = jumpsearch(companies, keyword)
 
-        for i, perusahaan in enumerate(companies, start=1):
-            print(f"[{color(i, 'orange')}] {color(perusahaan['nama_perusahaan'], 'cyan')}")
-            print(f"    {perusahaan['email_perusahaan']}")
-            print(f"    ID: {perusahaan['id_perusahaan']}")
-            print('-'*30)
+        if len(companies) > 0:
+            for i, perusahaan in enumerate(companies, start=1):
+                print(f"[{color(i, 'orange')}] {color(perusahaan['nama_perusahaan'], 'cyan')}")
+                print(f"    {perusahaan['email_perusahaan']}")
+                print(f"    ID: {perusahaan['id_perusahaan']}")
+                print('-'*30)
+        else:
+            print("Tidak ada perusahaan untuk ditampilkan")
     
     def pilih():
+        global selected_perusahaan
         while True:
             idx = inputhandler("Masukkan nomor urut perusahaan: ", "int")-1
             if idx < len(companies):
-                Perusahaan.profil(companies[idx]['id_perusahaan'])
+                selected_perusahaan = companies[idx]['id_perusahaan']
                 break
             else:
                 print("Nomor tidak valid")
@@ -661,6 +714,7 @@ class Perusahaan:
                     ])
                     if pil == '1':
                         Lamaran.pilih()
+                        Lamaran.lihat(selected_lamaran)
                         while True:
                             pil = choices([
                                 "Kembali",
@@ -729,6 +783,7 @@ class Perusahaan:
                     ])
                     if pil == '1':
                         Lowongan.pilih()
+                        Lowongan.lihat(selected_lowongan)
                         while True:
                             pil = choices([
                                 "Edit",
@@ -865,39 +920,42 @@ class Lowongan:
         if keyword:
             jobs = jumpsearch(jobs, keyword)
 
-        if user_data:
-            # Output for user
-            for i, job in enumerate(jobs, start=1):
-                print(f"[{color(i, 'orange')}] {color(job['posisi'], 'cyan')}")
-                print(f"    {job['nama_perusahaan']}")
-                print(f"    {job['klasifikasi']}")
-                print('-'*30)
-        elif perusahaan_data:
-            # PrettyTable for perusahaan_data
-            table = PrettyTable(["#", "ID", "Posisi", "Tipe", "Status"])
-            table.align["Posisi"] = "l" 
+        if len(jobs) > 0:
+            if user_data:
+                # Output for user
+                for i, job in enumerate(jobs, start=1):
+                    print(f"[{color(i, 'orange')}] {color(job['posisi'], 'cyan')}")
+                    print(f"    {job['nama_perusahaan']}")
+                    print(f"    {job['klasifikasi']}")
+                    print('-'*30)
+            elif perusahaan_data:
+                # PrettyTable for perusahaan_data
+                table = PrettyTable(["#", "ID", "Posisi", "Tipe", "Status"])
+                table.align["Posisi"] = "l" 
 
-            for i, job in enumerate(jobs, start=1):
-                if job['id_admin'] is not None:
-                    status = color("Disetujui", "green")
-                else:
-                    status = color("Pending", "yellow")
-                table.add_row([i, job['id_lowongan'], job['posisi'], job['tipe'], status])
+                for i, job in enumerate(jobs, start=1):
+                    if job['id_admin'] is not None:
+                        status = color("Disetujui", "green")
+                    else:
+                        status = color("Pending", "yellow")
+                    table.add_row([i, job['id_lowongan'], job['posisi'], job['tipe'], status])
+                
+                print(table)
+            else:
+                # PrettyTable for admin
+                table = PrettyTable(["#", "ID", "Posisi", "Perusahaan", "Status"])
+                table.align["Posisi"] = "l" 
+
+                for i, job in enumerate(jobs, start=1):
+                    if job['id_admin'] is not None:
+                        status = color("Disetujui", "green")
+                    else:
+                        status = color("Pending", "yellow")
+                    table.add_row([i, job['id_lowongan'], job['posisi'], job['nama_perusahaan'], status])
             
-            print(table)
+                print(table)
         else:
-            # PrettyTable for admin
-            table = PrettyTable(["#", "ID", "Posisi", "Perusahaan", "Status"])
-            table.align["Posisi"] = "l" 
-
-            for i, job in enumerate(jobs, start=1):
-                if job['id_admin'] is not None:
-                    status = color("Disetujui", "green")
-                else:
-                    status = color("Pending", "yellow")
-                table.add_row([i, job['id_lowongan'], job['posisi'], job['nama_perusahaan'], status])
-        
-            print(table)
+            print("Tidak ada lowongan untuk ditampilkan")
 
 
     def lihat(id_lowongan):
@@ -925,10 +983,11 @@ class Lowongan:
         print("Gaada")
 
     def pilih():
+        global selected_lowongan
         while True:
             idx = inputhandler("Pilih: ", "int")-1
             if idx < len(jobs):
-                Lowongan.lihat(jobs[idx]['id_lowongan'])
+                selected_lowongan = jobs[idx]['id_lowongan']
                 break
             else:
                 print("Nomor tidak valid")
@@ -965,28 +1024,32 @@ class Lamaran:
         if keyword:
             lamarans = jumpsearch(lamarans, keyword)
 
-        if perusahaan_data:
-            table = PrettyTable(["No", "ID Lamaran", "Pelamar", "Posisi"])
-            table.align["Posisi"] = "l" 
+        if len(lamarans) > 0:
+            if perusahaan_data:
+                table = PrettyTable(["No", "ID Lamaran", "Pelamar", "Posisi"])
+                table.align["Posisi"] = "l" 
 
-            for i, lamaran in enumerate(lamarans, start=1):
-                table.add_row([i, lamaran['id_lamaran'], lamaran['nama'], lamaran['posisi']])
+                for i, lamaran in enumerate(lamarans, start=1):
+                    table.add_row([i, lamaran['id_lamaran'], lamaran['nama'], lamaran['posisi']])
 
-            print(table)
+                print(table)
+            else:
+                table = PrettyTable(["No", "ID Lamaran", "Pelamar", "Perusahaan", "Posisi"])
+                table.align["Posisi"] = "l" 
+
+                for i, lamaran in enumerate(lamarans, start=1):
+                    table.add_row([i, lamaran['id_lamaran'], lamaran['nama'], lamaran['nama_perusahaan'], lamaran['posisi']])
+
+                print(table)
         else:
-            table = PrettyTable(["No", "ID Lamaran", "Pelamar", "Perusahaan", "Posisi"])
-            table.align["Posisi"] = "l" 
-
-            for i, lamaran in enumerate(lamarans, start=1):
-                table.add_row([i, lamaran['id_lamaran'], lamaran['nama'], lamaran['nama_perusahaan'], lamaran['posisi']])
-
-            print(table)
+            print("Tidak ada lamaran untuk ditampilkan")
     
     def pilih():
+        global selected_lamaran
         while True:
             idx = inputhandler("Pilih: ", "int")-1
             if idx < len(lamarans):
-                Lamaran.lihat(lamarans[idx]['id_lamaran'])
+                selected_lamaran = lamarans[idx]['id_lamaran']
                 break
             else:
                 print("Nomor tidak valid")
