@@ -84,7 +84,12 @@ class Admin:
 
     def menu():
         global admin_data
+        # untuk pas keluar dari profil perusahaan/user
+        global perusahaan_data
+        global user_data
         while True:
+            # print('perusahaan', perusahaan_data != {})
+            # print('user', user_data != {})
             pil = choices([
                 "Profil",
                 "Kelola Lowongan",
@@ -132,7 +137,13 @@ class Admin:
                                 if pil == '1':
                                     break
                                 elif pil == '2':
-                                    None
+                                    if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                        cursor.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
+                                        db.commit()
+                                        print("Berhasil menghapus lowongan.")
+                                        break
+                                    else:
+                                        break
                             else:
                                 pil = choices([
                                     "Setujui",
@@ -148,7 +159,13 @@ class Admin:
                                 elif pil == '2':
                                     break
                                 elif pil == '3':
-                                    None
+                                    if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                        cursor.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
+                                        db.commit()
+                                        print("Berhasil menghapus lowongan.")
+                                        break
+                                    else:
+                                        break
                     elif pil == '2':
                         print("\nUrut berdasarkan:")
                         key = choices([
@@ -207,8 +224,15 @@ class Admin:
                             if pil == '1':
                                 break
                             elif pil == '2':
-                                None
-                        break
+                                if inputhandler(f"Apakah anda yakin ingin menghapus user ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                    cursor.execute(f"delete from user where id_user = {user_data['id_user']}")
+                                    db.commit()
+                                    print("Berhasil menghapus user.")
+                                    break
+                                else:
+                                    break
+                        # supaya gak ke-overwrite jadi akun user
+                        user_data ={}
                     
                     elif pil == '2':
                         print("\nUrut berdasarkan:")
@@ -252,7 +276,15 @@ class Admin:
                             if pil == '1':
                                 break
                             elif pil == '2':
-                                None
+                                if inputhandler(f"Apakah anda yakin ingin menghapus perusahaan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                    cursor.execute(f"delete from perusahaan where id_perusahaan = {perusahaan_data['id_perusahaan']}")
+                                    db.commit()
+                                    print("Berhasil menghapus perusahaan.")
+                                    break
+                                else:
+                                    break
+                        # supaya gak ke-overwrite jadi akun perusahaan
+                        perusahaan_data = {}
                         
                     elif pil == '2':
                         print("\nUrut berdasarkan:")
@@ -302,7 +334,13 @@ class Admin:
                             if pil == '1':
                                 break
                             elif pil == '2':
-                                None
+                                if inputhandler(f"Apakah anda yakin ingin menghapus lamaran ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                    cursor.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
+                                    db.commit()
+                                    print("Berhasil menghapus lamaran.")
+                                    break
+                                else:
+                                    break
 
                     elif pil == '2':
                         print("\nUrut berdasarkan:")
@@ -631,7 +669,13 @@ class Perusahaan:
                             if pil == '1':
                                 break
                             elif pil == '2':
-                                None
+                                if inputhandler(f"Apakah anda yakin ingin menghapus lamaran ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                    cursor.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
+                                    db.commit()
+                                    print("Berhasil menghapus lamaran.")
+                                    break
+                                else:
+                                    break
                     elif pil == '2':
                         print("\nUrut berdasarkan:")
                         key = choices([
@@ -689,14 +733,20 @@ class Perusahaan:
                             pil = choices([
                                 "Edit",
                                 "Kembali",
-                                color("Hapus user", "red")
+                                color("Hapus lowongan", "red")
                             ])
                             if pil == '1':
                                 None
                             if pil == '2':
                                 break
                             elif pil == '3':
-                                None
+                                if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                    cursor.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
+                                    db.commit()
+                                    print("Berhasil menghapus lowongan.")
+                                    break
+                                else:
+                                    break
                             
                     elif pil == '2':
                         print("\nUrut berdasarkan:")
@@ -942,6 +992,8 @@ class Lamaran:
                 print("Nomor tidak valid")
 
     def lihat(id_lamaran=None):
+        global lamarans
+        global lamaran_data
         cursor.execute(f'''
             SELECT lamaran.*, user.*, perusahaan.*, lowongan.posisi 
             FROM lamaran 
@@ -992,6 +1044,7 @@ class Lamaran:
         print("Lamaran berhasil disubmit. Silahkan cek email anda secara berkala")
 
 # Global functions
+# bersihin terminal
 def clear():
     os.system("cls")
 
@@ -1015,7 +1068,7 @@ def jumpsearch(entries, keyword):
     items = []
     for idx, entry_dict in enumerate(entries):
         for key, entry in entry_dict.items():
-            for item in str(entry).lower().split():  # Convert to lowercase
+            for item in str(entry).lower().split():  # lower() = ubah ke lowercase. split() =  misah string jadi array
                 items.append((idx, item))
 
     # urutkan items
@@ -1024,9 +1077,10 @@ def jumpsearch(entries, keyword):
     result = []
     step = int(math.sqrt(len(items)))  # size untuk step, pakai akar dari panjang items
     
-    targets = keyword.strip().split()
+    # pecah keyword per-kata
+    # strip() = hapus spasi di awal dan akhir
+    targets = keyword.lower().strip().split()
     for target in targets:
-        target = target.lower()
         for i in range(len(items)):
             current_index = i
             if current_index < len(items):
@@ -1071,6 +1125,7 @@ def inputhandler(prompt, inputtype="str", max=None):
             elif inputtype == "pw":
                 userinput = pwinput(prompt)
             
+            # jika parameter max dipakai (gak kosong) dan panjang input lebih dari max
             if max is not None and len(str(userinput)) > max:
                 print(f"Input terlalu panjang. Maksimum panjang adalah {max} karakter.\n")
                 continue
@@ -1138,20 +1193,6 @@ def banner(text):
     # tinggal dikalikan pakai jumlah kanan kiri
     return f"{'=' * left_padding} {text} {'=' * right_padding}"
 
-# connect
-db = mysql.connector.connect(
-    user = 'root',
-    password = '',
-    host = 'localhost',
-    database = 'lowongankerja'
-)
-cursor = db.cursor()
-
-# predefine untuk pas login biar gak error
-user_data = {}
-admin_data = {}
-perusahaan_data = {}
-
 # Login
 def login():
     while True:
@@ -1170,6 +1211,21 @@ def login():
             Perusahaan.login()
         
 #Regist
+
+
+# connect
+db = mysql.connector.connect(
+    user = 'root',
+    password = '',
+    host = 'localhost',
+    database = 'lowongankerja'
+)
+cursor = db.cursor()
+
+# predefine untuk pas login biar gak error
+user_data = {}
+admin_data = {}
+perusahaan_data = {}
 
 #main
 os.system("") # entah kenapa kalau gak pakai ini warna teksnya gak muncul di beberapa device
