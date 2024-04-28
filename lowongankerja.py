@@ -1048,14 +1048,26 @@ class Lamaran:
 def clear():
     os.system("cls")
 
-def quicksort(arr, key, order='desc'):
+def quicksort(arr, key=None, order='desc'):
     if len(arr) <= 1:
         return arr
     else:
-        pivot = arr[len(arr) // 2][key]
-        less = [x for x in arr if x[key] < pivot]
-        equal = [x for x in arr if x[key] == pivot]
-        greater = [x for x in arr if x[key] > pivot]
+        if key:
+            # akses pivot value pakai key function kalau memang dipakai
+            if callable(key):
+                pivot_value = key(arr[len(arr) // 2])  # pakai key function ke tuple
+                less = [x for x in arr if key(x) < pivot_value]
+                equal = [x for x in arr if key(x) == pivot_value]
+                greater = [x for x in arr if key(x) > pivot_value]
+            else:
+                pivot_value = arr[len(arr) // 2][key]  # ekstrak pakai key biasa kalau key-nya string
+                less = [x for x in arr if x[key] < pivot_value]
+                equal = [x for x in arr if x[key] == pivot_value]
+                greater = [x for x in arr if x[key] > pivot_value]
+        else:
+            pivot = arr[len(arr) // 2]
+            less = [x for x in arr if x < pivot]
+            equal = [x for x in arr if x == pivot]
 
         if order == 'desc':
             return quicksort(greater, key, order) + equal + quicksort(less, key, order)
@@ -1072,7 +1084,7 @@ def jumpsearch(entries, keyword):
                 items.append((idx, item))
 
     # urutkan items
-    items.sort(key=lambda x: x[1])
+    quicksort(items, key=lambda x: x[1])
 
     result = []
     step = int(math.sqrt(len(items)))  # size untuk step, pakai akar dari panjang items
