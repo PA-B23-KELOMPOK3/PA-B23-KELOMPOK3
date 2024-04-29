@@ -79,28 +79,35 @@ class Admin:
                 print(color("Username tidak terdaftar\n", "red"))
             
     def profil():
+        global admin_data
+        cursor.execute(f"SELECT * FROM admin WHERE id_admin = '{admin_data['id_admin']}'")
+        row = cursor.fetchone()
+        if row:
+            columns = [column[0] for column in cursor.description]
+            admin_data = dict(zip(columns, row))
+
         print(f"\n{admin_data['username']}")
         print(f"ID: {admin_data['id_admin']}")
         print(f"Jabatan: {admin_data['jabatan']}")
         print("Hak akses: ")
         if admin_data['jabatan'] == 'admin1':
-            print(color("Hapus user", "green"))
-            print(color("Hapus perusahaan", "green"))
-            print(color("Hapus lowongan", "green"))
-            print(color("Hapus lamaran", "green"))
-            print(color("Setujui request lowongan", "green"))
+            print(color("  Hapus user", "green"))
+            print(color("  Hapus perusahaan", "green"))
+            print(color("  Hapus lowongan", "green"))
+            print(color("  Hapus lamaran", "green"))
+            print(color("  Setujui request lowongan", "green"))
         elif admin_data['jabatan'] == 'admin2':
-            print(color("Hapus user", "red"))
-            print(color("Hapus perusahaan", "red"))
-            print(color("Hapus lowongan", "green"))
-            print(color("Hapus lamaran", "green"))
-            print(color("Setujui request lowongan", "green"))
+            print(color("  Hapus user", "red"))
+            print(color("  Hapus perusahaan", "red"))
+            print(color("  Hapus lowongan", "green"))
+            print(color("  Hapus lamaran", "green"))
+            print(color("  Setujui request lowongan", "green"))
         elif admin_data['jabatan'] == 'admin3':
-            print(color("Hapus user", "red"))
-            print(color("Hapus perusahaan", "red"))
-            print(color("Hapus lowongan", "red"))
-            print(color("Hapus lamaran", "red"))
-            print(color("Setujui request lowongan", "green"))
+            print(color("  Hapus user", "red"))
+            print(color("  Hapus perusahaan", "red"))
+            print(color("  Hapus lowongan", "red"))
+            print(color("  Hapus lamaran", "red"))
+            print(color("  Setujui request lowongan", "green"))
 
     def menu():
         global admin_data
@@ -108,8 +115,6 @@ class Admin:
         global perusahaan_data
         global user_data
         while True:
-            # print('perusahaan', perusahaan_data != {})
-            # print('user', user_data != {})
             pil = choices([
                 "Profil",
                 "Kelola Lowongan",
@@ -126,7 +131,12 @@ class Admin:
                         "Keluar"
                     ])
                     if pil == '1':
-                        None
+                        fields = {
+                            "Username": ("username", 50),
+                            "Password": ("password", 8)
+                        }
+                        edit('admin', admin_data, fields)
+
                     elif pil == '2':
                         break
                     else:
@@ -526,6 +536,7 @@ class User:
                 print("Nomor tidak valid")
 
     def menu():
+        global user_data
         while True:
             pil = choices([
                 "Profil",
@@ -540,7 +551,19 @@ class User:
                         "Keluar"
                     ])
                     if pil == '1':
-                        None
+                        fields = {
+                            "Nama": ("nama", 25),
+                            "Jenis kelamin": ("jenis_kelamin", 10),
+                            "Alamat": ("alamat", 30),
+                            "Email": ("email", 25),
+                            "Password": ("password", 8),
+                            "Nomor telepon": ("no_telp", 15),
+                            "Pendidikan": ("pendidikan", 30),
+                            "Pengalaman": ("pengalaman", 500),
+                            "Keahlian": ("keahlian", 80)
+                        }
+                        edit('user', user_data, fields)
+
                     elif pil == '2':
                         break
                     else:
@@ -602,7 +625,6 @@ class User:
                     elif pil == '4':
                         break
             elif pil == '3':
-                global user_data
                 user_data = {}
                 break
 
@@ -763,7 +785,13 @@ class Perusahaan:
                         "Kembali"
                     ])
                     if pil == '1':
-                        None
+                        fields = {
+                            "Nama perusahaan": ("nama_perusahaan", 50),
+                            "Email perusahaan": ("email_perusahaan", 50),
+                            "Password": ("password", 8),
+                            "Alamat perusahaan": ("alamat_perusahaan", 255),
+                        }
+                        edit('perusahaan', perusahaan_data, fields)
                     elif pil == '2':
                         break
                     else:
@@ -783,15 +811,23 @@ class Perusahaan:
                     ])
                     if pil == '1':
                         Lowongan.pilih()
-                        Lowongan.lihat(selected_lowongan)
                         while True:
+                            Lowongan.lihat(selected_lowongan)
                             pil = choices([
                                 "Edit",
                                 "Kembali",
                                 color("Hapus lowongan", "red")
                             ])
                             if pil == '1':
-                                None
+                                fields = {
+                                    "Posisi pekerjaan": ("posisi", 50),
+                                    "Klasifikasi pekerjaan": ("klasifikasi", 100),
+                                    "Tipe pekerjaan": ("tipe", 15, 'tipe_choices'),
+                                    "Deskripsi": ("deskripsi", 500),
+                                    "Ketentuan": ("ketentuan", 500),
+                                    "gaji": ("gaji", 11, 'int')
+                                }
+                                edit('lowongan', job, fields)
                             if pil == '2':
                                 break
                             elif pil == '3':
@@ -961,26 +997,30 @@ class Lowongan:
     def lihat(id_lowongan):
         global jobs
         global job
-        for job in jobs:
-            if job['id_lowongan'] == id_lowongan:
-                print(f"\n{color(job['posisi'], 'cyan')}")
-                if not perusahaan_data:
-                    print(f"{job['nama_perusahaan']}")
-                    print(f"Alamat: {job['alamat_perusahaan']}")
-                print(f"Klasifikasi: {job['klasifikasi']}")
-                print(f"Tipe: {job['tipe']}")
-                print(f"Rata-rata gaji: {job['gaji']}")
-                print(f"\nDeskripsi:\n{job['deskripsi']}")
-                print(f"\nKetentuan:\n{job['ketentuan']}")
-                if admin_data:
-                    print(f"\nID lowongan: {job['id_lowongan']}")
-                    print(f"ID perusahaan: {job['id_lowongan']}")
-                    if job['id_admin'] is not None:
-                        print(f"Disetujui oleh: {job['username']} ({job['id_admin']})")
-                    else:
-                        print(color("Menunggu persetujuan", "yellow"))
-                return
-        print("Gaada")
+
+        cursor.execute(f"SELECT * FROM lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan LEFT JOIN admin on lowongan.id_admin = admin.id_admin WHERE id_lowongan = '{id_lowongan}'")
+        row = cursor.fetchone()
+        if row:
+            columns = [column[0] for column in cursor.description]
+            job = dict(zip(columns, row))
+
+        print(f"\n{color(job['posisi'], 'cyan')}")
+        if not perusahaan_data:
+            print(f"{job['nama_perusahaan']}")
+            print(f"Alamat: {job['alamat_perusahaan']}")
+        print(f"Klasifikasi: {job['klasifikasi']}")
+        print(f"Tipe: {job['tipe']}")
+        print(f"Rata-rata gaji: {job['gaji']}")
+        print(f"\nDeskripsi:\n{job['deskripsi']}")
+        print(f"\nKetentuan:\n{job['ketentuan']}")
+        if admin_data:
+            print(f"\nID lowongan: {job['id_lowongan']}")
+            print(f"ID perusahaan: {job['id_lowongan']}")
+            if job['id_admin'] is not None:
+                print(f"Disetujui oleh: {job['username']} ({job['id_admin']})")
+            else:
+                print(color("Menunggu persetujuan", "yellow"))
+        return
 
     def pilih():
         global selected_lowongan
@@ -992,7 +1032,6 @@ class Lowongan:
             else:
                 print("Nomor tidak valid")
     
-
 class Lamaran:
     def list(id_perusahaan=None, sort_key='id_lamaran', sort_order='desc', keyword=None):
         global lamarans
@@ -1111,6 +1150,39 @@ class Lamaran:
 def clear():
     os.system("cls")
 
+def edit(table, old_data, fields):
+    print(color("(Kosongkan untuk menggunakan data lama)", 'blue'))
+    updates = [] 
+    for prompt, (field, max, *inputtype) in fields.items():
+        print(f"\n{color(f'{prompt} lama', 'purple')}: {old_data[field]}")
+        if inputtype:
+            inputtype = inputtype[0]
+        else:
+            inputtype = 'str'
+
+        if inputtype == 'tipe_choices':
+            new_data = choices([
+                "Full time",
+                "Paruh waktu",
+                "Kontrak"
+            ], 'opt')
+        elif inputtype == 'kelamin_choices':
+            new_data = choices([
+                "Laki-laki",
+                "Perempuan"
+            ], 'opt')
+        else:
+            new_data = inputhandler(f"{color(f'{prompt} baru', 'yellow')}: ", inputtype, max=max)
+
+        if new_data:
+            updates.append(f"{field} = '{new_data}'")
+
+    query = f"update {table} set "
+    query += ", ".join(updates)
+    query += f" where id_{table} = {old_data[f'id_{table}']}"
+    cursor.execute(query)
+    db.commit()
+
 def quicksort(arr, key=None, order='desc'):
     if len(arr) <= 1:
         return arr
@@ -1189,16 +1261,16 @@ def inputhandler(prompt, inputtype="str", max=None):
     while True:
         try:
             if inputtype == "str":
-                userinput = input(prompt)
+                userinput = input(prompt).strip()
             elif inputtype == "int":
                 userinput = int(input(prompt))
             elif inputtype == "digit":
-                userinput = input(prompt)
+                userinput = input(prompt).strip()
                 if not userinput.isdigit():
                     print("Input hanya bisa berupa angka\n")
                     continue
             elif inputtype == "pw":
-                userinput = pwinput(prompt)
+                userinput = pwinput(prompt).strip()
             
             # jika parameter max dipakai (gak kosong) dan panjang input lebih dari max
             if max is not None and len(str(userinput)) > max:
@@ -1275,7 +1347,8 @@ def login():
         pil = choices([
             "Login admin",
             "Login user",
-            "Login menggunakan akun perusahaan"
+            "Login menggunakan akun perusahaan",
+            "Kembali"
         ])
 
         if pil == '1':
@@ -1284,6 +1357,8 @@ def login():
             User.login()
         elif pil == '3':
             Perusahaan.login()
+        elif pil == '4':
+            break
         
 #Regist
 
