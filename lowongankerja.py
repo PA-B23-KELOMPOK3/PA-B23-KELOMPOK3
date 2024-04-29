@@ -56,16 +56,61 @@ class LinkedList:
     def __len__(self):
         return self.length
 
+class MySQLHandler:
+    def __init__(self, user, password, host, database):
+        self.user = user
+        self.password = password
+        self.host = host
+        self.database = database
+        self.connect()
+
+    def connect(self):
+        self.db = mysql.connector.connect(
+            user=self.user,
+            password=self.password,
+            host=self.host,
+            database=self.database
+        )
+        self.cursor = self.db.cursor()
+
+    def execute(self, query, params=None):
+        try:
+            self.cursor.execute(query, params)
+        except:
+            print("Terjadi kesalahan saat menjalankan query")
+
+    def fetchall(self):
+        try:
+            return self.cursor.fetchall()
+        except:
+            None
+    
+    def fetchone(self):
+        try:
+            return self.cursor.fetchone()
+        except:
+            None
+    
+    def description(self):
+        return self.cursor.description
+    
+    def commit(self):
+        self.db.commit()
+
+    def close(self):
+        self.cursor.close()
+        self.db.close()
+
 class Admin:
     def login():
         global admin_data
         while True:
             username = inputhandler("username: ")
-            cursor.execute(f"select * from admin where username = '{username}'")
-            row = cursor.fetchone()
-            columns = [column[0] for column in cursor.description]
+            sql.execute(f"select * from admin where username = '{username}'")
+            row = sql.fetchone()
 
             if row:
+                columns = [column[0] for column in sql.description()]
                 admin_data = dict(zip(columns, row))
                 while True:
                     password = inputhandler("password: ", "pw")
@@ -80,10 +125,10 @@ class Admin:
             
     def profil():
         global admin_data
-        cursor.execute(f"SELECT * FROM admin WHERE id_admin = '{admin_data['id_admin']}'")
-        row = cursor.fetchone()
+        sql.execute(f"SELECT * FROM admin WHERE id_admin = '{admin_data['id_admin']}'")
+        row = sql.fetchone()
         if row:
-            columns = [column[0] for column in cursor.description]
+            columns = [column[0] for column in sql.description()]
             admin_data = dict(zip(columns, row))
 
         print(f"\n{admin_data['username']}")
@@ -170,8 +215,8 @@ class Admin:
                                 elif pil == '2':
                                     if admin_data['jabatan'] != 'admin3':
                                         if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
-                                            cursor.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
-                                            db.commit()
+                                            sql.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
+                                            sql.commit()
                                             print("Berhasil menghapus lowongan.")
                                             break
                                         else:
@@ -186,8 +231,8 @@ class Admin:
                                     color("Hapus lowongan", "red")
                                 ])
                                 if pil == '1':
-                                    cursor.execute(f"UPDATE lowongan SET id_admin = {admin_data['id_admin']} WHERE id_lowongan = {job['id_lowongan']}")
-                                    db.commit()
+                                    sql.execute(f"UPDATE lowongan SET id_admin = {admin_data['id_admin']} WHERE id_lowongan = {job['id_lowongan']}")
+                                    sql.commit()
                                     clear()
                                     print(color("Lowongan berhasil disetujui", "green"))
                                     break
@@ -196,8 +241,8 @@ class Admin:
                                 elif pil == '3':
                                     if admin_data['jabatan'] != 'admin3':
                                         if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
-                                            cursor.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
-                                            db.commit()
+                                            sql.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
+                                            sql.commit()
                                             print("Berhasil menghapus lowongan.")
                                             break
                                         else:
@@ -266,8 +311,8 @@ class Admin:
                             elif pil == '2':
                                 if admin_data['jabatan'] == 'admin1':
                                     if inputhandler(f"Apakah anda yakin ingin menghapus user ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
-                                        cursor.execute(f"delete from user where id_user = {user_data['id_user']}")
-                                        db.commit()
+                                        sql.execute(f"delete from user where id_user = {user_data['id_user']}")
+                                        sql.commit()
                                         print("Berhasil menghapus user.")
                                         break
                                     else:
@@ -323,8 +368,8 @@ class Admin:
                             elif pil == '2':
                                 if admin_data['jabatan'] == 'admin1':
                                     if inputhandler(f"Apakah anda yakin ingin menghapus perusahaan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
-                                        cursor.execute(f"delete from perusahaan where id_perusahaan = {perusahaan_data['id_perusahaan']}")
-                                        db.commit()
+                                        sql.execute(f"delete from perusahaan where id_perusahaan = {perusahaan_data['id_perusahaan']}")
+                                        sql.commit()
                                         print("Berhasil menghapus perusahaan.")
                                         break
                                     else:
@@ -386,8 +431,8 @@ class Admin:
                             elif pil == '2':
                                 if admin_data['jabatan'] != 'admin3':
                                     if inputhandler(f"Apakah anda yakin ingin menghapus lamaran ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
-                                        cursor.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
-                                        db.commit()
+                                        sql.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
+                                        sql.commit()
                                         print("Berhasil menghapus lamaran.")
                                         break
                                     else:
@@ -446,9 +491,9 @@ class User:
         print("\nLogin user")
         while True:
             email = inputhandler("email: ")
-            cursor.execute(f"SELECT * FROM user WHERE email = '{email}'")
-            row = cursor.fetchone()
-            columns = [column[0] for column in cursor.description]
+            sql.execute(f"SELECT * FROM user WHERE email = '{email}'")
+            row = sql.fetchone()
+            columns = [column[0] for column in sql.description()]
 
             if row:
                 user_data = dict(zip(columns, row))
@@ -475,13 +520,13 @@ class User:
                 return
             user_id = user_data.get('id_user')
 
-        cursor.execute(f"SELECT * FROM user WHERE id_user = {user_id}")
-        row = cursor.fetchone()
+        sql.execute(f"SELECT * FROM user WHERE id_user = {user_id}")
+        row = sql.fetchone()
         if not row:
             print("User dengan ID tersebut tidak ditemukan")
             return
 
-        columns = [column[0] for column in cursor.description]
+        columns = [column[0] for column in sql.description()]
         user_data = dict(zip(columns, row))
 
         print(f"\n{user_data['nama']}")
@@ -498,9 +543,9 @@ class User:
     def list(sort_key="id_user", sort_order='asc', keyword=None):
         global users
         global user
-        cursor.execute("select u.nama, u.email, u.id_user from user as u")
-        rows = cursor.fetchall()
-        columns = [column[0] for column in cursor.description]
+        sql.execute("select u.nama, u.email, u.id_user from user as u")
+        rows = sql.fetchall()
+        columns = [column[0] for column in sql.description()]
         users = LinkedList()
 
         # ubah data tiap user jadi dictionary
@@ -634,9 +679,9 @@ class Perusahaan:
         print("\nLogin menggunakan akun perusahaan")
         while True:
             email = inputhandler("email: ")
-            cursor.execute(f"select * from perusahaan where email_perusahaan = '{email}'")
-            row = cursor.fetchone()
-            columns = [column[0] for column in cursor.description]
+            sql.execute(f"select * from perusahaan where email_perusahaan = '{email}'")
+            row = sql.fetchone()
+            columns = [column[0] for column in sql.description()]
 
             if row:
                 perusahaan_data = dict(zip(columns, row))
@@ -662,9 +707,9 @@ class Perusahaan:
             else:
                 perusahaan_id = perusahaan_data['id_perusahaan']
 
-        cursor.execute(f"SELECT * FROM perusahaan WHERE id_perusahaan = {perusahaan_id}")
-        row = cursor.fetchone()
-        columns = [column[0] for column in cursor.description]
+        sql.execute(f"SELECT * FROM perusahaan WHERE id_perusahaan = {perusahaan_id}")
+        row = sql.fetchone()
+        columns = [column[0] for column in sql.description()]
         perusahaan_data = dict(zip(columns, row))
 
         print(f"\n{color(perusahaan_data['nama_perusahaan'], 'cyan')}")
@@ -676,12 +721,12 @@ class Perusahaan:
         global companies
         global perusahaan
         
-        cursor.execute('''
+        sql.execute('''
             select p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan
             from perusahaan as p
         ''')
-        rows = cursor.fetchall()
-        columns = [column[0] for column in cursor.description]
+        rows = sql.fetchall()
+        columns = [column[0] for column in sql.description()]
         companies = LinkedList()
 
         # ubah datanya jadi dictionary
@@ -746,8 +791,8 @@ class Perusahaan:
                                 break
                             elif pil == '2':
                                 if inputhandler(f"Apakah anda yakin ingin menghapus lamaran ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
-                                    cursor.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
-                                    db.commit()
+                                    sql.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
+                                    sql.commit()
                                     print("Berhasil menghapus lamaran.")
                                     break
                                 else:
@@ -832,8 +877,8 @@ class Perusahaan:
                                 break
                             elif pil == '3':
                                 if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
-                                    cursor.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
-                                    db.commit()
+                                    sql.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
+                                    sql.commit()
                                     print("Berhasil menghapus lowongan.")
                                     break
                                 else:
@@ -876,8 +921,8 @@ class Perusahaan:
                         ketentuan = inputhandler("ketentuan pekerjaan: ", max=500)
                         gaji = inputhandler("Gaji pekerjaan: ", "int", 11)
 
-                        cursor.execute(f"insert into lowongan values (NULL, '{perusahaan_data['id_perusahaan']}', NULL, '{klasifikasi}', '{tipe}', '{deskripsi}', '{posisi}', '{ketentuan}', '{gaji}')")
-                        db.commit()
+                        sql.execute(f"insert into lowongan values (NULL, '{perusahaan_data['id_perusahaan']}', NULL, '{klasifikasi}', '{tipe}', '{deskripsi}', '{posisi}', '{ketentuan}', '{gaji}')")
+                        sql.commit()
                         print("berhasil keknya")
                     elif pil == '5':
                         break
@@ -894,7 +939,7 @@ class Lowongan:
         global job
         # admin
         if id_perusahaan is not None:
-            cursor.execute(
+            sql.execute(
                 f'''
                 SELECT lowongan.*, p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan, a.id_admin, a.username
                 FROM lowongan 
@@ -906,7 +951,7 @@ class Lowongan:
         # admin/user
         elif not perusahaan_data:
             if status == "all":
-                cursor.execute(
+                sql.execute(
                     '''
                     select lowongan.*, p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan, a.id_admin, a.username
                     from lowongan
@@ -915,7 +960,7 @@ class Lowongan:
                     '''
                 )
             elif status == "disetujui":
-                cursor.execute(
+                sql.execute(
                     '''
                     select lowongan.*, p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan, a.id_admin, a.username
                     from lowongan 
@@ -924,7 +969,7 @@ class Lowongan:
                     '''
                 )
             elif status == "pending":
-                cursor.execute(
+                sql.execute(
                     '''
                     select lowongan.*, p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan
                     from lowongan 
@@ -934,7 +979,7 @@ class Lowongan:
                 )
         # perusahaan
         else:
-            cursor.execute(
+            sql.execute(
                 f'''
                 select lowongan.*, a.id_admin, a.username
                 from lowongan 
@@ -943,8 +988,8 @@ class Lowongan:
                 '''
             )
 
-        rows = cursor.fetchall()
-        columns = [column[0] for column in cursor.description]
+        rows = sql.fetchall()
+        columns = [column[0] for column in sql.description()]
         jobs = LinkedList()
 
         # Populate jobs list regardless of conditions
@@ -998,10 +1043,10 @@ class Lowongan:
         global jobs
         global job
 
-        cursor.execute(f"SELECT * FROM lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan LEFT JOIN admin on lowongan.id_admin = admin.id_admin WHERE id_lowongan = '{id_lowongan}'")
-        row = cursor.fetchone()
+        sql.execute(f"SELECT * FROM lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan LEFT JOIN admin on lowongan.id_admin = admin.id_admin WHERE id_lowongan = '{id_lowongan}'")
+        row = sql.fetchone()
         if row:
-            columns = [column[0] for column in cursor.description]
+            columns = [column[0] for column in sql.description()]
             job = dict(zip(columns, row))
 
         print(f"\n{color(job['posisi'], 'cyan')}")
@@ -1048,9 +1093,9 @@ class Lamaran:
         if id_perusahaan:
             query += f"WHERE perusahaan.id_perusahaan = {id_perusahaan}"
 
-        cursor.execute(query)
-        rows = cursor.fetchall()
-        columns = [column[0] for column in cursor.description]
+        sql.execute(query)
+        rows = sql.fetchall()
+        columns = [column[0] for column in sql.description()]
         lamarans = LinkedList()
 
         # ubah datanya jadi dictionary
@@ -1096,7 +1141,7 @@ class Lamaran:
     def lihat(id_lamaran=None):
         global lamarans
         global lamaran_data
-        cursor.execute(f'''
+        sql.execute(f'''
             SELECT lamaran.*, user.*, perusahaan.*, lowongan.posisi 
             FROM lamaran 
             JOIN user ON lamaran.id_user = user.id_user 
@@ -1104,8 +1149,8 @@ class Lamaran:
             JOIN perusahaan ON lamaran.id_perusahaan = perusahaan.id_perusahaan 
             WHERE id_lamaran = {id_lamaran}
         ''')
-        row = cursor.fetchone()
-        columns = [column[0] for column in cursor.description]
+        row = sql.fetchone()
+        columns = [column[0] for column in sql.description()]
         lamaran_data = dict(zip(columns, row))
         
         if admin_data:
@@ -1140,8 +1185,8 @@ class Lamaran:
         pengalaman_relevan = inputhandler("\nPegalaman relevan:\n", max=500)
         deskripsi = inputhandler("\nDeskripsi:\n", max=1500)
 
-        cursor.execute(f"insert into lamaran values (NULL, {job['id_perusahaan']}, {user_data['id_user']}, {job['id_lowongan']}, '{sumber}', '{pengalaman_relevan}', '{deskripsi}')")
-        db.commit()
+        sql.execute(f"insert into lamaran values (NULL, {job['id_perusahaan']}, {user_data['id_user']}, {job['id_lowongan']}, '{sumber}', '{pengalaman_relevan}', '{deskripsi}')")
+        sql.commit()
         
         print("Lamaran berhasil disubmit. Silahkan cek email anda secara berkala")
 
@@ -1172,7 +1217,7 @@ def edit(table, old_data, fields):
                 "Perempuan"
             ], 'opt')
         else:
-            new_data = inputhandler(f"{color(f'{prompt} baru', 'yellow')}: ", inputtype, max=max)
+            new_data = inputhandler(f"{color(f'{prompt} baru', 'yellow')}: ", inputtype, max=max, min=2)
 
         if new_data:
             updates.append(f"{field} = '{new_data}'")
@@ -1180,8 +1225,8 @@ def edit(table, old_data, fields):
     query = f"update {table} set "
     query += ", ".join(updates)
     query += f" where id_{table} = {old_data[f'id_{table}']}"
-    cursor.execute(query)
-    db.commit()
+    sql.execute(query)
+    sql.commit()
 
 def quicksort(arr, key=None, order='desc'):
     if len(arr) <= 1:
@@ -1256,8 +1301,13 @@ def jumpsearch(entries, keyword):
     # hilangin duplikat, return semua entry yang cocok
     return [entries[i] for i in set(result)]
 
+def execute_query():
+    try:
+        None
+    except:
+        None
 # handle inputs
-def inputhandler(prompt, inputtype="str", max=None):
+def inputhandler(prompt, inputtype="str", max=None, min=None):
     while True:
         try:
             if inputtype == "str":
@@ -1276,15 +1326,21 @@ def inputhandler(prompt, inputtype="str", max=None):
             if max is not None and len(str(userinput)) > max:
                 print(f"Input terlalu panjang. Maksimum panjang adalah {max} karakter.\n")
                 continue
+            
+            if min is not None and len(str(userinput)) < min:
+                print(f"Input terlalu pendek. Minimum panjang adalah {min} karakter.\n")
+                continue
                 
             return userinput
         except KeyboardInterrupt:
             print("Terdeteksi interupsi\n")
         except ValueError:
             print("Input hanya bisa berupa integer\n")
+        except mysql.connector.errors.ProgrammingError:
+            print("wahyu kontol\n")
         except Exception as error:
             print(f"Apa lah dia {error}\n")
-
+        
 
 # warnain teks
 def color(text, color_name):
@@ -1363,14 +1419,7 @@ def login():
 #Regist
 
 
-# connect
-db = mysql.connector.connect(
-    user = 'root',
-    password = '',
-    host = 'localhost',
-    database = 'lowongankerja'
-)
-cursor = db.cursor()
+sql = MySQLHandler('root', '', 'localhost', 'lowongankerja')
 
 # predefine untuk pas login biar gak error
 user_data = {}
