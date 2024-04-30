@@ -116,7 +116,7 @@ _Database program ini dirancang menggunakan struktur MySQL dengan 5 entitas utam
 ![Flowchart Capstone-Halaman-1 (3) (2)](./res/login5.jpg)
 
 - *Proses Registrasi akun user atau registrasi akun perusahaan*
-![register](./res/new/FlowchartCapstone(fix)-Login1.jpg)
+![register](./res/Flowchart_Capstone_(fix)-Login_1.jpg)
 Jika pengguna belum memiliki akun, program menyediakan opsi registrasi. pengguna menginputkan data-data yang dibutuhkan oleh program sebelum masuk ke dalam menu utama.
 
 - *Proses keluar dari program*
