@@ -125,6 +125,7 @@ Jika pengguna belum memiliki akun, program menyediakan opsi registrasi. pengguna
 ### Halaman Menu Admin
 - *Terdapat pilihan melihat profil, mengelola lowongan, user, perusahaan, atau lamaran*
 ![Flowchart Capstone-Halaman-2 1](./res/(fix)-Admin1.jpg)
+
 Di dalam menu admin, admin mempunyai fitur untuk mengedit dan menghapus pada lowongan,user,perusahaan, atau lamaran. 
 
 - *Untuk melihat/menampilkan profil*
@@ -163,11 +164,13 @@ Pada fitur ini user bisa mengedit profil yang dimiliki user itu sendiri.
 Pada fitur ini, user dapat memilih lowongan yang dinginkan dan dapat mengisi lamaran cepat yang berisi format lamaran yg telah disediakan. Selain itu, user juga dapat melakukan sorting berdasarkan pilihan yg diinginkan dan dapat melakukan searching berdasarkan keyword yg dimasukkan.
 
 - *Proses user memilih kembai ke menu utama*
+  
 ![Flowchart Capstone-Halaman-3(1) 2](./res/(fix)-User4.jpg)
 
 ### Halaman Menu Perusahaan
 - *Proses memilih melihat daftar lamaran, melihat profil perusahaan, atau mengelola lowongan*
 ![Flowchart Capstone-Halaman-4 1](./res/(fix)-Perusahaan1.jpg)
+
 Pada halaman menu perusahaan memiliki fitur mengedit menghapus dan melihat data tertentu.
 
 - *Proses melihat daftar lamaran dan menghapus data lamaran*
@@ -190,4 +193,5 @@ Pada fitur ini, perusahaan dapat memilih lowongan yang ingin dihapus atau diedit
 Pada fitur Submit lowongan baru, perusahaan dapat menambahkan lowongan kerja dalam program namun lowongan baru tersebut tidak bisa langsung ditampilkan, harus disetujui oleh admin terlebih dahulu untuk ditampilkan.
 
 - *Proses perusahaan memilih keluar ke menu log in*
+  
 ![perusahaan keluar ke menu log in](./res/(fix)-Perusahaan7.jpg)
