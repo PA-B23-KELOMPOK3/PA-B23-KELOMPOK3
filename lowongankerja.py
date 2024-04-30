@@ -1304,8 +1304,8 @@ class Lamaran:
             'Lainnya'
         ], 'opt')
 
-        pengalaman_relevan = inputhandler("\nPegalaman relevan:\n", max=500)
-        deskripsi = inputhandler("\nDeskripsi:\n", max=1500)
+        pengalaman_relevan = inputhandler("\nPegalaman relevan:\n", min=10, max=500)
+        deskripsi = inputhandler("\nDeskripsi:\n", min=10, max=1500)
 
         sql.execute(f"insert into lamaran values (NULL, {job['id_perusahaan']}, {user_data['id_user']}, {job['id_lowongan']}, '{sumber}', '{pengalaman_relevan}', '{deskripsi}')")
         # sql.commit()
