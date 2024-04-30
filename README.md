@@ -160,31 +160,34 @@ Pada fitur ini user bisa mengedit profil yang dimiliki user itu sendiri.
 
 - *Proses user melihat list lowongan yang tersedia*
 ![Flowchart Capstone-Halaman-3(1) 3](./res/(fix)-User3.jpg)
-Pada fitur ini, user dapat memilih lowongan yang dinginkan dan dapat mengisi lamaran cepat yang berisi format lamaran yg telah disediakan. Selain itu, user juga dapat melakukan sorting berdasarkan pilihan yg diinginkan dan dapat melakukan sotring berdasarkan keyword yg dimasukkan.
+Pada fitur ini, user dapat memilih lowongan yang dinginkan dan dapat mengisi lamaran cepat yang berisi format lamaran yg telah disediakan. Selain itu, user juga dapat melakukan sorting berdasarkan pilihan yg diinginkan dan dapat melakukan searching berdasarkan keyword yg dimasukkan.
 
 - *Proses user memilih kembai ke menu utama*
 ![Flowchart Capstone-Halaman-3(1) 2](./res/(fix)-User4.jpg)
 
 ### Halaman Menu Perusahaan
-- *Proses memilih melihat profil perusahaan, lihat lamaran atau lihat lowongan*
-![Flowchart Capstone-Halaman-4 1](./res/perusahaan1.jpg)
+- *Proses memilih melihat daftar lamaran, melihat profil perusahaan, atau mengelola lowongan*
+![Flowchart Capstone-Halaman-4 1](./res/(fix)-Perusahaan1.jpg)
 Pada halaman menu perusahaan memiliki fitur mengedit menghapus dan melihat data tertentu.
 
-- *Proses perusahaan mengedit profil perusahaan*
-![perusahaan mengeidt profil](./res/perusahaan2.jpg)
-Pada fitur Profil perusahaan, perusahaan dapat mengedit biodatanya.
-
 - *Proses melihat daftar lamaran dan menghapus data lamaran*
-![daftar lamaran dan menghapus](./res/perusahaan3.jpg)
-Pada fitur Lihat lamaran, perusahaan dapat menghapus lamaran.
+![daftar lamaran dan menghapus](./res/(fix)-Perusahaan2.jpg)
+Pada fitur Lihat lamaran, perusahaan dapat memilih lamaran yang ingin dihapus, dapat mengurutkan daftar lowongan, dan dapat mencari lowongan yang diingin dengan fitur searching.
 
-- *Proses melihat daftar lowongan, memilih lowongan untuk dihapus atau diedit*
-![melihat daftar lowongan](./res/perusahaan4.jpg)
-Pada fitur Lowongan, perusahaan dapat mengedit dan menghapus lowongan yang sebelumnya sudah terdaftar dalam program. perusahaan juga dapat menambahkan lowongan baru.
+- *Proses mengedit profil perusahaan*
+![melihat daftar lowongan](./res/(fix)-Perusahaan3.jpg)
+Pada fitur ini, perusahaan dapat mengedit profil perusahaannya sendiri.
+
+- *Menampilkan seluruh lowongan yang sudah di submit*
+![melihat daftar lowongan](./res/(fix)-Perusahaan4.jpg)
+
+- *Proses mengedit profil perusahaan, sorting, dan searching*
+![melihat daftar lowongan](./res/(fix)-Perusahaan5.jpg)
+Pada fitur ini, perusahaan dapat memilih lowongan yang ingin dihapus atau diedit, dapat mengurutkan berdasarkan pilihannya, dan dapt melakukan pencarian berdasarkan keyword yang ingin diinginkan.
 
 - *Proses perusahaan submit lowongan baru, kembali ke menu sebelumnya*
-![perusahaan submit lowongan baru](./res/perusahaan5.jpg)
+![perusahaan submit lowongan baru](./res/(fix)-Perusahaan6.jpg)
 Pada fitur Submit lowongan baru, perusahaan dapat menambahkan lowongan kerja dalam program namun lowongan baru tersebut tidak bisa langsung ditampilkan, harus disetujui oleh admin terlebih dahulu untuk ditampilkan.
 
 - *Proses perusahaan memilih keluar ke menu log in*
-![perusahaan keluar ke menu log in](./res/perusahaan6.jpg)
+![perusahaan keluar ke menu log in](./res/(fix)-Perusahaan6.jpg)
