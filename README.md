@@ -190,4 +190,4 @@ Pada fitur ini, perusahaan dapat memilih lowongan yang ingin dihapus atau diedit
 Pada fitur Submit lowongan baru, perusahaan dapat menambahkan lowongan kerja dalam program namun lowongan baru tersebut tidak bisa langsung ditampilkan, harus disetujui oleh admin terlebih dahulu untuk ditampilkan.
 
 - *Proses perusahaan memilih keluar ke menu log in*
-![perusahaan keluar ke menu log in](./res/(fix)-Perusahaan6.jpg)
+![perusahaan keluar ke menu log in](./res/(fix)-Perusahaan7.jpg)
