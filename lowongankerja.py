@@ -103,7 +103,9 @@ class MySQLHandler:
 
 class Admin:
     def login():
+        clear()
         global admin_data
+        print("Login admin")
         while True:
             username = inputhandler("username: ")
             sql.execute(f"select * from admin where username = '{username}'")
@@ -115,6 +117,8 @@ class Admin:
                 while True:
                     password = inputhandler("password: ", "pw")
                     if password == admin_data["password"]:
+                        clear()
+                        print(color("Berhasil login\n", "green"))
                         Admin.menu()
                         return
                     else:
@@ -169,6 +173,7 @@ class Admin:
                 "Keluar"
             ])
             if pil == '1':
+                clear()
                 while True:
                     Admin.profil()
                     pil = choices([
@@ -183,16 +188,22 @@ class Admin:
                         edit('admin', admin_data, fields)
 
                     elif pil == '2':
+                        clear()
                         break
                     else:
                         print("Pilihan tidak valid")
             elif pil == '2':
+                clear()
                 status = 'all'
                 sort_key = 'id_lowongan'
                 sort_order = 'desc'
                 keyword = None
                 while True:
                     # status yang kiri itu nama parameter, yang kanan variable
+                    if keyword:
+                        print(f"Hasil untuk '{keyword}'")
+                    if status != 'all':
+                        print("Status:", status)
                     Lowongan.list(status=status, sort_key=sort_key, sort_order=sort_order, keyword=keyword)
                     pil = choices([
                         "Pilih",
@@ -203,6 +214,7 @@ class Admin:
                     ])
                     if pil == '1':
                         Lowongan.pilih()
+                        clear()
                         while True:
                             Lowongan.lihat(selected_lowongan)
                             if job["id_admin"] is not None:
@@ -211,16 +223,18 @@ class Admin:
                                     color("Hapus lowongan", "red")
                                 ])
                                 if pil == '1':
+                                    clear()
                                     break
                                 elif pil == '2':
                                     if admin_data['jabatan'] != 'admin3':
                                         if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                             sql.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
-                                            sql.commit()
+                                            # sql.commit()
+                                            clear()
                                             print("Berhasil menghapus lowongan.")
                                             break
                                         else:
-                                            break
+                                            clear()
                                     else:
                                         clear()
                                         print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
@@ -232,25 +246,26 @@ class Admin:
                                 ])
                                 if pil == '1':
                                     sql.execute(f"UPDATE lowongan SET id_admin = {admin_data['id_admin']} WHERE id_lowongan = {job['id_lowongan']}")
-                                    sql.commit()
+                                    # sql.commit()
                                     clear()
                                     print(color("Lowongan berhasil disetujui", "green"))
                                     break
                                 elif pil == '2':
+                                    clear()
                                     break
                                 elif pil == '3':
                                     if admin_data['jabatan'] != 'admin3':
                                         if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                             sql.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
-                                            sql.commit()
+                                            # sql.commit()
+                                            clear()
                                             print("Berhasil menghapus lowongan.")
-                                            break
-                                        else:
                                             break
                                     else:
                                         clear()
                                         print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
                     elif pil == '2':
+                        clear()
                         print("\nUrut berdasarkan:")
                         key = choices([
                             "Posisi",
@@ -273,8 +288,10 @@ class Admin:
                             sort_order = "asc"
                         elif order == '2':
                             sort_order = "desc"
+                        clear()
                     elif pil == '3':
                         keyword = inputhandler("Masukkan keyword: ")
+                        clear()
                     elif pil == '4':
                         print("Pilih status")
                         status = choices([
@@ -282,15 +299,20 @@ class Admin:
                             "disetujui",
                             "pending",
                         ],"opt")
+                        clear()
                     elif pil == '5':
+                        clear()
                         break
 
                         
             elif pil == '3':
+                clear()
                 sort_key = "nama"
                 sort_order = "asc"
                 keyword = None
                 while True:
+                    if keyword:
+                        print(f"Hasil untuk '{keyword}'")
                     User.list(sort_key=sort_key, sort_order=sort_order, keyword=keyword)
                     pil = choices([
                         "Pilih",
@@ -300,6 +322,7 @@ class Admin:
                     ])
                     if pil == '1':
                         User.pilih()
+                        clear()
                         while True:
                             User.profil(selected_user)
                             pil = choices([
@@ -307,16 +330,18 @@ class Admin:
                                 color("Hapus user", "red")
                             ])
                             if pil == '1':
+                                clear()
                                 break
                             elif pil == '2':
                                 if admin_data['jabatan'] == 'admin1':
                                     if inputhandler(f"Apakah anda yakin ingin menghapus user ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                         sql.execute(f"delete from user where id_user = {user_data['id_user']}")
-                                        sql.commit()
+                                        # sql.commit()
+                                        clear()
                                         print("Berhasil menghapus user.")
                                         break
                                     else:
-                                        break
+                                        clear()
                                 else:
                                     clear()
                                     print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
@@ -324,6 +349,7 @@ class Admin:
                         user_data ={}
                     
                     elif pil == '2':
+                        clear()
                         print("\nUrut berdasarkan:")
                         key = choices(["Nama user", "ID User"])
                         if key == '1':
@@ -337,13 +363,16 @@ class Admin:
                             sort_order = "asc"
                         elif order == '2':
                             sort_order = "desc"
-                        
+                        clear()
                     elif pil == '3':
                         keyword = inputhandler("Masukkan keyword: ")
+                        clear()
                     elif pil == '4':
+                        clear()
                         break
                         
             elif pil == '4':
+                clear()
                 sort_key = "id_perusahaan"
                 sort_order = "desc"
                 keyword = None
@@ -357,6 +386,7 @@ class Admin:
                     ])
                     if pil == '1':
                         Perusahaan.pilih()
+                        clear()
                         while True:
                             Perusahaan.profil(selected_perusahaan)
                             pil = choices([
@@ -364,16 +394,18 @@ class Admin:
                                 color("Hapus perusahaan", "red")
                             ])
                             if pil == '1':
+                                clear()
                                 break
                             elif pil == '2':
                                 if admin_data['jabatan'] == 'admin1':
                                     if inputhandler(f"Apakah anda yakin ingin menghapus perusahaan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                         sql.execute(f"delete from perusahaan where id_perusahaan = {perusahaan_data['id_perusahaan']}")
-                                        sql.commit()
+                                        # sql.commit()
                                         print("Berhasil menghapus perusahaan.")
+                                        clear()
                                         break
                                     else:
-                                        break
+                                        clear()
                                 else:
                                     clear()
                                     print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
@@ -381,6 +413,7 @@ class Admin:
                         perusahaan_data = {}
                         
                     elif pil == '2':
+                        clear()
                         print("\nUrut berdasarkan:")
                         key = choices([
                             "Nama perusahaan",
@@ -400,13 +433,17 @@ class Admin:
                             sort_order = "asc"
                         elif order == '2':
                             sort_order = "desc"
+                        clear()
                     elif pil == '3':
-                        keyword = inputhandler("Masukkan keyword: ")
+                        keyword = inputhandler("\nMasukkan keyword: ")
+                        clear()
                     elif pil == '4':
+                        clear()
                         break
 
             
             elif pil == '5':
+                clear()
                 sort_key = 'id_lamaran'
                 sort_order = 'desc'
                 keyword = None
@@ -420,6 +457,7 @@ class Admin:
                     ])
                     if pil == '1':
                         Lamaran.pilih()
+                        clear()
                         while True:
                             Lamaran.lihat(selected_lamaran)
                             pil = choices([
@@ -432,16 +470,19 @@ class Admin:
                                 if admin_data['jabatan'] != 'admin3':
                                     if inputhandler(f"Apakah anda yakin ingin menghapus lamaran ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                         sql.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
-                                        sql.commit()
+                                        # sql.commit()
+                                        clear()
                                         print("Berhasil menghapus lamaran.")
                                         break
                                     else:
+                                        clear()
                                         break
                                 else:
                                     clear()
                                     print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
 
                     elif pil == '2':
+                        clear()
                         print("\nUrut berdasarkan:")
                         key = choices([
                             "Nama pelamar",
@@ -474,18 +515,49 @@ class Admin:
                         elif order == '2':
                             sort_order = "desc"
                         print(sort_key, sort_order)
+                        clear()
                     elif pil == '3':
-                        keyword = inputhandler("Masukkan keyword: ")
+                        keyword = inputhandler("\nMasukkan keyword: ")
+                        clear()
                     elif pil == '4':
+                        clear()
                         break
 
             
             elif pil == '6':
+                clear()
                 admin_data = {}
                 break
         
     
 class User:
+    def register():
+        global user_data
+        sql.execute("select email from user")
+        emails = [row[0] for row in sql.fetchall()]
+        email = inputhandler("Masukkan email anda: ", min=11, max=25)
+        if email not in emails:
+            password = inputhandler("Masukkan password: ", "pw", min=1, max=8)
+            nama = inputhandler("Masukkan nama anda: ", min=1, max=25)
+            print("Pilih jenis kelamin anda:")
+            jenis_kelamin = choices(["Laki-laki", "Perempuan"], "opt")
+            no_telp = inputhandler("Masukkan nomor telepon anda: ", "digit", min=10, max=15)
+            pendidikan = inputhandler("Masukkan pendidikan terakhir anda: ", min=2, max=25)
+            alamat = inputhandler("Masukkan alamat anda: ", min=11, max=30)
+            pengalaman = inputhandler("Masukkan pengalaman anda: ", min=5, max=500)
+            keahlian = inputhandler("Masukkan keahlian anda: ", min=5, max=80)
+            sql.execute(f"insert into user values(NULL, '{nama}', '{password}', '{email}', '{no_telp}', '{pendidikan}', '{pengalaman}', '{keahlian}', '{jenis_kelamin}', '{alamat}')")
+            # sql.commit()
+            sql.execute(f"SELECT * FROM user WHERE id_user = {sql.cursor.lastrowid}")
+            row = sql.fetchone()
+            columns = [column[0] for column in sql.description()]
+            user_data = dict(zip(columns, row))
+            clear()
+            print(color("Akun berhasil dibuat", "green"))
+            User.menu()
+        else:
+            clear()
+            print(color("Email sudah dipakai. Silahkan gunakan email lain\n", "red"))
     def login():
         global user_data
         print("\nLogin user")
@@ -501,7 +573,7 @@ class User:
                     password = inputhandler("password: ", "pw")
                     if password == user_data["password"]:
                         clear()
-                        print(f"Selamat datang {user_data['nama']}!")
+                        print(color(f"Selamat datang {user_data['nama']}!\n", "green"))
                         User.menu()
                         return
                     else:
@@ -589,6 +661,7 @@ class User:
                 "Keluar"
             ])
             if pil == '1':
+                clear()
                 while True:
                     User.profil()
                     pil = choices([
@@ -610,10 +683,12 @@ class User:
                         edit('user', user_data, fields)
 
                     elif pil == '2':
+                        clear()
                         break
                     else:
                         print("Pilihan tidak valid")
             elif pil == '2':
+                clear()
                 sort_key = "id_lowongan"
                 sort_order = "desc"
                 keyword = None
@@ -627,6 +702,7 @@ class User:
                     ])
                     if pil == '1':
                         Lowongan.pilih()
+                        clear()
                         Lowongan.lihat(selected_lowongan)
                         while True:
                             pil = choices([
@@ -634,13 +710,15 @@ class User:
                                 "Kembali"
                             ])
                             if pil == '1':
+                                clear()
                                 Lamaran.submit()
+                                clear()
                                 break
                             elif pil == '2':
+                                clear()
                                 break
-                            else:
-                                print(color("Pilihan tidak valid\n", "red"))
                     elif pil == '2':
+                        clear()
                         # 'Waktu ditambahkan' itu pakai ID hehe
                         print("\nUrut berdasarkan:")
                         key = choices([
@@ -664,16 +742,41 @@ class User:
                             sort_order = "asc"
                         elif order == '2':
                             sort_order = "desc"
+                        clear()
                     elif pil == '3':
                         keyword = inputhandler("Keyword: ")
-                        
+                        clear()
                     elif pil == '4':
+                        clear()
                         break
             elif pil == '3':
+                clear()
                 user_data = {}
                 break
 
 class Perusahaan:
+    def register():
+        global perusahaan_data
+        sql.execute("select email_perusahaan from perusahaan")
+        emails = [row[0] for row in sql.fetchall()]
+        email = inputhandler("Masukkan email perusahaan anda: ", min=11, max=50)
+        if email not in emails:
+            password = inputhandler("Masukkan password: ", "pw", min=1, max=8)
+            nama_perusahaan = inputhandler("Masukkan nama perusahaan: ", min=1, max=25)
+            no_telp = inputhandler("Masukkan nomor telepon perusahaan: ", "digit", min=10, max=15)
+            alamat = inputhandler("Masukkan alamat perusahaan: ", min=11, max=30)
+            sql.execute(f"insert into perusahaan values(NULL, '{nama_perusahaan}', '{password}', '{no_telp}', '{email}', '{alamat}')")
+            # sql.commit()
+            sql.execute(f"SELECT * FROM perusahaan WHERE id_perusahaan = {sql.cursor.lastrowid}")
+            row = sql.fetchone()
+            columns = [column[0] for column in sql.description()]
+            perusahaan_data = dict(zip(columns, row))
+            clear()
+            print(color("Akun berhasil dibuat", "green"))
+            Perusahaan.menu()
+        else:
+            clear()
+            print(color("Email sudah dipakai. Silahkan gunakan email lain\n", "red"))
     def login():
         global perusahaan_data
         print("\nLogin menggunakan akun perusahaan")
@@ -688,6 +791,8 @@ class Perusahaan:
                 while True:
                     password = inputhandler("password: ", "pw")
                     if password == perusahaan_data["password"]:
+                        clear()
+                        print(color("Berhasil login!\n", "green"))
                         Perusahaan.menu()
                         return
                     else:
@@ -768,6 +873,7 @@ class Perusahaan:
                 "Keluar"
             ])
             if pil == '1':
+                clear()
                 sort_key = 'id_lamaran'
                 sort_order = 'desc'
                 keyword = None
@@ -781,6 +887,7 @@ class Perusahaan:
                     ])
                     if pil == '1':
                         Lamaran.pilih()
+                        clear()
                         Lamaran.lihat(selected_lamaran)
                         while True:
                             pil = choices([
@@ -788,16 +895,18 @@ class Perusahaan:
                                 color("Hapus lamaran", "red")
                             ])
                             if pil == '1':
+                                clear()
                                 break
                             elif pil == '2':
                                 if inputhandler(f"Apakah anda yakin ingin menghapus lamaran ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                     sql.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
-                                    sql.commit()
+                                    # sql.commit()
                                     print("Berhasil menghapus lamaran.")
                                     break
                                 else:
-                                    break
+                                    clear()
                     elif pil == '2':
+                        clear()
                         print("\nUrut berdasarkan:")
                         key = choices([
                             "Nama pelamar",
@@ -817,12 +926,16 @@ class Perusahaan:
                             sort_order = "asc"
                         elif order == '2':
                             sort_order = "desc"
+                        clear()
                     elif pil == '3':
                         keyword = inputhandler("Masukkan keyword: ")
+                        clear()
                     elif pil == '4':
+                        clear()
                         break
 
             elif pil == '2':
+                clear()
                 while True:
                     Perusahaan.profil()
                     pil = choices([
@@ -838,10 +951,11 @@ class Perusahaan:
                         }
                         edit('perusahaan', perusahaan_data, fields)
                     elif pil == '2':
+                        clear()
                         break
-                    else:
-                        print("Pilihan tidak valid")
+                    
             elif pil == '3':
+                clear()
                 sort_key = 'id_lowongan'
                 sort_order = 'desc'
                 keyword = None
@@ -856,6 +970,7 @@ class Perusahaan:
                     ])
                     if pil == '1':
                         Lowongan.pilih()
+                        clear()
                         while True:
                             Lowongan.lihat(selected_lowongan)
                             pil = choices([
@@ -874,17 +989,20 @@ class Perusahaan:
                                 }
                                 edit('lowongan', job, fields)
                             if pil == '2':
+                                clear()
                                 break
                             elif pil == '3':
                                 if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                     sql.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
-                                    sql.commit()
+                                    # sql.commit()
+                                    clear()
                                     print("Berhasil menghapus lowongan.")
                                     break
                                 else:
-                                    break
+                                    clear()
                             
                     elif pil == '2':
+                        clear()
                         print("\nUrut berdasarkan:")
                         key = choices([
                             "Posisi",
@@ -907,9 +1025,12 @@ class Perusahaan:
                             sort_order = "asc"
                         elif order == '2':
                             sort_order = "desc"
+                        clear()
                     elif pil == '3':
                         keyword = inputhandler("Masukkan keyword: ")
+                        clear()
                     elif pil == '4':
+                        clear()
                         posisi = inputhandler("Posisi pekerjaan: ", max=50)
                         klasifikasi = inputhandler("Klasifikasi pekerjaan: ", max=100)
                         tipe = choices([
@@ -922,17 +1043,18 @@ class Perusahaan:
                         gaji = inputhandler("Gaji pekerjaan: ", "int", 11)
 
                         sql.execute(f"insert into lowongan values (NULL, '{perusahaan_data['id_perusahaan']}', NULL, '{klasifikasi}', '{tipe}', '{deskripsi}', '{posisi}', '{ketentuan}', '{gaji}')")
-                        sql.commit()
-                        print("berhasil keknya")
+                        clear()
+                        # sql.commit()
+                        print(color("Lowongan berhasil disubmit. Silahkan tunggu disetujui admin", "green"))
                     elif pil == '5':
+                        clear()
                         break
             
             elif pil == '4':
+                clear()
                 perusahaan_data = {}
                 break
-            else:
-                print("Pilihan tidak valid")
-
+            
 class Lowongan:
     def list(id_perusahaan=None, status='all', sort_key='id_lowongan', sort_order='desc', keyword=None):
         global jobs
@@ -1186,16 +1308,19 @@ class Lamaran:
         deskripsi = inputhandler("\nDeskripsi:\n", max=1500)
 
         sql.execute(f"insert into lamaran values (NULL, {job['id_perusahaan']}, {user_data['id_user']}, {job['id_lowongan']}, '{sumber}', '{pengalaman_relevan}', '{deskripsi}')")
-        sql.commit()
+        # sql.commit()
         
         print("Lamaran berhasil disubmit. Silahkan cek email anda secara berkala")
 
 # Global functions
-# bersihin terminal
+
+# mindahin output jadi ke kiri atas (mirip os.system('cls') tapi gak beneran ngehapus)
 def clear():
-    os.system("cls")
+    print('\n'*40)
+    print('\033[H')
 
 def edit(table, old_data, fields):
+    clear()
     print(color("(Kosongkan untuk menggunakan data lama)", 'blue'))
     updates = [] 
     for prompt, (field, max, *inputtype) in fields.items():
@@ -1217,7 +1342,7 @@ def edit(table, old_data, fields):
                 "Perempuan"
             ], 'opt')
         else:
-            new_data = inputhandler(f"{color(f'{prompt} baru', 'yellow')}: ", inputtype, max=max, min=2)
+            new_data = inputhandler(f"{color(f'{prompt} baru', 'yellow')}: ", inputtype, max=max)
 
         if new_data:
             updates.append(f"{field} = '{new_data}'")
@@ -1225,8 +1350,11 @@ def edit(table, old_data, fields):
     query = f"update {table} set "
     query += ", ".join(updates)
     query += f" where id_{table} = {old_data[f'id_{table}']}"
-    sql.execute(query)
-    sql.commit()
+    if updates != []:
+        sql.execute(query)
+    clear()
+    print(color("Data berhasil diubah", "green"))
+    # sql.commit()
 
 def quicksort(arr, key=None, order='desc'):
     if len(arr) <= 1:
@@ -1374,7 +1502,7 @@ def choices(options, re='num'):
     for idx, option in enumerate(options, start=1):
         print(f"[{color(idx, 'orange')}] {option}")
     while True:
-        choice = inputhandler("Masukkan pilihan: ", "digit")
+        choice = inputhandler("\nMasukkan pilihan: ", "digit")
         if choice.isdigit() and 1 <= int(choice) <= len(options):
             if re == 'num':
                 return choice
@@ -1398,6 +1526,7 @@ def banner(text):
 
 # Login
 def login():
+    clear()
     while True:
         print(f"\n{banner('LOGIN')}")
         pil = choices([
@@ -1417,7 +1546,24 @@ def login():
             break
         
 #Regist
+def register():
+    clear()
+    while True:
+        print(f"\n{banner('REGISTRASI')}")
+        pil = choices([
+            "Registrasi akun user",
+            "Registrasi akun perusahaan",
+            "Kembali"
+        ])
 
+        if pil == '1':
+            clear()
+            User.register()
+        elif pil == '2':
+            clear()
+            Perusahaan.register()
+        elif pil == '3':
+            break
 
 sql = MySQLHandler('root', '', 'localhost', 'lowongankerja')
 
@@ -1430,6 +1576,7 @@ perusahaan_data = {}
 os.system("") # entah kenapa kalau gak pakai ini warna teksnya gak muncul di beberapa device
 
 while True:
+    clear()
     print(f"\n{banner('PROGRAM LOWONGAN KERJA UNTUK SEMUA')}")
     pil = choices([
         "Login",
@@ -1440,7 +1587,7 @@ while True:
     if pil == '1':
         login()
     elif pil == '2':
-        None #belum ada 
+        register()
     elif pil == '3':
         break
     
