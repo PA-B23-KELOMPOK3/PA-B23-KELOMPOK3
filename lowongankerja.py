@@ -1313,6 +1313,40 @@ class Lamaran:
         print("Lamaran berhasil disubmit. Silahkan cek email anda secara berkala")
 
 # Global functions
+# handle inputs
+def inputhandler(prompt, inputtype="str", max=None, min=None):
+    while True:
+        try:
+            if inputtype == "str":
+                userinput = input(prompt).strip().replace('\t', '').replace('\\','')
+            elif inputtype == "int":
+                userinput = int(input(prompt))
+            elif inputtype == "digit":
+                userinput = input(prompt).strip().replace('\t', '').replace('\\','')
+                if not userinput.isdigit():
+                    print("Input hanya bisa berupa angka\n")
+                    continue
+            elif inputtype == "pw":
+                userinput = pwinput(prompt).strip()
+            
+            # jika parameter max dipakai (gak kosong) dan panjang input lebih dari max
+            if max is not None and len(str(userinput)) > max:
+                print(f"Input terlalu panjang. Maksimum panjang adalah {max} karakter.\n")
+                continue
+            
+            if min is not None and len(str(userinput)) < min:
+                print(f"Input terlalu pendek. Minimum panjang adalah {min} karakter.\n")
+                continue
+                
+            return userinput
+        except KeyboardInterrupt:
+            print("Terdeteksi interupsi\n")
+        except ValueError:
+            print("Input hanya bisa berupa integer\n")
+        except:
+            print(f"Apa lah dia\n")
+        
+
 
 # mindahin output jadi ke kiri atas (mirip os.system('cls') tapi gak beneran ngehapus)
 def clear():
@@ -1429,47 +1463,6 @@ def jumpsearch(entries, keyword):
     # hilangin duplikat, return semua entry yang cocok
     return [entries[i] for i in set(result)]
 
-def execute_query():
-    try:
-        None
-    except:
-        None
-# handle inputs
-def inputhandler(prompt, inputtype="str", max=None, min=None):
-    while True:
-        try:
-            if inputtype == "str":
-                userinput = input(prompt).strip()
-            elif inputtype == "int":
-                userinput = int(input(prompt))
-            elif inputtype == "digit":
-                userinput = input(prompt).strip()
-                if not userinput.isdigit():
-                    print("Input hanya bisa berupa angka\n")
-                    continue
-            elif inputtype == "pw":
-                userinput = pwinput(prompt).strip()
-            
-            # jika parameter max dipakai (gak kosong) dan panjang input lebih dari max
-            if max is not None and len(str(userinput)) > max:
-                print(f"Input terlalu panjang. Maksimum panjang adalah {max} karakter.\n")
-                continue
-            
-            if min is not None and len(str(userinput)) < min:
-                print(f"Input terlalu pendek. Minimum panjang adalah {min} karakter.\n")
-                continue
-                
-            return userinput
-        except KeyboardInterrupt:
-            print("Terdeteksi interupsi\n")
-        except ValueError:
-            print("Input hanya bisa berupa integer\n")
-        except mysql.connector.errors.ProgrammingError:
-            print("wahyu kontol\n")
-        except Exception as error:
-            print(f"Apa lah dia {error}\n")
-        
-
 # warnain teks
 def color(text, color_name):
     # ANSI color escape
@@ -1573,7 +1566,7 @@ admin_data = {}
 perusahaan_data = {}
 
 #main
-os.system("") # entah kenapa kalau gak pakai ini warna teksnya gak muncul di beberapa device
+os.system('') # entah kenapa kalau gak pakai ini warna teksnya gak muncul di beberapa device
 
 while True:
     clear()
