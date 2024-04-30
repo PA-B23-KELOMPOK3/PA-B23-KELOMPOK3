@@ -123,40 +123,47 @@ Jika pengguna belum memiliki akun, program menyediakan opsi registrasi. pengguna
 ![Flowchart Capstone-Halaman-1 (4) (1)](./res/login7.jpg)
 
 ### Halaman Menu Admin
-- *Proses memilih mengelola lowongan, user, perusahaan, atau lamaran*
-![Flowchart Capstone-Halaman-2 1](./res/admin1.jpg)
+- *Terdapat pilihan melihat profil, mengelola lowongan, user, perusahaan, atau lamaran*
+![Flowchart Capstone-Halaman-2 1](./res/(fix)-Admin1.jpg)
 Di dalam menu admin, admin mempunyai fitur untuk mengedit dan menghapus pada lowongan,user,perusahaan, atau lamaran. 
 
+- *Untuk melihat/menampilkan profil*
+![mengelola lowongan](./res/(fix)-Admin2.jpg)
+Pada fitur menampilkan profil, admin dapat mengedit profil admin.
+
 - *Proses mengelola lowongan*
-![mengelola lowongan](./res/admin2.jpg)
-Pada fitur mengelola lowongan, admin dapat menerima atau menolak request lowongan yang diajukan oleh perusahaan.
+![mengelola user](./res/(fix)-Admin3.jpg)
+Pada fitur ini, admin dapat menampilkan profil lowongan yang dipilih untuk dihapus, mengurutkan lowongan, dan juga mencari lowongan menggunakan keyword.
 
 - *Proses mengelola user*
-![mengelola user](./res/admin3.jpg)
-Pada fitur ini, admin dapat menghapus user dalam program ini.
+![mengelola perusahaan](./res/(fix)-Admin4.jpg)
+Sama halnya dengan fitur lowongan, admin dapat menampilkan profil user yang dipilih untuk dihapus, mengurutkan data user, dan juga mencari user menggunakan keyword.
 
 - *Proses mengelola perusahaan*
-![mengelola perusahaan](./res/admin4.jpg)
-Sama halnya dengan fitur user, admin dapat menghapus perusahaan dalam program ini.
+![mengelola lamaran](./res/(fix)-Admin5.jpg)
+Begitu juga dengan fitur perusahaan, admin dapat menampilkan profil perusahaan yang dipilih untuk dihapus, mengurutkan data perusahaan, dan juga mencari perusahaan menggunakan keyword.
 
 - *Proses mengelola lamaran*
-![mengelola lamaran](./res/admin5.jpg)
-Begitu juga dengan fitur lamaran, admin dapat menghapus lamaran dalam program ini.
+![mengelola lamaran](./res/(fix)-Admin6.jpg)
+Terakhir dengan fitur lamaran, admin dapat menampilkan profil lamaran yang dipilih untuk dihapus, mengurutkan data lamaran, dan juga mencari lamaran menggunakan keyword.
 
 - *Proses Admin kembali ke menu log in*
-![admin kembali ke menu](./res/admin6.jpg)
+![admin kembali ke menu](./res/(fix)-Admin7.jpg)
 
 ### Halaman Menu User
-- *Proses user memilih lowongan*
-![Flowchart Capstone-Halaman-3(1) 1](./res/1.jpg)
-Pada halaman menu user memiliki fitur Lamaran cepat.
+- *Pilihan untuk memilih user ingin melihat profil atau melihat daftar lowongan*
+![Flowchart Capstone-Halaman-3(1) 1](./res/(fix)-User1.jpg)
 
-- *Proses user mengisi lamaran cepat dan di bawahnya keluar kemenu sebelumnya*
-![Flowchart Capstone-Halaman-3(1) 2](./res/2.jpg)
-Fitur Lamaran cepat, template lamaran yang sudah disediakan dari program. jadi user hanya perlu menginputkan data yang diperlukan oleh program.
+- *Menampilkan Profil User*
+![Flowchart Capstone-Halaman-3(1) 2](./res/(fix)-User2.jpg)
+Pada fitur ini user bisa mengedit profil yang dimiliki user itu sendiri.
 
-- *Proses user memilih keluar ke menu log in*
-![Flowchart Capstone-Halaman-3(1) 3](./res/3.jpg)
+- *Proses user melihat list lowongan yang tersedia*
+![Flowchart Capstone-Halaman-3(1) 3](./res/(fix)-User3.jpg)
+Pada fitur ini, user dapat memilih lowongan yang dinginkan dan dapat mengisi lamaran cepat yang berisi format lamaran yg telah disediakan. Selain itu, user juga dapat melakukan sorting berdasarkan pilihan yg diinginkan dan dapat melakukan sotring berdasarkan keyword yg dimasukkan.
+
+- *Proses user memilih kembai ke menu utama*
+![Flowchart Capstone-Halaman-3(1) 2](./res/(fix)-User4.jpg)
 
 ### Halaman Menu Perusahaan
 - *Proses memilih melihat profil perusahaan, lihat lamaran atau lihat lowongan*
