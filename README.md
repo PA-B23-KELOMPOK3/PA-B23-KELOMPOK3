@@ -2106,16 +2106,21 @@ def inputhandler(prompt, inputtype="str", max=None, min=None):
     while True:
         try:
             if inputtype == "str":
-                userinput = input(prompt).strip().replace('\t', '').replace('\\','')
+                userinput = input(prompt).strip()
             elif inputtype == "int":
                 userinput = int(input(prompt))
             elif inputtype == "digit":
-                userinput = input(prompt).strip().replace('\t', '').replace('\\','')
+                userinput = input(prompt)
                 if not userinput.isdigit():
                     print("Input hanya bisa berupa angka\n")
                     continue
             elif inputtype == "pw":
                 userinput = pwinput(prompt).strip()
+            elif inputtype == "nospecial":
+                userinput = input(prompt).strip()
+                if any(char in "!@#$%^&*()+=[]{};:'\"<>,.?/~`" for char in userinput):
+                    print("Input tidak boleh mengandung karakter spesial\n")
+                    continue
             
             # jika parameter max dipakai (gak kosong) dan panjang input lebih dari max
             if max is not None and len(str(userinput)) > max:
@@ -2125,7 +2130,11 @@ def inputhandler(prompt, inputtype="str", max=None, min=None):
             if min is not None and len(str(userinput)) < min:
                 print(f"Input terlalu pendek. Minimum panjang adalah {min} karakter.\n")
                 continue
-                
+            
+            if '\t' in userinput or '\\' in userinput:
+                print("Input tidak boleh mengandung tab atau '\\'\n")
+                continue
+
             return userinput
         except KeyboardInterrupt:
             print("Terdeteksi interupsi\n")
@@ -2146,7 +2155,7 @@ Fungsi `inputhandler` digunakan untuk memvalidasi input pengguna sesuai dengan t
 2. **Validasi Input**:
    - Fungsi ini menggunakan loop `while True` untuk terus meminta input dari pengguna sampai input yang valid diberikan.
    - Bergantung pada `inputtype`, input pengguna diambil dengan menggunakan fungsi `input()`, `int()`, atau `pwinput()` (untuk input password).
-   - Input string di-strip dari spasi di awal dan akhir, serta karakter `\t` dan `\`.
+   - Input string di-strip dari spasi di awal dan akhir.
    - Jika `inputtype` adalah `"digit"`, input akan divalidasi untuk memastikan bahwa hanya terdiri dari digit angka.
    - Setelah mendapatkan input, panjangnya diperiksa menggunakan parameter `max` dan `min`. Jika panjang input tidak memenuhi kriteria, pesan kesalahan akan ditampilkan, dan loop akan melanjutkan hingga input yang valid diberikan.
 
