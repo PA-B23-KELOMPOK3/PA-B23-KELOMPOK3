@@ -267,7 +267,7 @@ Nantinya setiap method dalam linked list akan memiliki parameter self. Dengan me
         self.length += 1
 ```
 
-Method ini berfungsi untuk menambahkan node baru di bagian akhir linked list. Method kemudian akan membuat istance baru dari class Node dan menyimpan data pada node tersebut.
+Method `append` digunakan untuk menambahkan sebuah node baru ke dalam linked list. Node baru ini akan diletakkan di bagian paling akhir dari linked list. Pertama, method akan membuat sebuah node baru dengan data yang diberikan. Kemudian, method akan memeriksa apakah linked list masih kosong (tidak memiliki head). Jika iya, maka node baru tersebut akan menjadi head dari linked list. Namun, jika linked list sudah memiliki head, method akan mencari node terakhir dari linked list dengan menelusuri setiap node dari head hingga node terakhir (yang memiliki `next` bernilai `None`). Setelah menemukan node terakhir, node baru akan ditambahkan setelahnya. Setelah node baru berhasil ditambahkan, panjang (atau jumlah) dari linked list akan bertambah satu.
 
 </ul>
 
@@ -301,7 +301,7 @@ ini berfungsi untuk menampilkan seluruh data-data yang berada di dalam database 
         raise IndexError("Index out of range")
 ```
 
-biar bisa langsung pakai list[index] macam array biasanya
+Method `__getitem__` memungkinkan kita mengakses data dalam linked list seperti mengakses elemen dalam array, dengan menggunakan indeks seperti `list[index]`. Method ini mencari data pada posisi tertentu dalam linked list berdasarkan indeks yang diberikan. Jika indeks yang diminta tidak valid, misalnya lebih besar dari panjang linked list, method akan memberikan pesan error. Dengan method ini, kita bisa menggunakan linked list dengan cara yang mirip dengan array.
 
 </ul>
 
@@ -316,7 +316,7 @@ biar bisa langsung pakai list[index] macam array biasanya
             current = current.next
 ```
 
-biar bisa pakai for loop 
+Method `__iter__` membuat linked list bisa digunakan dalam loop `for`. Saat dipanggil, method ini akan mulai dari awal linked list dan mengambil data dari setiap node satu per satu. Kemudian, data tersebut akan diberikan kembali menggunakan `yield`. Proses ini berulang sampai mencapai akhir linked list. Dengan method ini, kita bisa menggunakan loop `for` untuk dengan mudah mengakses dan memanipulasi data dalam linked list tanpa perlu mengetahui detail implementasinya.
 
 </ul>
 
@@ -327,8 +327,7 @@ biar bisa pakai for loop
     def __len__(self):
         return self.length
 ```
-
-biar bisa pakai len()
+Method `__len__` memungkinkan penggunaan fungsi `len()` untuk mengetahui jumlah elemen dalam linked list dengan mudah. Saat dipanggil, method ini langsung mengembalikan jumlah elemen yang telah disimpan sebelumnya dalam atribut `length`. Jadi, cukup panggil `len(nama_linked_list)` untuk tahu panjangnya, tidak perlu menghitung manual satu per satu.
 
 </ul>
 
