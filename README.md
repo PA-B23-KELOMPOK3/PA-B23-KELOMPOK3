@@ -2620,9 +2620,9 @@ Pengguna dapat memilih antara tiga opsi:
 
 Setelah pengguna memilih salah satu dari tiga opsi tersebut, program akan mengevaluasi pilihan pengguna dan menjalankan fungsi yang sesuai dengan pilihan tersebut. Proses ini akan berulang terus menerus selama pengguna tidak memilih untuk keluar dari program.
 
-## CARA PENGGUNAAN
+# CARA PENGGUNAAN
 
-### Halaman Depan
+## Halaman Depan
 Ketika program dijalankan, akan muncul tampilan opsi untuk login bagi yang sudah mempunyai akun, registrasi bagi yang belum mempunyai akun dan keluar untuk menghentika program.
 ![halamanawal](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/2e5f8ecc-762d-44ef-97c1-1a56b6febb2b)
 
@@ -2656,5 +2656,143 @@ Untuk menghentikan program, pilih keluar.
 Jika pengguna menginputkan email atau password atau keduanya yang salah, program akan menampilkan pemberitahuan seperti dibawah ini.
 
 ![logingagal](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/01762b7b-1812-4c9e-aaf2-8bebcd3be6c3)
+
+
+## MENU ADMIN
+Pada role admin, di menu halaman login pilih opsi “Login Admin” lalu masukkan username dan password dengan benar.
+
+![LOGINADMIN1](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/8466f377-9afd-4a2e-90fd-4b6f0344cfc1)
+
+![LoginAdmin2](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/9c7ce0d6-5d4e-47f9-9d54-5cd6ccab19bc)
+
+Jika username dan password yang di inputkan benar, program mengarahkan ke halaman menu admin yang menyediakan fitur-fitur seperti dibawah ini,
+
+![Menuadmin](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/1e38f05e-8c9e-4ea6-b49a-c4b88b1f1d56)
+
+### MENU ADMIN - PROFIL
+Pada menu Profil, Program menampilkan username, ID, Jabatan serta Hak akses yang dimiliki oleh admin (Warna hijau artinya mempunyai hak akses sedangkan warna merah tidak mempunyai hak akses). Program menyediakan edit untuk mengubah username dan password pengguna dan keluar untuk kembali kehalaman menu utama admin.
+
+![profiladmin](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/a2269170-1c2d-4c60-9339-2e043a42c4d0)
+
+Dibawah ini adalah contoh admin yang memiliki akses yang terbatas, yaitu hanya bisa menyetujui request lowongan.
+
+![hakaksesadminpt2](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/1481e5c3-8e1a-4b9d-a5f4-94a2e2a24e58)
+
+Jika pengguna ingin mengubah username dan password, pilih “Edit data”. Misal disini pengguna mengubah usernamenya. Setelah selesai, program akan menyimpan perubahan tersebut.
+
+![editdataadmin](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/97510361-ef92-48e5-8b88-5830990e3602)
+
+![habisrename](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/f2a67e50-354a-44a2-b520-60c7cbf99b90)
+
+### MENU ADMIN - KELOLA LOWONGAN
+Pada menu Kelola lowongan, program menampilkan lowongan yang terdaftar beserta statusnya. Pending disini artinya lowongan tersebut belum bisa ditampilkan dan dilamar oleh user karna harus mendapatkan persetujuan dari pihak admin. Dan fitur didalam Kelola lowongan ini terdiri dari pilih, urutkan, cari, list berdasarkan status, dan kembali.
+
+![kelolalowongan](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/c2212e29-e7c4-4e63-98bd-f612b2e1b247)
+
+#### FITUR PILIH - KELOLA LOWONGAN
+Fitur pilih untuk memilih lowongan yang ingin di pilih untuk di setujui (jika statusnya masih pending) dan di hapus lowongannya. Di awal tampilan fitur ini adalah menampilkan data lowongan yang dipilih sebelumnya. Misal disini memilih Lowongan Asisten Kebun Sawit.
+
+![pilihaccept](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/f8a19c92-3acc-4cc7-bfe5-e13e1af409b5)
+
+#### FITUR URUTAN - KELOLA LOWONGAN
+Fitur urutkan dalam Kelola lowongan berguna untuk mengurutkan tabel lowongan sesuai dengan kategori yang diinginkan, dan dapat diurutkan secara Ascending/Descending. Misal disini lowongan akan diurutkan berdasarkan Klasifikasinya dengan urutan secara descending.
+
+![urutkan](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/4c29eafe-5321-4d9e-9cc6-5424c421f929)
+
+![urutkan1](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/04b9dd5e-a94f-4274-bf1d-a8eeb9681fbc)
+
+#### FITUR CARI - KELOLA LOWONGAN
+Fitur cari dalam Kelola lowongan berfungsi untuk mencari lowongan yang diinginkan dengan mengetik keywordnya. Seperti contoh ini yaitu mencari lowongan Stockpile Foreman (Contract) dengan memasukkan keyword Stockpile, dan program akan menampilkan pencarian yang sesuai dengan keyword.
+
+![cari](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/777456d5-c29c-428b-9cd3-87c26b6dfb2f)
+
+#### FITUR LIST BERDASARKAN STATUS - KELOLA LOWONGAN
+Fitur List Berdasarkan Status berfungsi untuk menampilkan lowongan berdasarkan statusnya. Misalnya disini list berdasarkan status yang disetujui dan di pending.
+
+![listerdasarkanstatus](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/839a35c7-d22e-491f-b475-4dc51576f654)
+
+![Listberdasarkanstatus1](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/1a34f56f-6b90-4f99-8d6f-bbbf90100624)
+
+### MENU ADMIN - KELOLA USER
+Pada menu Kelola User, terdapat fitur pilih, urutkan, cari dan kembali.
+
+![kelolauser](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/236ff6a3-fd8b-42dd-8ced-f440015ac297)
+
+![kelolauser1](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/213c5600-821f-4e71-bdd7-6ab3d31a517d)
+
+#### FITUR PILIH - KELOLA USER
+Fitur ini berguna untuk menampilkan profil lengkap user yang dipilih serta admin dapat menghapus user tersebut dari program. Pertama, disini admin memilih user dengan nomor 40, setelah itu program menampilkan profil lengkap user tersebut.
+
+![Pilih](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/7aabf3f4-934a-498d-a0f3-366c311978c0)
+
+#### FITUR URUTKAN - KELOLA USER
+Fitur urutkan dalam Kelola user berguna untuk mengurutkan tabel user sesuai dengan kategori yang diinginkan, dan dapat diurutkan secara Ascending/Descending. Misal disini mengurutkan nama user secara Ascending.
+
+![urutkan](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/a78384c3-a3ea-49d6-b0a7-0fc440aee4b0)
+
+![kelolauser1](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/28eb83c4-29a9-42b8-914d-24c4eb0c11fc)
+
+#### FITUR CARI - KELOLA USER
+Fitur cari dalam Kelola user berfungsi untuk mencari user yang diinginkan dengan mengetik keywordnya. Seperti contoh ini yaitu mencari user yang bernama Mahen Lee dengan memasukkan keyword Mahen program langsung menampilkan hasil pencarian yang sesuai dengan keyword.
+
+![cari](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/ac165524-fa95-4901-b4fa-3bae912553f5)
+
+### MENU ADMIN - KELOLA PERUSAHAAN
+Pada menu Kelola Perusahaan, program menampilkan semua Perusahaan yang terdaftar dalam aplikasi ini. Fitur -fiturnya yaitu pilih, urutkan, cari dan kembali.
+
+![kelolaperusahaan](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/08e20e98-ea05-4f19-83d3-45c069862331)
+
+#### FITUR PILIH - KELOLA PERUSAHAAN
+Fitur pilih dalam Kelola Perusahaan ini berguna untuk menampilkan profil lengkap Perusahaan yang dipilih serta admin dapat menghapus akun perusahaan tersebut dari program. Pertama, disini admin memilih user dengan nomor urut Perusahaan 2, setelah itu program menampilkan profil lengkap perusahaan tersebut.
+
+![pilih](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/125e64f8-1e1a-4662-a3ea-68b97644e356)
+
+#### FITUR URUTKAN - KELOLA PERUSAHAAN
+Fitur urutkan dalam Kelola Perusahaan berguna untuk mengurutkan list Perusahaan sesuai dengan kategori yang diinginkan, dan dapat diurutkan secara Ascending/Descending. Misal disini mengurutkan nama Perusahaan secara Ascending.
+
+![urutkan](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/3272cfb2-3421-491f-bceb-302bcfeb3f57)
+
+![urutkan1](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/4d3ac60b-e428-426e-8bf9-3f3d8bd7fefa)
+
+#### FITUR CARI - KELOLA LOWONGAN
+Fitur cari dalam Kelola lowongan berfungsi untuk mencari perusahaan yang diinginkan dengan mengetik keywordnya. Seperti contoh ini yaitu mencari Perusahaan yang bernama PT. SM Town dengan memasukkan keyword SM program langsung menampilkan hasil pencarian yang sesuai dengan keyword.
+
+![cari](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/fd95162d-4393-4d15-8b71-93a4d74b4274)
+
+### MENU ADMIN - KELOLA LAMARAN
+Pada menu Kelola Lamaran, terdapat menu Pilih, Urutkan, Cari dan kembali. Di tampilan awal dalam menu ini program menampilkan semua lamaran yang di lamar oleh user.
+
+![Kelolalamaran](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/d620336e-82ac-4865-9b48-41ba7ee4104f)
+
+#### FITUR PILIH - KELOLA LAMARAN
+Fitur pilih dalam Kelola Lamaran ini berguna untuk menampilkan data lengkap lamaran yang dipilih serta admin dapat menghapus lamaran tersebut dari program. Pertama, disini admin memilih lamaran dengan nomor 2, setelah itu program menampilkan data lamaran lengkap user tersebut.
+
+![Pilih](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/9c0b2fd8-f4e8-4e3c-aa56-7e4ffa457296)
+
+#### FITUR URUTKAN - KELOLA LAMARAN
+Fitur urutkan dalam Kelola Lamaran berguna untuk mengurutkan Lamaran sesuai dengan kategori yang diinginkan, dan dapat diurutkan secara Ascending/Descending. Misal disini mengurutkan Lamaran berdasarkan posisi pekerjaan secara Ascending
+
+![urutkan](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/a0ecebef-dd4f-4cfc-8220-af71c2b2ede7)
+
+![Urutkan1](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/2d26e37f-c206-47e4-a236-6b92a4ef0940)
+
+#### FITUR CARI - KELOLA LAMARAN
+Fitur cari dalam Kelola lamaran berfungsi untuk mencari lamaran yang diinginkan dengan mengetik keywordnya. Seperti contoh ini yaitu mencari lamaran dengan posisi yang di lamar adalah Asisten Kebun Sawit dengan memasukkan keyword Asisten, program langsung menampilkan hasil pencarian yang sesuai dengan keyword.
+
+![Cari](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/ecd79926-1286-44ab-b5b4-46ba8caa2215)
+
+### MENU ADMIN - KELUAR
+Pada menu keluar ini, program mengembalikan pengguna ke halaman login.
+
+![keluar](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/c7b07e11-eb10-46a0-82c1-02e5a0fe4306)
+
+
+
+
+
+
+
+
+
 
 
