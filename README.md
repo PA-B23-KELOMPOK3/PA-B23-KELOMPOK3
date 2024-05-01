@@ -2645,14 +2645,13 @@ Contoh, ini adalah proses Registrasi user. Program meminta user untuk menginput 
 Jika data yang diinputkan Valid, program langsung mengarahkan ke menu halaman utama user.
 ![registberhasil](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/81d8f733-89b2-490a-b6a2-ac452b936b5f)
 
-### Keluar
-  
+### Keluar  
 Untuk menghentikan program, pilih keluar.
+
 ![keluar](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/87e482e4-1187-43bd-b8d2-0377cab3dd07)
 
 
 #### Login Gagal
-
 Jika pengguna menginputkan email atau password atau keduanya yang salah, program akan menampilkan pemberitahuan seperti dibawah ini.
 
 ![logingagal](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/01762b7b-1812-4c9e-aaf2-8bebcd3be6c3)
