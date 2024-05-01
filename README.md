@@ -2626,12 +2626,12 @@ Setelah pengguna memilih salah satu dari tiga opsi tersebut, program akan mengev
 Ketika program dijalankan, akan muncul tampilan opsi untuk login bagi yang sudah mempunyai akun, registrasi bagi yang belum mempunyai akun dan keluar untuk menghentika program.
 ![halamanawal](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/2e5f8ecc-762d-44ef-97c1-1a56b6febb2b)
 
-- Login
+## Login
 
 Jika memilih login, maka program akan menyediakan 3 opsi role yaitu admin, user dan Perusahaan. Pada opsi nomor 4, program akan kembali ke halaman utama.
 ![opsilogin](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/35452d64-28d1-4867-892e-bf240b4e9715)
 
-- Registrasi
+### Registrasi
 
 Bagi User maupun Perusahaan yang belum memiliki akun, program menyediakan menu registrasi agar terdaftar dalam program lowongan kerja ini.
 ![regist](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/3b3975ac-cec6-4117-9843-595c4eb9131f)
@@ -2645,26 +2645,27 @@ Contoh, ini adalah proses Registrasi user. Program meminta user untuk menginput 
 Jika data yang diinputkan Valid, program langsung mengarahkan ke menu halaman utama user.
 ![registberhasil](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/81d8f733-89b2-490a-b6a2-ac452b936b5f)
 
-- Keluar
+### Keluar
   
 Untuk menghentikan program, pilih keluar.
 ![keluar](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/87e482e4-1187-43bd-b8d2-0377cab3dd07)
 
 
-- Login Gagal
+#### Login Gagal
 
 Jika pengguna menginputkan email atau password atau keduanya yang salah, program akan menampilkan pemberitahuan seperti dibawah ini.
 
 ![logingagal](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/01762b7b-1812-4c9e-aaf2-8bebcd3be6c3)
 
 
-## MENU ADMIN
+## ADMIN
 Pada role admin, di menu halaman login pilih opsi “Login Admin” lalu masukkan username dan password dengan benar.
 
 ![LOGINADMIN1](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/8466f377-9afd-4a2e-90fd-4b6f0344cfc1)
 
 ![LoginAdmin2](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/9c7ce0d6-5d4e-47f9-9d54-5cd6ccab19bc)
 
+### MENU ADMIN
 Jika username dan password yang di inputkan benar, program mengarahkan ke halaman menu admin yang menyediakan fitur-fitur seperti dibawah ini,
 
 ![Menuadmin](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/1e38f05e-8c9e-4ea6-b49a-c4b88b1f1d56)
@@ -2786,6 +2787,58 @@ Pada menu keluar ini, program mengembalikan pengguna ke halaman login.
 
 ![keluar](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/c7b07e11-eb10-46a0-82c1-02e5a0fe4306)
 
+
+## USER
+Untuk login sebagai user, pada halaman login pilih 2 setelah itu masukkan email dan passwordnya.
+
+![loginuser](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/9e0b135a-92ad-4d2d-a64c-a3ecd853d067)
+
+### MENU USER
+Jika email dan password benar, maka program akan mengarahkan ke halaman menu utama user yaitu, profil, lihat lowongan, dan keluar
+
+![menuuser](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/c586bc74-ab47-47f7-a203-d84620655c74)
+
+### MENU USER - PROFIL
+Menu profil dalam menu user menyediakan fitur edit untuk mengubah data user tersebut. Contoh disini adalah profil user dengan nama Budi Santoso.
+
+![Profiluser](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/abba3f7e-2676-4309-8e8b-f581f1532ab3)
+
+Untuk fitur mengedit profil, user dapat mengubah Sebagian data saja dengan mengosongkan jika tidak ingin di ubah.
+
+![editdata](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/c6d26429-994e-4404-bb01-ee781c866ee1)
+
+![editdata1](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/e4cef4c4-d3da-46d8-bb71-4da8152b0212)
+
+### MENU USER - LIHAT LOWONGAN
+Menu Lihat Lowongan ini berfungsi untuk menampilkan lowongan kerja yang tersedia dalam program ini. Dan terdapat fitur lain yaitu Pilih, Urutkan, Cari dan kembali.
+
+![Lihatlowongan](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/8723bc25-e28a-4a0f-a728-f9ea39e31429)
+
+#### FITUR PILIH - LIHAT LOWONGAN
+Fitur pilih dalam Lihat Lowongan ini berfungsi untuk menampilkan informasi lowongan secara lengkap.
+
+![pilih](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/915ab01d-9e7c-46c6-b812-8f0fa21f9cdd)
+
+Pada fitur Lamaran Cepat selain menghemat waktu, user bisa melamar ke Perusahaan tersebut secara instan. Karena ketika user sudah mengisi lamaran cepat, Perusahaan dapat melihat lamaran user tersebut.
+
+![Lamarancepat](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/49337ca2-127a-43a8-9ffe-5dbe80da924b)
+
+#### FITUR URUTKAN - LIHAT LOWONGAN
+Fitur urutkan dalam Lihat Lowongan berguna untuk mengurutkan Lowongan sesuai dengan kategori yang diinginkan, dan dapat diurutkan secara Ascending/Descending. Misal disini mengurutkan Posisi secara Descending.
+
+![Urutkan](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/0d8db38e-421b-4b6f-b104-a674584ac12d)
+
+![urutkan1](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/768f6a65-998e-4bd5-9868-6d4c5b92edaa)
+
+#### FITUR CARI - LIHAT LOWONGAN
+Fitur Cari dalam Lihat Lowongan berfungsi untuk mencari Lowongan yang diinginkan dengan mengetik keywordnya. Seperti contoh ini yaitu mencari Lowongan dengan posisi Stockpile Foreman (Contract) dengan memasukkan keyword Stockpile, program langsung menampilkan hasil pencarian yang sesuai dengan keyword.
+
+![cari](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/c0ead30b-0fb7-41de-8a41-3bf510edc1be)
+
+### MENU USER - KELUAR
+Pada menu keluar ini, program mengembalikan pengguna ke halaman login.
+
+![keluar](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/b32142a3-2ea6-4d16-a8ea-520652d78c7d)
 
 
 
