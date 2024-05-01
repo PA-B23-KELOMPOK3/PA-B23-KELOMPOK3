@@ -149,7 +149,9 @@ Begitu juga dengan fitur perusahaan, admin dapat menampilkan profil perusahaan y
 Terakhir dengan fitur lamaran, admin dapat menampilkan profil lamaran yang dipilih untuk dihapus, mengurutkan data lamaran, dan juga mencari lamaran menggunakan keyword.
 
 - *Proses Admin kembali ke menu log in*
-![admin kembali ke menu](./res/(fix)-Admin7.jpg)
+
+  ![admin kembali ke menu](./res/(fix)-Admin7.jpg)
+
 
 ### Halaman Menu User
 - *Pilihan untuk memilih user ingin melihat profil atau melihat daftar lowongan*
@@ -197,154 +199,347 @@ Pada fitur Submit lowongan baru, perusahaan dapat menambahkan lowongan kerja dal
 ![perusahaan keluar ke menu log in](./res/(fix)-Perusahaan7.jpg)
 
 
-- *Fungsionalitas*
-  
-#(built-in)
+### Fungsionalitas
 
-![Screenshot 2024-04-30 200314](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/e3deae6e-9e0c-40a0-814a-9742bddf17d4)
+#### Modul bawaan
+
+```py
+import os
+import math
+```
 
 1. **`import os`**: Modul `os` memberikan alat untuk berinteraksi dengan sistem operasi, seperti mengelola file dan direktori, mengakses variabel lingkungan, dan menjalankan perintah shell.
 
 2. **`import math`**: Modul `math` menyediakan fungsi matematika dasar, seperti perhitungan akar kuadrat, sinus, kosinus, dan logaritma.
 
-#(external)
+#### Modul external
 
-![Screenshot 2024-04-30 200327](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/25c8f224-9ff0-4cf0-b1af-6d9f216558dd)
+```py
+import mysql.connector
+from pwinput import pwinput
+from prettytable import PrettyTable
+```
 
 1. **`import mysql.connector`**: Ini memungkinkan koneksi dan manipulasi database MySQL dari Python.
 
 2. **`from pwinput import pwinput`**: Ini memungkinkan input password yang aman.
 
-3. **`from prettytable import PrettyTable`**: Ini digunakan untuk membuat dan mencetak tabel yang rapi di konsol.
+3. **`from prettytable import PrettyTable`**: Ini digunakan untuk membuat dan mencetak tabel yang rapi di terminal.
 
--Class Node
-
-![Screenshot 2024-04-30 201040](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/5369419c-2d10-4b1d-97c6-67045fe9a31d)
+#### Class Node
+      
+```py
+class Node:
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+```
 
 Fungsi kelas “Node”. Setiap node dalam linked list akan memiliki atribut “data” untuk menyimpan nilai dan atribut “next” untuk menunjukkan ke node berikutnya dalam linked list.
 
--Class LinkedList
 
-#(fungsi def init)
+#### Class LinkedList
 
-![Screenshot 2024-04-30 201718](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/1f5cddab-3a67-43f0-9359-14588cd4d2b3)
+```py
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.length = 0
+```
 
-*Class LinkedList adalah salah satu struktur data yang yang terdiri dari node-node yang terhubung satu sama lain. Dalam Class LinkedList, fungsi def init dan self berperan sebagai konstruktor untuk membuat instance dari class tersebut
+Class LinkedList adalah salah satu struktur data yang yang terdiri dari node-node yang terhubung satu sama lain. Dalam Class LinkedList, fungsi def init dan self berperan sebagai konstruktor untuk membuat instance dari class tersebut
 
-*Nantinya setiap method dalam linked list akan memiliki parameter self. Dengan menggunakan parameter self kita dapat mengakses atribut-atribut yang ada pada Class LinkedList
+Nantinya setiap method dalam linked list akan memiliki parameter self. Dengan menggunakan parameter self kita dapat mengakses atribut-atribut yang ada pada Class LinkedList
 
-#(fungsi def append)
+- Method append
+<ul>
 
-![Screenshot 2024-04-30 201923](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/e22d9551-7a9d-45bb-a292-a5c5b2ce7518)
+```py
+    def append(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
+        self.length += 1
+```
 
-* Method ini berfungsi untuk menambahkan node baru di bagian akhir linked list. Method kemudian akan membuat istance baru dari class Node dan menyimpan data pada node tersebut.
+Method ini berfungsi untuk menambahkan node baru di bagian akhir linked list. Method kemudian akan membuat istance baru dari class Node dan menyimpan data pada node tersebut.
 
-#(fungsi def display)
+</ul>
 
-![Screenshot 2024-04-30 202740](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/3070f24c-6cf9-4969-9766-cb8904df2ad8)
+- Method display
+<ul>
 
-* ini berfungsi untuk menampilkan seluruh data-data yang berada di dalam database yang kemudian tersusun di dalam table berkat bantuan dari library prettytable.
+```py
+    def display(self):
+        current = self.head
+        while current:
+            print(current.data)
+            current = current.next
+```
 
-#(fungsi def getitem)
+ini berfungsi untuk menampilkan seluruh data-data yang berada di dalam database yang kemudian tersusun di dalam table.
 
-![Screenshot 2024-04-30 202952](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/03d2744b-3265-4506-ba6c-208f3723457b)
+</ul>
 
-* biar bisa langsung pakai list[index] macam array biasanya
+- Method \_\_getitem__
+<ul>
+      
+```py
+    def __getitem__(self, index):
+        current_index = 0
+        current_node = self.head
+        while current_node:
+            if current_index == index:
+                return current_node.data
+            current_node = current_node.next
+            current_index += 1
+        raise IndexError("Index out of range")
+```
 
-#(fungsi def iter (self))
+biar bisa langsung pakai list[index] macam array biasanya
 
-![Screenshot 2024-04-30 203433](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/0dfe31b9-356f-4215-b06f-b052fe38ff72)
+</ul>
 
-* biar bisa pakai for loop 
+- Method \_\_iter__
+<ul>
 
-#(fungsi def len (self))
+```py
+    def __iter__(self):
+        current = self.head
+        while current:
+            yield current.data
+            current = current.next
+```
 
-![Screenshot 2024-04-30 203628](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/fbeb5a35-ebf5-4899-826b-6db9b291093a)
+biar bisa pakai for loop 
 
-* biar bisa pakai len()
+</ul>
 
+- Method len
+<ul>
+      
+```py
+    def __len__(self):
+        return self.length
+```
 
--Class MySQLHandler
+biar bisa pakai len()
 
-#(def init)
-
-![Screenshot 2024-04-30 203955](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/1d4f35fe-fa94-43b5-9378-f7ccd01a1fc9)
-
-1.Kelas MySQLHandler merupakan kerangka kerja untuk mengelola koneksi dan operasi database MySQL.
-
-2.Fungsi __init__ digunakan untuk menginisialisasi objek MySQLHandler dengan informasi koneksi yang diberikan.
-
-#(def connect)
-
-![Screenshot 2024-04-30 204550](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/3dae24f0-f212-4d7d-8b22-f698845abf07)
-
-* Fungsi connect(self) dalam kelas MySQLHandler bertujuan untuk membuat koneksi ke server MySQL menggunakan informasi yang telah diberikan saat objek MySQLHandler diinisialisasi.
-
-#(def execute)
-
-![Screenshot 2024-04-30 205318](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/17db4168-583e-4f5f-9744-7bb84999d383)
-
-* Fungsi execute dalam sebuah kelas yang berhubungan dengan database, biasanya digunakan untuk mengeksekusi perintah SQL ke dalam database yang terhubung.
-
-#(def fetchall)
-
-![Screenshot 2024-04-30 205510](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/0917aa5d-85f8-4292-8957-5051d4cb9fb5)
-
-* Fungsi fetchall digunakan dalam koneksi basis data untuk mengambil semua baris hasil dari sebuah query yang dieksekusi.
-
-#(def fetchone)
-
-![Screenshot 2024-04-30 205750](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/4b0933e0-6a3c-4e00-a2d7-4138e8bb03cf)
-
-* Fungsi fetchone dalam koneksi basis data digunakan untuk mengambil satu baris hasil dari sebuah query yang dieksekusi. 
-
-#(def description)
-
-![Screenshot 2024-04-30 205928](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/1f865fb8-a911-4b1e-8885-a3b4d2382838)
-
-* Fungsi description biasanya digunakan untuk mengembalikan deskripsi kolom dari hasil query.
-
-#(def commit)
-
-![Screenshot 2024-04-30 210301](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/52782cf3-a4f0-42a8-b07c-fa0bd9419281)
-
-* Fungsi commit dalam konteks basis data digunakan untuk menyimpan perubahan yang telah dilakukan dalam transaksi ke dalam basis data secara permanen.
-
-#(def close)
-
-![Screenshot 2024-04-30 210447](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/2ff52fa5-2b3e-446e-b897-73565368f478)
-
-* Fungsi close dalam konteks koneksi basis data digunakan untuk menutup koneksi atau kursor yang telah dibuka.
-
-
--Class Admin
-
-#(def login)
-
-![Screenshot 2024-04-30 210720](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/df251f4b-9253-403e-b9b9-adc7fb88c82f)
-
-* Kelas `Admin` adalah representasi dari administrator dalam sebuah sistem atau aplikasi. Admin memiliki akses dan kekuatan lebih dalam mengelola sistem dibandingkan pengguna biasa. Ini dapat mencakup atribut seperti username, password, role, email, dan metode untuk mengelola sistem, seperti menambah, menghapus, atau memperbarui informasi pengguna dan data lainnya.
-
-*Fungsi Login adalah program yang digunakan untuk menampilkan perintah terkait login sebelum masuk ke dalam aplikasi, di dalamnya terdapat percabangan(if, elif, else) yang digunakan untuk mengeksekusi kode tertentu hanya jika kondisi tersebut terpenuhi.
-
-1.Membersihkan Layar: Fungsi clear() dipanggil untuk membersihkan layar konsol sebelum tampilan login dimulai.
-
-2.Input Username: Pengguna diminta untuk memasukkan username mereka.
-
-3.Query Database: Fungsi execute digunakan untuk menjalankan perintah SQL yang mencari admin dengan username yang cocok dalam tabel admin.
-
-4.Pengecekan Username: Jika admin dengan username tersebut ditemukan dalam database, pengguna diminta untuk memasukkan password mereka.
-
-5.Validasi Password: Password yang dimasukkan oleh pengguna dibandingkan dengan password yang disimpan dalam database. Jika cocok, pengguna berhasil masuk ke sistem dan menu admin ditampilkan. Jika tidak, pesan kesalahan ditampilkan.
-
-6.Tindakan untuk Username Tidak Terdaftar: Jika admin dengan username yang dimasukkan tidak ditemukan dalam database, pesan kesalahan ditampilkan.
+</ul>
 
 
-#(def profil)
+#### Class MySQLHandler
+<ul>
 
-![Screenshot 2024-04-30 213910](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/0183a3c8-a277-49fb-8d85-de6f05b2b911)
+```py
+class MySQLHandler:
+    def __init__(self, user, password, host, database):
+        self.user = user
+        self.password = password
+        self.host = host
+        self.database = database
+        self.connect()
+```
 
-Fungsi `profil` digunakan untuk menampilkan profil admin saat ini beserta jabatan dan hak akses yang dimilikinya. Berikut adalah penjelasan singkat tentang fungsi ini:
+Class ini merupakan kerangka kerja untuk mengelola koneksi dan operasi database MySQL.
+`__init__` digunakan untuk menginisialisasi objek MySQLHandler dengan informasi koneksi yang diberikan.
+
+</ul>
+
+- Method connect
+<ul>
+
+```py
+    def connect(self):
+        self.db = mysql.connector.connect(
+            user=self.user,
+            password=self.password,
+            host=self.host,
+            database=self.database
+        )
+        self.cursor = self.db.cursor()
+```
+
+Fungsi `connect(self)` dalam kelas MySQLHandler bertujuan untuk membuat koneksi ke server MySQL menggunakan informasi yang telah diberikan saat objek MySQLHandler diinisialisasi.
+
+</ul>
+
+- Method execute
+<ul>
+
+```py
+    def execute(self, query, params=None):
+        try:
+            self.cursor.execute(query, params)
+        except:
+            print("Terjadi kesalahan saat menjalankan query")
+```
+
+Fungsi execute dalam sebuah kelas yang berhubungan dengan database, biasanya digunakan untuk mengeksekusi perintah SQL ke dalam database yang terhubung.
+
+</ul>
+
+- Method fetchall
+<ul>
+
+```py
+    def fetchall(self):
+        try:
+            return self.cursor.fetchall()
+        except:
+            None
+```
+
+Method fetchall digunakan dalam koneksi basis data untuk mengambil semua baris hasil dari sebuah query yang dieksekusi.
+
+</ul>
+
+- Method fetchone
+<ul>
+
+```py
+    def fetchone(self):
+        try:
+            return self.cursor.fetchone()
+        except:
+            None
+```
+
+Method fetchone dalam koneksi basis data digunakan untuk mengambil satu baris hasil dari sebuah query yang dieksekusi. 
+
+</ul>
+
+- Method description
+<ul>
+
+```py
+    def description(self):
+        return self.cursor.description
+```
+
+Fungsi description biasanya digunakan untuk mengembalikan deskripsi kolom dari hasil query.
+
+</ul>
+
+- Method commit
+<ul>
+
+```py
+    def commit(self):
+        self.db.commit()
+```
+
+Fungsi commit dalam konteks basis data digunakan untuk menyimpan perubahan yang telah dilakukan dalam transaksi ke dalam basis data secara permanen.
+
+</ul>
+
+- Method close
+<ul>
+
+```py
+    def close(self):
+        self.cursor.close()
+        self.db.close()
+```
+
+Fungsi close dalam konteks koneksi database digunakan untuk menutup koneksi atau kursor yang telah dibuka.
+
+</ul>
+
+
+#### Class Admin
+
+- Method login
+<ul>
+      
+```py
+class Admin:
+    def login():
+        clear()
+        global admin_data
+        print("Login admin")
+        while True:
+            username = inputhandler("username: ")
+            sql.execute(f"select * from admin where username = '{username}'")
+            row = sql.fetchone()
+
+            if row:
+                columns = [column[0] for column in sql.description()]
+                admin_data = dict(zip(columns, row))
+                while True:
+                    password = inputhandler("password: ", "pw")
+                    if password == admin_data["password"]:
+                        clear()
+                        print(color("Berhasil login\n", "green"))
+                        Admin.menu()
+                        return
+                    else:
+                        print(color("Password salah\n","red"))
+            else:
+                admin_data = {}
+                print(color("Username tidak terdaftar\n", "red"))
+```
+
+Class `Admin` adalah representasi dari administrator dalam sebuah sistem atau aplikasi. Admin memiliki akses dan kekuatan lebih dalam mengelola sistem dibandingkan pengguna biasa. Ini dapat mencakup atribut seperti username, password, role, email, dan metode untuk mengelola sistem, seperti menambah, menghapus, atau memperbarui informasi pengguna dan data lainnya.
+
+Method login digunakan untuk menampilkan perintah terkait login sebelum masuk ke dalam aplikasi, di dalamnya terdapat percabangan(if, elif, else) yang digunakan untuk mengeksekusi kode tertentu hanya jika kondisi tersebut terpenuhi.
+
+1. **Membersihkan terminal**: Method `clear()` dipanggil untuk membersihkan terminal sebelum tampilan login dimulai.
+
+2. **Input Username**: User diminta untuk memasukkan username mereka.
+
+3. **Query Database**: Method execute digunakan untuk menjalankan perintah SQL yang mencari admin dengan username yang cocok dalam tabel admin.
+
+4. **Pengecekan Username**: Jika admin dengan username tersebut ditemukan dalam database, pengguna diminta untuk memasukkan password mereka.
+
+5. **Validasi Password**: Password yang dimasukkan oleh pengguna dibandingkan dengan password yang disimpan dalam database. Jika cocok, pengguna berhasil masuk ke sistem dan menu admin ditampilkan. Jika tidak, pesan kesalahan ditampilkan.
+
+6. **Kondisi untuk Username Tidak Terdaftar**: Jika admin dengan username yang dimasukkan tidak ditemukan dalam database, pesan kesalahan ditampilkan.
+
+</ul>
+
+- Method profil
+<ul>
+
+```py
+def profil():
+        global admin_data
+        sql.execute(f"SELECT * FROM admin WHERE id_admin = '{admin_data['id_admin']}'")
+        row = sql.fetchone()
+        if row:
+            columns = [column[0] for column in sql.description()]
+            admin_data = dict(zip(columns, row))
+
+        print(f"\n{admin_data['username']}")
+        print(f"ID: {admin_data['id_admin']}")
+        print(f"Jabatan: {admin_data['jabatan']}")
+        print("Hak akses: ")
+        if admin_data['jabatan'] == 'admin1':
+            print(color("  Hapus user", "green"))
+            print(color("  Hapus perusahaan", "green"))
+            print(color("  Hapus lowongan", "green"))
+            print(color("  Hapus lamaran", "green"))
+            print(color("  Setujui request lowongan", "green"))
+        elif admin_data['jabatan'] == 'admin2':
+            print(color("  Hapus user", "red"))
+            print(color("  Hapus perusahaan", "red"))
+            print(color("  Hapus lowongan", "green"))
+            print(color("  Hapus lamaran", "green"))
+            print(color("  Setujui request lowongan", "green"))
+        elif admin_data['jabatan'] == 'admin3':
+            print(color("  Hapus user", "red"))
+            print(color("  Hapus perusahaan", "red"))
+            print(color("  Hapus lowongan", "red"))
+            print(color("  Hapus lamaran", "red"))
+            print(color("  Setujui request lowongan", "green"))
+```
+
+Method `profil` digunakan untuk menampilkan profil admin saat ini beserta jabatan dan hak akses yang dimilikinya. Berikut adalah penjelasan singkat tentang fungsi ini:
 
 1. **Query Database**: Fungsi `execute` digunakan untuk menjalankan perintah SQL yang mencari admin dengan ID admin yang sedang aktif dalam tabel admin.
 
@@ -354,31 +549,385 @@ Fungsi `profil` digunakan untuk menampilkan profil admin saat ini beserta jabata
 
 4. **Hak Akses**: Hak akses admin ditampilkan berdasarkan jabatan. Berbagai aksi yang dapat dilakukan oleh admin ditampilkan dengan warna yang sesuai.
 
+</ul>
 
-#(def menu)
+- Method menu
+<ul>
 
-![Screenshot 2024-04-30 214449](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/902725e4-eb36-41e5-a0f0-e493d7d4a32b)
+```py
+    def menu():
+        global admin_data
+        # untuk pas keluar dari profil perusahaan/user
+        global perusahaan_data
+        global user_data
+        while True:
+            pil = choices([
+                "Profil",
+                "Kelola Lowongan",
+                "Kelola User",
+                "Kelola Perusahaan",
+                "Kelola Lamaran",
+                "Keluar"
+            ])
+            if pil == '1':
+                clear()
+                while True:
+                    Admin.profil()
+                    pil = choices([
+                        "Edit data",
+                        "Keluar"
+                    ])
+                    if pil == '1':
+                        fields = {
+                            "Username": ("username", 50),
+                            "Password": ("password", 8)
+                        }
+                        edit('admin', admin_data, fields)
 
-![Screenshot 2024-04-30 214808](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/22bb43e2-d7ee-48b5-807f-daaad7ff84ca)
+                    elif pil == '2':
+                        clear()
+                        break
+                    else:
+                        print("Pilihan tidak valid")
+            elif pil == '2':
+                clear()
+                status = 'all'
+                sort_key = 'id_lowongan'
+                sort_order = 'desc'
+                keyword = None
+                while True:
+                    # status yang kiri itu nama parameter, yang kanan variable
+                    if keyword:
+                        print(f"Hasil untuk '{keyword}'")
+                    if status != 'all':
+                        print("Status:", status)
+                    Lowongan.list(status=status, sort_key=sort_key, sort_order=sort_order, keyword=keyword)
+                    pil = choices([
+                        "Pilih",
+                        "Urutkan",
+                        "Cari",
+                        "List berdasarkan status",
+                        "Kembali"
+                    ])
+                    if pil == '1':
+                        Lowongan.pilih()
+                        clear()
+                        while True:
+                            Lowongan.lihat(selected_lowongan)
+                            if job["id_admin"] is not None:
+                                pil = choices([
+                                    "Kembali",
+                                    color("Hapus lowongan", "red")
+                                ])
+                                if pil == '1':
+                                    clear()
+                                    break
+                                elif pil == '2':
+                                    if admin_data['jabatan'] != 'admin3':
+                                        if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                            sql.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
+                                            # sql.commit()
+                                            clear()
+                                            print("Berhasil menghapus lowongan.")
+                                            break
+                                        else:
+                                            clear()
+                                    else:
+                                        clear()
+                                        print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
+                            else:
+                                pil = choices([
+                                    "Setujui",
+                                    "Kembali",
+                                    color("Hapus lowongan", "red")
+                                ])
+                                if pil == '1':
+                                    sql.execute(f"UPDATE lowongan SET id_admin = {admin_data['id_admin']} WHERE id_lowongan = {job['id_lowongan']}")
+                                    # sql.commit()
+                                    clear()
+                                    print(color("Lowongan berhasil disetujui", "green"))
+                                    break
+                                elif pil == '2':
+                                    clear()
+                                    break
+                                elif pil == '3':
+                                    if admin_data['jabatan'] != 'admin3':
+                                        if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                            sql.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
+                                            # sql.commit()
+                                            clear()
+                                            print("Berhasil menghapus lowongan.")
+                                            break
+                                    else:
+                                        clear()
+                                        print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
+                    elif pil == '2':
+                        clear()
+                        print("\nUrut berdasarkan:")
+                        key = choices([
+                            "Posisi",
+                            "Klasifikasi",
+                            "ID lowongan",
+                            "Rata-rata gaji"
+                        ])
+                        if key == '1':
+                            sort_key = "posisi"
+                        elif key == '2':
+                            sort_key = "klasifikasi"
+                        elif key == '3':
+                            sort_key = "id_lowongan"
+                        elif key == '4':
+                            sort_key = "gaji"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
+                        clear()
+                    elif pil == '3':
+                        keyword = inputhandler("Masukkan keyword: ")
+                        clear()
+                    elif pil == '4':
+                        print("Pilih status")
+                        status = choices([
+                            "all",
+                            "disetujui",
+                            "pending",
+                        ],"opt")
+                        clear()
+                    elif pil == '5':
+                        clear()
+                        break
 
-![Screenshot 2024-04-30 215526](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/ba3f2288-af21-4f5a-aac1-a4f71f23a9ba)
+                        
+            elif pil == '3':
+                clear()
+                sort_key = "nama"
+                sort_order = "asc"
+                keyword = None
+                while True:
+                    if keyword:
+                        print(f"Hasil untuk '{keyword}'")
+                    User.list(sort_key=sort_key, sort_order=sort_order, keyword=keyword)
+                    pil = choices([
+                        "Pilih",
+                        "Urutkan",
+                        "Cari",
+                        "Kembali"
+                    ])
+                    if pil == '1':
+                        User.pilih()
+                        clear()
+                        while True:
+                            User.profil(selected_user)
+                            pil = choices([
+                                "Kembali",
+                                color("Hapus user", "red")
+                            ])
+                            if pil == '1':
+                                clear()
+                                break
+                            elif pil == '2':
+                                if admin_data['jabatan'] == 'admin1':
+                                    if inputhandler(f"Apakah anda yakin ingin menghapus user ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                        sql.execute(f"delete from user where id_user = {user_data['id_user']}")
+                                        # sql.commit()
+                                        clear()
+                                        print("Berhasil menghapus user.")
+                                        break
+                                    else:
+                                        clear()
+                                else:
+                                    clear()
+                                    print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
+                        # supaya gak ke-overwrite jadi akun user
+                        user_data ={}
+                    
+                    elif pil == '2':
+                        clear()
+                        print("\nUrut berdasarkan:")
+                        key = choices(["Nama user", "ID User"])
+                        if key == '1':
+                            sort_key = "nama"
+                        elif key == '2':
+                            sort_key = "id_user"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
+                        clear()
+                    elif pil == '3':
+                        keyword = inputhandler("Masukkan keyword: ")
+                        clear()
+                    elif pil == '4':
+                        clear()
+                        break
+                        
+            elif pil == '4':
+                clear()
+                sort_key = "id_perusahaan"
+                sort_order = "desc"
+                keyword = None
+                while True:
+                    Perusahaan.list(sort_key=sort_key, sort_order=sort_order, keyword=keyword)
+                    pil = choices([
+                        "Pilih",
+                        "Urutkan",
+                        "Cari",
+                        "Kembali"
+                    ])
+                    if pil == '1':
+                        Perusahaan.pilih()
+                        clear()
+                        while True:
+                            Perusahaan.profil(selected_perusahaan)
+                            pil = choices([
+                                "Kembali",
+                                color("Hapus perusahaan", "red")
+                            ])
+                            if pil == '1':
+                                clear()
+                                break
+                            elif pil == '2':
+                                if admin_data['jabatan'] == 'admin1':
+                                    if inputhandler(f"Apakah anda yakin ingin menghapus perusahaan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                        sql.execute(f"delete from perusahaan where id_perusahaan = {perusahaan_data['id_perusahaan']}")
+                                        # sql.commit()
+                                        print("Berhasil menghapus perusahaan.")
+                                        clear()
+                                        break
+                                    else:
+                                        clear()
+                                else:
+                                    clear()
+                                    print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
+                        # supaya gak ke-overwrite jadi akun perusahaan
+                        perusahaan_data = {}
+                        
+                    elif pil == '2':
+                        clear()
+                        print("\nUrut berdasarkan:")
+                        key = choices([
+                            "Nama perusahaan",
+                            "Alamat perusahaan",
+                            "ID perusahaan"
+                        ])
+                        if key == '1':
+                            sort_key = "nama_perusahaan"
+                        elif key == '2':
+                            sort_key = "alamat_perusahaan"
+                        elif key == '3':
+                            sort_key = "id_perusahaan"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
+                        clear()
+                    elif pil == '3':
+                        keyword = inputhandler("\nMasukkan keyword: ")
+                        clear()
+                    elif pil == '4':
+                        clear()
+                        break
 
-![Screenshot 2024-04-30 215643](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/2541406d-6adb-469c-86e2-34425123941d)
+            
+            elif pil == '5':
+                clear()
+                sort_key = 'id_lamaran'
+                sort_order = 'desc'
+                keyword = None
+                while True:
+                    Lamaran.list(sort_key=sort_key, sort_order=sort_order, keyword=keyword)
+                    pil = choices([
+                        "Pilih",
+                        "Urutkan",
+                        "Cari",
+                        "Kembali"
+                    ])
+                    if pil == '1':
+                        Lamaran.pilih()
+                        clear()
+                        while True:
+                            Lamaran.lihat(selected_lamaran)
+                            pil = choices([
+                                "Kembali",
+                                color("Hapus lamaran", "red")
+                            ])
+                            if pil == '1':
+                                break
+                            elif pil == '2':
+                                if admin_data['jabatan'] != 'admin3':
+                                    if inputhandler(f"Apakah anda yakin ingin menghapus lamaran ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                        sql.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
+                                        # sql.commit()
+                                        clear()
+                                        print("Berhasil menghapus lamaran.")
+                                        break
+                                    else:
+                                        clear()
+                                        break
+                                else:
+                                    clear()
+                                    print(color("Anda tidak memiliki hak akses untuk menghapus data ini.\n", "red"))
 
-![Screenshot 2024-04-30 220010](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/a3e9bbb6-e9ab-4599-858d-040453ada25b)
+                    elif pil == '2':
+                        clear()
+                        print("\nUrut berdasarkan:")
+                        key = choices([
+                            "Nama pelamar",
+                            "Nama perusahaan",
+                            "Posisi pekerjaan",
+                            "ID lamaran",
+                            "ID user",
+                            "ID perusahaan",
+                            "ID lowongan"
+                        ])
+                        if key == '1':
+                            sort_key = "nama"
+                        elif key == '2':
+                            sort_key = "nama_perusahaan"
+                        elif key == '3':
+                            sort_key = "posisi"
+                        elif key == '4':
+                            sort_key = "id_lamaran"
+                        elif key == '5':
+                            sort_key = "id_user"
+                        elif key == '6':
+                            sort_key = "id_perusahaan"
+                        elif key == '7':
+                            sort_key = "id_lowongan"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
+                        print(sort_key, sort_order)
+                        clear()
+                    elif pil == '3':
+                        keyword = inputhandler("\nMasukkan keyword: ")
+                        clear()
+                    elif pil == '4':
+                        clear()
+                        break
 
-![Screenshot 2024-04-30 221312](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/415cc76d-824c-4e5c-87d1-c0eaa57e089f)
+            
+            elif pil == '6':
+                clear()
+                admin_data = {}
+                break
+```
 
-![Screenshot 2024-04-30 221348](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/1f55d7d4-5bfd-4707-9a15-272eb72a60fd)
-
-![Screenshot 2024-04-30 221409](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/5a8455ab-fa6a-4170-a37d-da994e80eb76)
-
-![Screenshot 2024-04-30 221435](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/21465ca6-bbf0-4a9a-a02e-ae6b5f5a9e83)
-
-![Screenshot 2024-04-30 221453](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144904706/5893813a-6003-4e1e-bdba-000aede6ec09)
-
-
-Fungsi `menu` adalah bagian dari sistem yang bertanggung jawab untuk menampilkan menu utama admin, memungkinkan mereka untuk memilih dan melakukan berbagai tindakan terkait manajemen sistem. Berikut adalah penjelasan singkat tentang fungsi ini:
+Method `menu` adalah bagian dari sistem yang bertanggung jawab untuk menampilkan menu utama admin, memungkinkan mereka untuk memilih dan melakukan berbagai tindakan terkait manajemen sistem. Berikut adalah penjelasan singkat tentang fungsi ini:
 
 1. **Tampilan Menu Utama**: Fungsi `choices` digunakan untuk menampilkan pilihan menu utama kepada admin. Admin dapat memilih dari berbagai opsi, seperti melihat profil, mengelola lowongan, mengelola user, mengelola perusahaan, mengelola lamaran, atau keluar dari sistem.
 
@@ -394,13 +943,45 @@ Fungsi `menu` adalah bagian dari sistem yang bertanggung jawab untuk menampilkan
 
 7. **Keluar dari Menu**: Admin dapat memilih opsi "Keluar" dari menu utama untuk keluar dari sistem.
 
--Class User
+</ul>
 
-#(def register)
+#### Class User
 
-![Screenshot 2024-04-30 231026](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/78a62591-a78f-4406-8086-7f320a2f6528)
+- Method register
+<ul>
 
-Fungsi `register` dalam kelas `User` bertujuan untuk memungkinkan pengguna untuk mendaftar ke dalam sistem. Berikut penjelasan singkat tentang fungsi ini:
+```py
+class User:
+    def register():
+        global user_data
+        sql.execute("select email from user")
+        emails = [row[0] for row in sql.fetchall()]
+        email = inputhandler("Masukkan email anda: ", min=11, max=25)
+        if email not in emails:
+            password = inputhandler("Masukkan password: ", "pw", min=1, max=8)
+            nama = inputhandler("Masukkan nama anda: ", min=1, max=25)
+            print("Pilih jenis kelamin anda:")
+            jenis_kelamin = choices(["Laki-laki", "Perempuan"], "opt")
+            no_telp = inputhandler("Masukkan nomor telepon anda: ", "digit", min=10, max=15)
+            pendidikan = inputhandler("Masukkan pendidikan terakhir anda: ", min=2, max=25)
+            alamat = inputhandler("Masukkan alamat anda: ", min=11, max=30)
+            pengalaman = inputhandler("Masukkan pengalaman anda: ", min=5, max=500)
+            keahlian = inputhandler("Masukkan keahlian anda: ", min=5, max=80)
+            sql.execute(f"insert into user values(NULL, '{nama}', '{password}', '{email}', '{no_telp}', '{pendidikan}', '{pengalaman}', '{keahlian}', '{jenis_kelamin}', '{alamat}')")
+            sql.commit()
+            sql.execute(f"SELECT * FROM user WHERE id_user = {sql.cursor.lastrowid}")
+            row = sql.fetchone()
+            columns = [column[0] for column in sql.description()]
+            user_data = dict(zip(columns, row))
+            clear()
+            print(color("Akun berhasil dibuat", "green"))
+            User.menu()
+        else:
+            clear()
+            print(color("Email sudah dipakai. Silahkan gunakan email lain\n", "red"))
+```
+
+Method `register` dalam kelas `User` bertujuan untuk memungkinkan pengguna untuk mendaftar ke dalam sistem. Berikut penjelasan singkat tentang fungsi ini:
 
 1. **Input Data**: Pengguna diminta untuk memasukkan informasi pribadi seperti email, password, nama, jenis kelamin, nomor telepon, pendidikan, alamat, pengalaman, dan keahlian.
 
@@ -414,27 +995,85 @@ Fungsi `register` dalam kelas `User` bertujuan untuk memungkinkan pengguna untuk
 
 Ini adalah kerangka umum dari fungsi `register` yang memanfaatkan berbagai fungsi bantuan seperti `inputhandler` (untuk validasi input) dan `choices` (untuk memilih jenis kelamin). Fungsi-fungsi lainnya terkait dengan operasi basis data seperti eksekusi perintah SQL dan manipulasi data yang diperlukan untuk pendaftaran pengguna.
 
+</ul>
 
-#(def login)
+- Method login
+<ul>
 
-![Screenshot 2024-04-30 231630](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/836500a8-de00-4244-8b9a-140350c17e89)
+```py
+    def login():
+        global user_data
+        print("\nLogin user")
+        while True:
+            email = inputhandler("email: ")
+            sql.execute(f"SELECT * FROM user WHERE email = '{email}'")
+            row = sql.fetchone()
+            columns = [column[0] for column in sql.description()]
 
+            if row:
+                user_data = dict(zip(columns, row))
+                while True:
+                    password = inputhandler("password: ", "pw")
+                    if password == user_data["password"]:
+                        clear()
+                        print(color(f"Selamat datang {user_data['nama']}!\n", "green"))
+                        User.menu()
+                        return
+                    else:
+                        print("Password salah")
+            else:
+                user_data = {}
+                print("Email tidak terdaftar")
+```
 
-Fungsi login dalam kelas User bertujuan untuk memungkinkan pengguna untuk masuk ke dalam sistem. Berikut penjelasan lebih detail tentang fungsi ini:
+Method login dalam kelas User bertujuan untuk memungkinkan pengguna untuk masuk ke dalam sistem. Berikut penjelasan lebih detail tentang fungsi ini:
 
-Input Data: Pengguna diminta untuk memasukkan email dan password mereka menggunakan fungsi inputhandler. Ini membantu memastikan bahwa input yang dimasukkan sesuai dengan format yang diinginkan.
+1. Input Data: Pengguna diminta untuk memasukkan email dan password mereka menggunakan fungsi inputhandler. Ini membantu memastikan bahwa input yang dimasukkan sesuai dengan format yang diinginkan.
 
-Query Database: Sistem menggunakan perintah SQL untuk mencari pengguna berdasarkan email yang dimasukkan. Ini dilakukan dengan pernyataan SELECT yang mencocokkan email yang dimasukkan pengguna dengan email yang ada dalam tabel user.
+2. Query Database: Sistem menggunakan perintah SQL untuk mencari pengguna berdasarkan email yang dimasukkan. Ini dilakukan dengan pernyataan SELECT yang mencocokkan email yang dimasukkan pengguna dengan email yang ada dalam tabel user.
 
-Validasi Pengguna: Jika email yang dimasukkan oleh pengguna ditemukan dalam database, sistem membandingkan password yang dimasukkan oleh pengguna dengan password yang tersimpan dalam database. Jika keduanya cocok, pengguna dianggap berhasil masuk.
+3. Validasi Pengguna: Jika email yang dimasukkan oleh pengguna ditemukan dalam database, sistem membandingkan password yang dimasukkan oleh pengguna dengan password yang tersimpan dalam database. Jika keduanya cocok, pengguna dianggap berhasil masuk.
 
-Tindakan Setelah Login: Jika login berhasil, pengguna diberikan pesan selamat datang yang mencakup nama pengguna, dan kemudian diarahkan ke menu utama menggunakan fungsi User.menu().
+4. Tindakan Setelah Login: Jika login berhasil, pengguna diberikan pesan selamat datang yang mencakup nama pengguna, dan kemudian diarahkan ke menu utama menggunakan fungsi User.menu().
 
-#(def profil)
+</ul>
 
-![Screenshot 2024-04-30 232057](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/504c6c37-4964-4144-b61b-e2eea969ed08)
+- Method profil
+<ul>
 
-Fungsi `profil` dalam kelas `User` bertujuan untuk menampilkan profil pengguna. Berikut adalah penjelasan singkat tentang fungsi ini:
+```py
+    def profil(user_id=None):
+        global user_data
+        
+        # jaga-jaga
+        if user_id is None:
+            if not user_data:
+                print("Tidak ada pengguna yang terdaftar. Silakan login terlebih dahulu.")
+                return
+            user_id = user_data.get('id_user')
+
+        sql.execute(f"SELECT * FROM user WHERE id_user = {user_id}")
+        row = sql.fetchone()
+        if not row:
+            print("User dengan ID tersebut tidak ditemukan")
+            return
+
+        columns = [column[0] for column in sql.description()]
+        user_data = dict(zip(columns, row))
+
+        print(f"\n{user_data['nama']}")
+        if admin_data:
+            print(f"{user_data['id_user']}")
+        print(f"Jenis kelamin: {user_data['jenis_kelamin']}")
+        print(f"Alamat: {user_data['alamat']}")
+        print(f"Email: {user_data['email']}")
+        print(f"Nomor telepon: {user_data['no_telp']}")
+        print(f"\nPendidikan terakhir: {user_data['pendidikan']}")
+        print(f"Pengalaman:\n{user_data['pengalaman']}")
+        print(f"Keahlian:\n{user_data['keahlian']}")
+```
+
+Method `profil` dalam kelas `User` bertujuan untuk menampilkan profil pengguna. Berikut adalah penjelasan singkat tentang fungsi ini:
 
 1. **Parameter Opsional**: Fungsi ini menerima parameter opsional `user_id`, yang merupakan ID pengguna yang ingin ditampilkan profilnya. Jika tidak ada `user_id` yang diberikan, fungsi akan mencoba menggunakan `user_data` global, yang berisi informasi pengguna yang saat ini login.
 
@@ -444,10 +1083,42 @@ Fungsi `profil` dalam kelas `User` bertujuan untuk menampilkan profil pengguna. 
 
 4. **Menampilkan Profil**: Setelah mendapatkan informasi pengguna dari database, profil pengguna ditampilkan dengan menggunakan data yang ditemukan, seperti nama, jenis kelamin, alamat, email, nomor telepon, pendidikan terakhir, pengalaman, dan keahlian.
 
+</ul>
 
-#(def list)
+- Method list
+<ul>
 
-![Screenshot 2024-04-30 232521](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/d09eabe0-f0ac-4481-b9e2-6f8047e3185c)
+```py
+    def list(sort_key="id_user", sort_order='asc', keyword=None):
+        global users
+        global user
+        sql.execute("select u.nama, u.email, u.id_user from user as u")
+        rows = sql.fetchall()
+        columns = [column[0] for column in sql.description()]
+        users = LinkedList()
+
+        # ubah data tiap user jadi dictionary
+        for row in rows:
+            # bikin dictionary dari row data pakai nama kolom
+            row_data = dict(zip(columns, row))
+            # append dictionary ke list
+            users.append(row_data)
+        
+        users = quicksort(users, sort_key, sort_order)
+        if keyword:
+            users = jumpsearch(users, keyword)
+
+        if len(users) > 0:
+            # PrettyTable for perusahaan_data
+            table = PrettyTable(["#", "Nama", "Email", "ID"])
+
+            for i, user in enumerate(users, start=1):
+                table.add_row([color(i, 'orange'), user['nama'], user['email'], user['id_user']])
+            
+            print(table)
+        else:
+            print("Tidak ada user untuk ditampilkan")
+```
 
 Fungsi `list` dalam kelas `User` bertujuan untuk menampilkan daftar pengguna dalam format yang rapi. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -461,12 +1132,24 @@ Fungsi `list` dalam kelas `User` bertujuan untuk menampilkan daftar pengguna dal
 
 5. **Penanganan Kasus Kosong**: Jika tidak ada pengguna yang ditemukan atau daftar pengguna kosong, pesan yang sesuai dicetak untuk memberi tahu pengguna bahwa tidak ada data yang tersedia untuk ditampilkan.
 
+</ul>
 
-#(def pilih)
+- Method pilih
+<ul>
 
-![Screenshot 2024-04-30 232723](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/fb0744f5-746b-4590-816d-d1bf544926f4)
+```py
+    def pilih():
+        global selected_user
+        while True:
+            idx = inputhandler("Pilih: ", "int")-1
+            if idx < len(users):
+                selected_user = users[idx]['id_user']
+                break
+            else:
+                print("Nomor tidak valid")
+```
 
- Fungsi `pilih` bertujuan untuk memungkinkan pengguna memilih satu dari daftar pengguna yang ditampilkan. Berikut adalah penjelasan singkat tentang fungsi ini:
+Method `pilih` bertujuan untuk memilih satu dari daftar pengguna yang ditampilkan sebagai ID user. Berikut adalah penjelasan singkat tentang fungsi ini:
 
 1. **Pemilihan Pengguna**: Pengguna diminta untuk memasukkan nomor yang terkait dengan pengguna yang ingin mereka pilih dari daftar yang ditampilkan.
 
@@ -476,14 +1159,114 @@ Fungsi `list` dalam kelas `User` bertujuan untuk menampilkan daftar pengguna dal
 
 4. **Penanganan Kasus Tidak Valid**: Jika nomor yang dimasukkan tidak valid (misalnya, di luar rentang nomor yang tersedia), pesan yang sesuai dicetak untuk memberi tahu pengguna bahwa nomor tersebut tidak valid.
 
+</ul>
 
-#(def menu)
+- Method menu
+<ul>
 
-![Screenshot 2024-04-30 233034](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/71374dd0-80ab-4369-b671-f35c19628da0)
+```py
+    def menu():
+        global user_data
+        while True:
+            pil = choices([
+                "Profil",
+                "Lihat Lowongan",
+                "Keluar"
+            ])
+            if pil == '1':
+                clear()
+                while True:
+                    User.profil()
+                    pil = choices([
+                        "Edit Data",
+                        "Keluar"
+                    ])
+                    if pil == '1':
+                        fields = {
+                            "Nama": ("nama", 25),
+                            "Jenis kelamin": ("jenis_kelamin", 10),
+                            "Alamat": ("alamat", 30),
+                            "Email": ("email", 25),
+                            "Password": ("password", 8),
+                            "Nomor telepon": ("no_telp", 15),
+                            "Pendidikan": ("pendidikan", 30),
+                            "Pengalaman": ("pengalaman", 500),
+                            "Keahlian": ("keahlian", 80)
+                        }
+                        edit('user', user_data, fields)
 
-![Screenshot 2024-04-30 233106](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/c9539fea-4f36-425a-bdb6-780106a68e40)
-
-![Screenshot 2024-04-30 233121](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/3fca0691-5537-463b-bba4-ab31f8546700)
+                    elif pil == '2':
+                        clear()
+                        break
+                    else:
+                        print("Pilihan tidak valid")
+            elif pil == '2':
+                clear()
+                sort_key = "id_lowongan"
+                sort_order = "desc"
+                keyword = None
+                while True:
+                    Lowongan.list(status="disetujui", sort_key=sort_key, sort_order=sort_order, keyword=keyword)
+                    pil = choices([
+                        "Pilih",
+                        "Urutkan",
+                        "Cari",
+                        "Kembali"
+                    ])
+                    if pil == '1':
+                        Lowongan.pilih()
+                        clear()
+                        Lowongan.lihat(selected_lowongan)
+                        while True:
+                            pil = choices([
+                                "Lamaran cepat",
+                                "Kembali"
+                            ])
+                            if pil == '1':
+                                clear()
+                                Lamaran.submit()
+                                clear()
+                                break
+                            elif pil == '2':
+                                clear()
+                                break
+                    elif pil == '2':
+                        clear()
+                        # 'Waktu ditambahkan' itu pakai ID hehe
+                        print("\nUrut berdasarkan:")
+                        key = choices([
+                            "Posisi",
+                            "Klasifikasi",
+                            "Waktu ditambahkan",
+                            "Rata-rata gaji"
+                        ])
+                        if key == '1':
+                            sort_key = "posisi"
+                        elif key == '2':
+                            sort_key = "klasifikasi"
+                        elif key == '3':
+                            sort_key = "id_lowongan"
+                        elif key == '4':
+                            sort_key = "gaji"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
+                        clear()
+                    elif pil == '3':
+                        keyword = inputhandler("Keyword: ")
+                        clear()
+                    elif pil == '4':
+                        clear()
+                        break
+            elif pil == '3':
+                clear()
+                user_data = {}
+                break
+```
 
 Fungsi `menu` dalam kelas `User` bertujuan untuk menyediakan menu interaktif bagi pengguna. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -497,16 +1280,41 @@ Fungsi `menu` dalam kelas `User` bertujuan untuk menyediakan menu interaktif bag
 
 5. **Penanganan Kasus Tidak Valid**: Fungsi ini memeriksa apakah opsi yang dipilih oleh pengguna valid. Jika pengguna memasukkan opsi yang tidak valid, pesan yang sesuai dicetak untuk memberi tahu mereka bahwa opsi tersebut tidak valid.
 
+</ul>
 
 
+#### Class perusahaan
 
--Class Perusahaan
+- Method register
+<ul>
 
-#(def register)
+```py
+class Perusahaan:
+    def register():
+        global perusahaan_data
+        sql.execute("select email_perusahaan from perusahaan")
+        emails = [row[0] for row in sql.fetchall()]
+        email = inputhandler("Masukkan email perusahaan anda: ", min=11, max=50)
+        if email not in emails:
+            password = inputhandler("Masukkan password: ", "pw", min=1, max=8)
+            nama_perusahaan = inputhandler("Masukkan nama perusahaan: ", min=1, max=25)
+            no_telp = inputhandler("Masukkan nomor telepon perusahaan: ", "digit", min=10, max=15)
+            alamat = inputhandler("Masukkan alamat perusahaan: ", min=11, max=30)
+            sql.execute(f"insert into perusahaan values(NULL, '{nama_perusahaan}', '{password}', '{no_telp}', '{email}', '{alamat}')")
+            sql.commit()
+            sql.execute(f"SELECT * FROM perusahaan WHERE id_perusahaan = {sql.cursor.lastrowid}")
+            row = sql.fetchone()
+            columns = [column[0] for column in sql.description()]
+            perusahaan_data = dict(zip(columns, row))
+            clear()
+            print(color("Akun berhasil dibuat", "green"))
+            Perusahaan.menu()
+        else:
+            clear()
+            print(color("Email sudah dipakai. Silahkan gunakan email lain\n", "red"))
+```
 
-![Screenshot 2024-04-30 233624](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/a2e87d87-f745-4556-9532-cc4af2f7bad8)
-
-Fungsi `register` dalam kelas `Perusahaan` bertujuan untuk memungkinkan perusahaan untuk mendaftar dan membuat akun baru dalam sistem. Berikut adalah penjelasan singkat tentang fungsi ini:
+Menthod `register` dalam kelas `Perusahaan` bertujuan untuk memungkinkan perusahaan untuk mendaftar dan membuat akun baru dalam sistem. Berikut adalah penjelasan singkat tentang method ini:
 
 1. **Input Data**: Perusahaan diminta untuk memasukkan email, password, nama perusahaan, nomor telepon, dan alamat perusahaan mereka.
 
@@ -518,9 +1326,36 @@ Fungsi `register` dalam kelas `Perusahaan` bertujuan untuk memungkinkan perusaha
 
 Fungsi ini memungkinkan perusahaan untuk mendaftar dengan mudah dalam sistem, memungkinkan mereka untuk mengakses fitur-fitur dan fungsionalitas yang disediakan. Ini adalah proses penting dalam memungkinkan perusahaan untuk memanfaatkan layanan yang ditawarkan oleh platform.
 
-#(def login)
+</ul>
 
-![Screenshot 2024-04-30 233927](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/73433aaf-8c3f-42fc-88e8-110225a59a88)
+- Method login
+<ul>
+
+```py
+    def login():
+        global perusahaan_data
+        print("\nLogin menggunakan akun perusahaan")
+        while True:
+            email = inputhandler("email: ")
+            sql.execute(f"select * from perusahaan where email_perusahaan = '{email}'")
+            row = sql.fetchone()
+            columns = [column[0] for column in sql.description()]
+
+            if row:
+                perusahaan_data = dict(zip(columns, row))
+                while True:
+                    password = inputhandler("password: ", "pw")
+                    if password == perusahaan_data["password"]:
+                        clear()
+                        print(color("Berhasil login!\n", "green"))
+                        Perusahaan.menu()
+                        return
+                    else:
+                        print("password salah")
+            else:
+                perusahaan_data = {}
+                print("email gak terdaftar")
+```
 
 Fungsi `login` dalam kelas `Perusahaan` bertujuan untuk memungkinkan perusahaan untuk masuk ke dalam sistem menggunakan akun mereka. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -534,10 +1369,33 @@ Fungsi `login` dalam kelas `Perusahaan` bertujuan untuk memungkinkan perusahaan 
 
 Fungsi ini memungkinkan perusahaan untuk masuk ke dalam sistem dengan menggunakan akun mereka, memberikan akses ke berbagai fitur dan fungsionalitas yang tersedia. Ini adalah langkah penting dalam memungkinkan perusahaan untuk mengelola informasi dan melakukan tindakan yang sesuai dengan kebutuhan bisnis mereka.
 
+</ul>
 
-#(def profil)
+- Method profil
+<ul>
 
-![Screenshot 2024-04-30 234113](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/c9ab32b8-9a4b-4c12-911c-eabc025760fe)
+```py
+    def profil(perusahaan_id=None):
+        global perusahaan_data
+        
+        if perusahaan_id is None:
+            # jaga-jaga
+            if not perusahaan_data:
+                print("Tidak ada perusahaan yang terdaftar. Silakan login terlebih dahulu.")
+                return
+            else:
+                perusahaan_id = perusahaan_data['id_perusahaan']
+
+        sql.execute(f"SELECT * FROM perusahaan WHERE id_perusahaan = {perusahaan_id}")
+        row = sql.fetchone()
+        columns = [column[0] for column in sql.description()]
+        perusahaan_data = dict(zip(columns, row))
+
+        print(f"\n{color(perusahaan_data['nama_perusahaan'], 'cyan')}")
+        print(f"alamat: {perusahaan_data['alamat_perusahaan']}")
+        print(f"email: {perusahaan_data['email_perusahaan']}")
+        print(f"nomor telepon: {perusahaan_data['no_telp']}")
+```
 
 Fungsi `profil` dalam kelas `Perusahaan` bertujuan untuk menampilkan profil perusahaan yang sedang aktif. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -549,9 +1407,43 @@ Fungsi `profil` dalam kelas `Perusahaan` bertujuan untuk menampilkan profil peru
 
 Fungsi ini memungkinkan perusahaan untuk melihat informasi profil mereka sendiri atau profil perusahaan lain jika `perusahaan_id` disediakan. Ini membantu perusahaan untuk memeriksa dan memperbarui informasi yang terkait dengan bisnis mereka.
 
-#(def list)
+</ul>
 
-![Screenshot 2024-04-30 234307](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/0cd3900c-3dd6-46cd-93c5-bb90c94019d1)
+- Method list
+<ul>
+
+```py
+    def list(sort_key='id_perusahaan', sort_order='desc', keyword=None):
+        global companies
+        global perusahaan
+        
+        sql.execute('''
+            select p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan
+            from perusahaan as p
+        ''')
+        rows = sql.fetchall()
+        columns = [column[0] for column in sql.description()]
+        companies = LinkedList()
+
+        # ubah datanya jadi dictionary
+        for row in rows:
+            # bikin dictionary dari row data pakai nama kolom
+            row_data = dict(zip(columns, row))
+            companies.append(row_data)
+        
+        companies = quicksort(companies, sort_key, sort_order)
+        if keyword:
+            companies = jumpsearch(companies, keyword)
+
+        if len(companies) > 0:
+            for i, perusahaan in enumerate(companies, start=1):
+                print(f"[{color(i, 'orange')}] {color(perusahaan['nama_perusahaan'], 'cyan')}")
+                print(f"    {perusahaan['email_perusahaan']}")
+                print(f"    ID: {perusahaan['id_perusahaan']}")
+                print('-'*30)
+        else:
+            print("Tidak ada perusahaan untuk ditampilkan")
+```
 
 Fungsi `list` dalam kelas `Perusahaan` bertujuan untuk menampilkan daftar perusahaan yang ada dalam sistem. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -565,9 +1457,22 @@ Fungsi `list` dalam kelas `Perusahaan` bertujuan untuk menampilkan daftar perusa
 
 Fungsi ini memungkinkan pengguna untuk melihat daftar perusahaan yang terdaftar dalam sistem, memberikan visibilitas tentang perusahaan-perusahaan yang ada.
 
-#(def pilih)
+</ul>
 
-![Screenshot 2024-04-30 234502](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/97616e22-c6ac-4d9a-9e79-211f582723ae)
+- Method pilih
+<ul>
+
+```py
+    def pilih():
+        global selected_perusahaan
+        while True:
+            idx = inputhandler("Masukkan nomor urut perusahaan: ", "int")-1
+            if idx < len(companies):
+                selected_perusahaan = companies[idx]['id_perusahaan']
+                break
+            else:
+                print("Nomor tidak valid")
+```
 
 Fungsi `pilih` dalam kelas `Perusahaan` bertujuan untuk memungkinkan pengguna memilih sebuah perusahaan dari daftar perusahaan yang ditampilkan. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -579,17 +1484,204 @@ Fungsi `pilih` dalam kelas `Perusahaan` bertujuan untuk memungkinkan pengguna me
 
 Fungsi ini memastikan bahwa pengguna dapat memilih perusahaan yang tepat dari daftar yang ditampilkan dengan memvalidasi nomor yang dimasukkan dan menyimpan pilihan mereka untuk penggunaan selanjutnya.
 
-#(def menu)
+</ul>
 
-![Screenshot 2024-04-30 234651](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/1c1c2b1a-be56-475f-896d-bc7eff78a52b)
+- Method menu
+<ul>
 
-![Screenshot 2024-04-30 234722](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/1f3707b7-118e-41e9-9bb2-60c2baeda108)
+```py
+    def menu():
+        global perusahaan_data
+        while True:
+            pil = choices([
+                "Cek lamaran",
+                "Lihat profil perusahaan",
+                "Kelola lowongan",
+                "Keluar"
+            ])
+            if pil == '1':
+                clear()
+                sort_key = 'id_lamaran'
+                sort_order = 'desc'
+                keyword = None
+                while True:
+                    Lamaran.list(sort_key=sort_key, sort_order=sort_order, keyword=keyword)
+                    pil = choices([
+                        "Pilih",
+                        "Urutkan",
+                        "Cari",
+                        "Kembali"
+                    ])
+                    if pil == '1':
+                        Lamaran.pilih()
+                        clear()
+                        Lamaran.lihat(selected_lamaran)
+                        while True:
+                            pil = choices([
+                                "Kembali",
+                                color("Hapus lamaran", "red")
+                            ])
+                            if pil == '1':
+                                clear()
+                                break
+                            elif pil == '2':
+                                if inputhandler(f"Apakah anda yakin ingin menghapus lamaran ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                    sql.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
+                                    sql.commit()
+                                    print("Berhasil menghapus lamaran.")
+                                    break
+                                else:
+                                    clear()
+                    elif pil == '2':
+                        clear()
+                        print("\nUrut berdasarkan:")
+                        key = choices([
+                            "Nama pelamar",
+                            "Posisi pekerjaan",
+                            "Waktu melamar"
+                        ])
+                        if key == '1':
+                            sort_key = "nama"
+                        elif key == '2':
+                            sort_key = "posisi"
+                        elif key == '3':
+                            sort_key = "id_lamaran"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
+                        clear()
+                    elif pil == '3':
+                        keyword = inputhandler("Masukkan keyword: ")
+                        clear()
+                    elif pil == '4':
+                        clear()
+                        break
 
-![Screenshot 2024-04-30 234739](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/07bb5637-a21f-4841-841e-674091ab52b1)
+            elif pil == '2':
+                clear()
+                while True:
+                    Perusahaan.profil()
+                    pil = choices([
+                        "Edit data",
+                        "Kembali"
+                    ])
+                    if pil == '1':
+                        fields = {
+                            "Nama perusahaan": ("nama_perusahaan", 50),
+                            "Email perusahaan": ("email_perusahaan", 50),
+                            "Password": ("password", 8),
+                            "Alamat perusahaan": ("alamat_perusahaan", 255),
+                        }
+                        edit('perusahaan', perusahaan_data, fields)
+                    elif pil == '2':
+                        clear()
+                        break
+                    
+            elif pil == '3':
+                clear()
+                sort_key = 'id_lowongan'
+                sort_order = 'desc'
+                keyword = None
+                while True:
+                    Lowongan.list(sort_key=sort_key, sort_order=sort_order, keyword=keyword)
+                    pil = choices([
+                        "Pilih",
+                        "Urutkan",
+                        "Cari",
+                        "Submit Lowongan Baru",
+                        "Kembali"
+                    ])
+                    if pil == '1':
+                        Lowongan.pilih()
+                        clear()
+                        while True:
+                            Lowongan.lihat(selected_lowongan)
+                            pil = choices([
+                                "Edit",
+                                "Kembali",
+                                color("Hapus lowongan", "red")
+                            ])
+                            if pil == '1':
+                                fields = {
+                                    "Posisi pekerjaan": ("posisi", 50),
+                                    "Klasifikasi pekerjaan": ("klasifikasi", 100),
+                                    "Tipe pekerjaan": ("tipe", 15, 'tipe_choices'),
+                                    "Deskripsi": ("deskripsi", 500),
+                                    "Ketentuan": ("ketentuan", 500),
+                                    "gaji": ("gaji", 11, 'int')
+                                }
+                                edit('lowongan', job, fields)
+                            if pil == '2':
+                                clear()
+                                break
+                            elif pil == '3':
+                                if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
+                                    sql.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
+                                    sql.commit()
+                                    clear()
+                                    print("Berhasil menghapus lowongan.")
+                                    break
+                                else:
+                                    clear()
+                            
+                    elif pil == '2':
+                        clear()
+                        print("\nUrut berdasarkan:")
+                        key = choices([
+                            "Posisi",
+                            "Klasifikasi",
+                            "Waktu ditambahkan",
+                            "Rata-rata gaji"
+                        ])
+                        if key == '1':
+                            sort_key = "posisi"
+                        elif key == '2':
+                            sort_key = "klasifikasi"
+                        elif key == '3':
+                            sort_key = "id_lowongan"
+                        elif key == '4':
+                            sort_key = "gaji"
+                        
+                        print("\nUrutan:")
+                        order = choices(["Ascending", "Descending"])
+                        if order == '1':
+                            sort_order = "asc"
+                        elif order == '2':
+                            sort_order = "desc"
+                        clear()
+                    elif pil == '3':
+                        keyword = inputhandler("Masukkan keyword: ")
+                        clear()
+                    elif pil == '4':
+                        clear()
+                        posisi = inputhandler("Posisi pekerjaan: ", max=50)
+                        klasifikasi = inputhandler("Klasifikasi pekerjaan: ", max=100)
+                        tipe = choices([
+                            "Full time",
+                            "Paruh waktu",
+                            "Kontrak"
+                        ], 'opt')
+                        deskripsi = inputhandler("Deskripsi pekerjaan: ", max=500)
+                        ketentuan = inputhandler("ketentuan pekerjaan: ", max=500)
+                        gaji = inputhandler("Gaji pekerjaan: ", "int", 11)
 
-![Screenshot 2024-04-30 234759](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/c094accf-1563-4121-9de9-ab13243aa19b)
-
-![Screenshot 2024-04-30 234856](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/d37eaede-dba2-4bde-8749-4193d3b9cc89)
+                        sql.execute(f"insert into lowongan values (NULL, '{perusahaan_data['id_perusahaan']}', NULL, '{klasifikasi}', '{tipe}', '{deskripsi}', '{posisi}', '{ketentuan}', '{gaji}')")
+                        clear()
+                        sql.commit()
+                        print(color("Lowongan berhasil disubmit. Silahkan tunggu disetujui admin", "green"))
+                    elif pil == '5':
+                        clear()
+                        break
+            
+            elif pil == '4':
+                clear()
+                perusahaan_data = {}
+                break
+```
 
 Fungsi `menu` dalam kelas `Perusahaan` adalah menu utama yang memungkinkan perusahaan untuk mengelola berbagai aspek dalam sistem. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -603,16 +1695,119 @@ Fungsi `menu` dalam kelas `Perusahaan` adalah menu utama yang memungkinkan perus
 
 Fungsi ini memungkinkan perusahaan untuk mengelola berbagai aspek dari akun mereka dalam sistem dengan cara yang terstruktur dan mudah dipahami.
 
+</ul>
 
--Class Lowongan
 
-#(def list)
+#### Class Lowongan
 
-![Screenshot 2024-04-30 235929](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/f506bd6b-21f8-4864-8691-4f29e57c5bba)
+<ul>
 
-![Screenshot 2024-04-30 235952](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/59f741d9-bfe3-4938-bc4a-b4da931385b4)
+```py
+class Lowongan:
+    def list(id_perusahaan=None, status='all', sort_key='id_lowongan', sort_order='desc', keyword=None):
+        global jobs
+        global job
+        # admin
+        if id_perusahaan is not None:
+            sql.execute(
+                f'''
+                SELECT lowongan.*, p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan, a.id_admin, a.username
+                FROM lowongan 
+                INNER JOIN perusahaan AS p ON lowongan.id_perusahaan = p.id_perusahaan
+                INNER JOIN admin AS a ON lowongan.id_admin = a.id_admin 
+                WHERE id_perusahaan = {id_perusahaan}
+                '''
+            )
+        # admin/user
+        elif not perusahaan_data:
+            if status == "all":
+                sql.execute(
+                    '''
+                    select lowongan.*, p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan, a.id_admin, a.username
+                    from lowongan
+                    INNER JOIN perusahaan AS p ON lowongan.id_perusahaan = p.id_perusahaan 
+                    LEFT JOIN admin AS a ON lowongan.id_admin = a.id_admin
+                    '''
+                )
+            elif status == "disetujui":
+                sql.execute(
+                    '''
+                    select lowongan.*, p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan, a.id_admin, a.username
+                    from lowongan 
+                    INNER JOIN perusahaan AS p ON lowongan.id_perusahaan = p.id_perusahaan 
+                    INNER JOIN admin AS a ON lowongan.id_admin = a.id_admin
+                    '''
+                )
+            elif status == "pending":
+                sql.execute(
+                    '''
+                    select lowongan.*, p.id_perusahaan, p.nama_perusahaan, p.no_telp, p.email_perusahaan, p.alamat_perusahaan
+                    from lowongan 
+                    INNER JOIN perusahaan AS p ON lowongan.id_perusahaan = p.id_perusahaan 
+                    WHERE lowongan.id_admin IS NULL
+                    '''
+                )
+        # perusahaan
+        else:
+            sql.execute(
+                f'''
+                select lowongan.*, a.id_admin, a.username
+                from lowongan 
+                LEFT JOIN admin AS a ON lowongan.id_admin = a.id_admin 
+                where id_perusahaan = {perusahaan_data['id_perusahaan']}
+                '''
+            )
 
-![Screenshot 2024-05-01 000114](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/f56e548c-6786-4a37-a9c2-597780bbe106)
+        rows = sql.fetchall()
+        columns = [column[0] for column in sql.description()]
+        jobs = LinkedList()
+
+        # Populate jobs list regardless of conditions
+        for row in rows:
+            row_data = dict(zip(columns, row))
+            jobs.append(row_data)
+
+        jobs = quicksort(jobs, sort_key, sort_order)
+        if keyword:
+            jobs = jumpsearch(jobs, keyword)
+
+        if len(jobs) > 0:
+            if user_data:
+                # Output for user
+                for i, job in enumerate(jobs, start=1):
+                    print(f"[{color(i, 'orange')}] {color(job['posisi'], 'cyan')}")
+                    print(f"    {job['nama_perusahaan']}")
+                    print(f"    {job['klasifikasi']}")
+                    print('-'*30)
+            elif perusahaan_data:
+                # PrettyTable for perusahaan_data
+                table = PrettyTable(["#", "ID", "Posisi", "Tipe", "Status"])
+                table.align["Posisi"] = "l" 
+
+                for i, job in enumerate(jobs, start=1):
+                    if job['id_admin'] is not None:
+                        status = color("Disetujui", "green")
+                    else:
+                        status = color("Pending", "yellow")
+                    table.add_row([i, job['id_lowongan'], job['posisi'], job['tipe'], status])
+                
+                print(table)
+            else:
+                # PrettyTable for admin
+                table = PrettyTable(["#", "ID", "Posisi", "Perusahaan", "Status"])
+                table.align["Posisi"] = "l" 
+
+                for i, job in enumerate(jobs, start=1):
+                    if job['id_admin'] is not None:
+                        status = color("Disetujui", "green")
+                    else:
+                        status = color("Pending", "yellow")
+                    table.add_row([i, job['id_lowongan'], job['posisi'], job['nama_perusahaan'], status])
+            
+                print(table)
+        else:
+            print("Tidak ada lowongan untuk ditampilkan")
+```
 
 Fungsi `list` dalam kelas `Lowongan` bertujuan untuk menampilkan daftar lowongan pekerjaan sesuai dengan beberapa kriteria tertentu. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -628,9 +1823,40 @@ Fungsi `list` dalam kelas `Lowongan` bertujuan untuk menampilkan daftar lowongan
 
 Fungsi ini memberikan fleksibilitas dalam menampilkan lowongan pekerjaan yang memungkinkan pengguna, baik perusahaan, admin, atau pengguna umum, untuk melihat dan mengelola lowongan sesuai kebutuhan.
 
-#(def lihat)
+</ul>
 
-![Screenshot 2024-05-01 000315](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/db19a82b-c0a4-48d6-9ef5-a683aa4fdca3)
+- Method lihat
+<ul>
+
+```py
+    def lihat(id_lowongan):
+        global jobs
+        global job
+
+        sql.execute(f"SELECT * FROM lowongan INNER JOIN perusahaan ON lowongan.id_perusahaan = perusahaan.id_perusahaan LEFT JOIN admin on lowongan.id_admin = admin.id_admin WHERE id_lowongan = '{id_lowongan}'")
+        row = sql.fetchone()
+        if row:
+            columns = [column[0] for column in sql.description()]
+            job = dict(zip(columns, row))
+
+        print(f"\n{color(job['posisi'], 'cyan')}")
+        if not perusahaan_data:
+            print(f"{job['nama_perusahaan']}")
+            print(f"Alamat: {job['alamat_perusahaan']}")
+        print(f"Klasifikasi: {job['klasifikasi']}")
+        print(f"Tipe: {job['tipe']}")
+        print(f"Rata-rata gaji: {job['gaji']}")
+        print(f"\nDeskripsi:\n{job['deskripsi']}")
+        print(f"\nKetentuan:\n{job['ketentuan']}")
+        if admin_data:
+            print(f"\nID lowongan: {job['id_lowongan']}")
+            print(f"ID perusahaan: {job['id_lowongan']}")
+            if job['id_admin'] is not None:
+                print(f"Disetujui oleh: {job['username']} ({job['id_admin']})")
+            else:
+                print(color("Menunggu persetujuan", "yellow"))
+        return
+```
 
 Fungsi `lihat` dalam kelas `Lowongan` bertujuan untuk menampilkan detail lengkap tentang satu lowongan pekerjaan tertentu. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -644,9 +1870,22 @@ Fungsi `lihat` dalam kelas `Lowongan` bertujuan untuk menampilkan detail lengkap
 
 Fungsi ini memungkinkan pengguna untuk melihat semua detail penting tentang lowongan pekerjaan tertentu, termasuk informasi tentang perusahaan yang mempostingnya dan status persetujuannya jika diakses oleh admin.
 
-#(def pilih)
+</ul>
 
-![Screenshot 2024-05-01 000614](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/0042d09c-39db-4110-8c1b-92a25a13d113)
+- Method pilih
+<ul>
+
+```py
+    def pilih():
+        global selected_lowongan
+        while True:
+            idx = inputhandler("Pilih: ", "int")-1
+            if idx < len(jobs):
+                selected_lowongan = jobs[idx]['id_lowongan']
+                break
+            else:
+                print("Nomor tidak valid")
+```
 
 Fungsi `pilih` dalam kelas `Lowongan` bertujuan untuk memungkinkan pengguna memilih lowongan pekerjaan tertentu dari daftar lowongan yang ditampilkan. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -660,12 +1899,66 @@ Fungsi `pilih` dalam kelas `Lowongan` bertujuan untuk memungkinkan pengguna memi
 
 Fungsi ini membantu pengguna memilih lowongan pekerjaan tertentu dari daftar yang ditampilkan sehingga mereka dapat melanjutkan dengan tindakan selanjutnya, seperti melihat detail lowongan atau mengambil tindakan terkait.
 
+</ul>
 
--Class Lamaran
 
-#(def list)
+#### Class Lamaran
 
-![Screenshot 2024-05-01 000826](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/e31c2572-73a2-4bef-ac75-52ff44dfa883)
+- Method list
+<ul>
+
+```py
+class Lamaran:
+    def list(id_perusahaan=None, sort_key='id_lamaran', sort_order='desc', keyword=None):
+        global lamarans
+        query = f'''
+                SELECT lamaran.*, user.nama, perusahaan.nama_perusahaan, lowongan.posisi 
+                FROM lamaran 
+                JOIN user ON lamaran.id_user = user.id_user 
+                JOIN lowongan ON lamaran.id_lowongan = lowongan.id_lowongan 
+                JOIN perusahaan ON lamaran.id_perusahaan = perusahaan.id_perusahaan 
+                '''
+        if perusahaan_data:
+            id_perusahaan = perusahaan_data['id_perusahaan']
+
+        if id_perusahaan:
+            query += f"WHERE perusahaan.id_perusahaan = {id_perusahaan}"
+
+        sql.execute(query)
+        rows = sql.fetchall()
+        columns = [column[0] for column in sql.description()]
+        lamarans = LinkedList()
+
+        # ubah datanya jadi dictionary
+        for row in rows:
+            # bikin dictionary dari row data pakai nama kolom
+            row_data = dict(zip(columns, row))
+            lamarans.append(row_data)
+
+        lamarans = quicksort(lamarans, sort_key, sort_order)
+        if keyword:
+            lamarans = jumpsearch(lamarans, keyword)
+
+        if len(lamarans) > 0:
+            if perusahaan_data:
+                table = PrettyTable(["No", "ID Lamaran", "Pelamar", "Posisi"])
+                table.align["Posisi"] = "l" 
+
+                for i, lamaran in enumerate(lamarans, start=1):
+                    table.add_row([i, lamaran['id_lamaran'], lamaran['nama'], lamaran['posisi']])
+
+                print(table)
+            else:
+                table = PrettyTable(["No", "ID Lamaran", "Pelamar", "Perusahaan", "Posisi"])
+                table.align["Posisi"] = "l" 
+
+                for i, lamaran in enumerate(lamarans, start=1):
+                    table.add_row([i, lamaran['id_lamaran'], lamaran['nama'], lamaran['nama_perusahaan'], lamaran['posisi']])
+
+                print(table)
+        else:
+            print("Tidak ada lamaran untuk ditampilkan")
+```
 
 Fungsi `list` dalam kelas `Lamaran` bertujuan untuk menampilkan daftar lamaran pekerjaan. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -683,9 +1976,22 @@ Fungsi `list` dalam kelas `Lamaran` bertujuan untuk menampilkan daftar lamaran p
 
 Fungsi ini memfasilitasi penggunaan informasi lamaran pekerjaan dengan menyediakan tampilan yang terstruktur dan mudah dibaca.
 
-#(def pilih)
+</ul>
 
-![Screenshot 2024-05-01 001001](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/1f1a4de7-9eba-4b3a-a080-488b89de599c)
+- Method pilih
+<ul>
+
+```py
+    def pilih():
+        global selected_lamaran
+        while True:
+            idx = inputhandler("Pilih: ", "int")-1
+            if idx < len(lamarans):
+                selected_lamaran = lamarans[idx]['id_lamaran']
+                break
+            else:
+                print("Nomor tidak valid")
+```
 
 Fungsi `pilih` dalam kelas `Lamaran` bertujuan untuk memungkinkan pengguna untuk memilih salah satu lamaran pekerjaan dari daftar yang ditampilkan. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -699,9 +2005,47 @@ Fungsi `pilih` dalam kelas `Lamaran` bertujuan untuk memungkinkan pengguna untuk
 
 Fungsi ini memastikan bahwa pengguna dapat memilih lamaran pekerjaan dari daftar yang ditampilkan dengan cara yang mudah dan aman.
 
-#(def lihat)
+</ul>
 
-![Screenshot 2024-05-01 001142](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/e08d02a7-e2dd-4263-a6ca-6b6bae8a1d5d)
+- Method lihat
+<ul>
+
+```py
+    def lihat(id_lamaran=None):
+        global lamarans
+        global lamaran_data
+        sql.execute(f'''
+            SELECT lamaran.*, user.*, perusahaan.*, lowongan.posisi 
+            FROM lamaran 
+            JOIN user ON lamaran.id_user = user.id_user 
+            JOIN lowongan ON lamaran.id_lowongan = lowongan.id_lowongan 
+            JOIN perusahaan ON lamaran.id_perusahaan = perusahaan.id_perusahaan 
+            WHERE id_lamaran = {id_lamaran}
+        ''')
+        row = sql.fetchone()
+        columns = [column[0] for column in sql.description()]
+        lamaran_data = dict(zip(columns, row))
+        
+        if admin_data:
+            print(f"Nama perusahaan: {lamaran_data['nama_perusahaan']}")
+            print(f"Posisi: {lamaran_data['posisi']}")
+            print(f"Nama Pelamar: {color(lamaran_data['nama'], 'cyan')}")
+        else:
+            print(f"{color(lamaran_data['nama'], 'cyan')}")
+        print(f"Jenis Kelamin: {lamaran_data['jenis_kelamin']}")
+        print(f"Alamat: {lamaran_data['alamat']}")
+        print(f"Email: {lamaran_data['email']}")
+        print(f"Nomor Telepon: {lamaran_data['no_telp']}")
+        print(f"\nSumber informasi: {lamaran_data['sumber_informasi']}")
+        print(f"Pengalaman relevan:\n{lamaran_data['pengalaman_relevan']}")
+        print(f"\n{lamaran_data['deskripsi']}")
+
+        if admin_data:
+            print(f"ID lamaran: {lamaran_data['id_lamaran']}")
+            print(f"ID user: {lamaran_data['id_user']}")
+            print(f"ID perusahaan: {lamaran_data['id_perusahaan']}")
+            print(f"ID lowongan: {lamaran_data['id_lowongan']}")
+```
 
 Fungsi `lihat` dalam kelas `Lamaran` bertujuan untuk menampilkan detail lengkap dari sebuah lamaran pekerjaan. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -715,9 +2059,29 @@ Fungsi `lihat` dalam kelas `Lamaran` bertujuan untuk menampilkan detail lengkap 
 
 Fungsi ini memungkinkan pengguna untuk melihat detail lengkap dari sebuah lamaran pekerjaan, termasuk informasi yang relevan seperti data pelamar, informasi kontak, pengalaman, dan deskripsi tambahan.
 
-#(def sumbit)
+</ul>
 
-![Screenshot 2024-05-01 001314](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/a740c05b-3d00-45fd-b629-421364010e60)
+- Method submit
+<ul>
+
+```py
+    def submit():
+        print("Sumber Informasi")
+        sumber = choices([
+            'Dari aplikasi ini',
+            'Iklan di internet',
+            'Diberitahu kerabat',
+            'Lainnya'
+        ], 'opt')
+
+        pengalaman_relevan = inputhandler("\nPegalaman relevan:\n", min=10, max=500)
+        deskripsi = inputhandler("\nDeskripsi:\n", min=10, max=1500)
+
+        sql.execute(f"insert into lamaran values (NULL, {job['id_perusahaan']}, {user_data['id_user']}, {job['id_lowongan']}, '{sumber}', '{pengalaman_relevan}', '{deskripsi}')")
+        sql.commit()
+        
+        print("Lamaran berhasil disubmit. Silahkan cek email anda secara berkala")
+```
 
 Fungsi `submit` dalam kelas `Lamaran` bertujuan untuk memungkinkan pengguna untuk mengirimkan lamaran pekerjaan. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -733,9 +2097,43 @@ Fungsi `submit` dalam kelas `Lamaran` bertujuan untuk memungkinkan pengguna untu
 
 Fungsi ini memberikan pengguna cara yang jelas dan terstruktur untuk mengajukan lamaran pekerjaan dan memastikan bahwa informasi yang diberikan divalidasi sebelum dimasukkan ke dalam sistem.
 
-#(def inputhandler)
+</ul>
 
-![Screenshot 2024-05-01 001522](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/0b66d5c1-8835-47bb-bfba-f8bab5189ec5)
+#### Function inputhandler
+
+```py
+def inputhandler(prompt, inputtype="str", max=None, min=None):
+    while True:
+        try:
+            if inputtype == "str":
+                userinput = input(prompt).strip().replace('\t', '').replace('\\','')
+            elif inputtype == "int":
+                userinput = int(input(prompt))
+            elif inputtype == "digit":
+                userinput = input(prompt).strip().replace('\t', '').replace('\\','')
+                if not userinput.isdigit():
+                    print("Input hanya bisa berupa angka\n")
+                    continue
+            elif inputtype == "pw":
+                userinput = pwinput(prompt).strip()
+            
+            # jika parameter max dipakai (gak kosong) dan panjang input lebih dari max
+            if max is not None and len(str(userinput)) > max:
+                print(f"Input terlalu panjang. Maksimum panjang adalah {max} karakter.\n")
+                continue
+            
+            if min is not None and len(str(userinput)) < min:
+                print(f"Input terlalu pendek. Minimum panjang adalah {min} karakter.\n")
+                continue
+                
+            return userinput
+        except KeyboardInterrupt:
+            print("Terdeteksi interupsi\n")
+        except ValueError:
+            print("Input hanya bisa berupa integer\n")
+        except:
+            print(f"Apa lah dia\n")
+```
 
 Fungsi `inputhandler` digunakan untuk memvalidasi input pengguna sesuai dengan tipe data dan batasan panjang yang diberikan. Berikut adalah penjelasan singkat tentang fungsi ini:
 
@@ -761,9 +2159,13 @@ Fungsi `inputhandler` digunakan untuk memvalidasi input pengguna sesuai dengan t
 
 Fungsi ini membantu dalam memastikan bahwa input pengguna sesuai dengan harapan dan memenuhi persyaratan yang diberikan sebelum diproses lebih lanjut.
 
-#(def clear)
+### Function clear
 
-![Screenshot 2024-05-01 001712](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/bed4bb96-f9a6-4884-84c3-2c98f7c50c07)
+```py
+def clear():
+    print('\n'*40)
+    print('\033[H')
+```
 
 Fungsi `clear()` bertujuan untuk membersihkan layar konsol dengan cara menampilkan 40 baris kosong di layar, diikuti dengan perintah untuk mengatur kursor ke posisi awal pada layar konsol menggunakan kode escape `\033[H`.
 
@@ -773,9 +2175,46 @@ Penjelasan kode escape `\033[H`:
 
 Dengan melakukan ini, layar konsol akan terlihat bersih dan tampilan baru dapat dimulai dari posisi awal.
 
-#(def edit)
+### Function edit
 
-![Screenshot 2024-05-01 001847](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/2f400dbc-6628-4264-82ab-9cf06febd38a)
+```py
+def edit(table, old_data, fields):
+    clear()
+    print(color("(Kosongkan untuk menggunakan data lama)", 'blue'))
+    updates = [] 
+    for prompt, (field, max, *inputtype) in fields.items():
+        print(f"\n{color(f'{prompt} lama', 'purple')}: {old_data[field]}")
+        if inputtype:
+            inputtype = inputtype[0]
+        else:
+            inputtype = 'str'
+
+        if inputtype == 'tipe_choices':
+            new_data = choices([
+                "Full time",
+                "Paruh waktu",
+                "Kontrak"
+            ], 'opt')
+        elif inputtype == 'kelamin_choices':
+            new_data = choices([
+                "Laki-laki",
+                "Perempuan"
+            ], 'opt')
+        else:
+            new_data = inputhandler(f"{color(f'{prompt} baru', 'yellow')}: ", inputtype, max=max)
+
+        if new_data:
+            updates.append(f"{field} = '{new_data}'")
+
+    query = f"update {table} set "
+    query += ", ".join(updates)
+    query += f" where id_{table} = {old_data[f'id_{table}']}"
+    if updates != []:
+        sql.execute(query)
+    clear()
+    print(color("Data berhasil diubah", "green"))
+    sql.commit()
+```
 
 Fungsi `edit()` bertujuan untuk mengizinkan pengguna mengedit data dalam database dengan memasukkan input baru. Berikut adalah penjelasan untuk setiap bagian dari fungsi ini:
 
@@ -801,9 +2240,35 @@ Fungsi `edit()` bertujuan untuk mengizinkan pengguna mengedit data dalam databas
 
 Fungsi ini memungkinkan pengguna untuk secara interaktif mengedit data dalam database dengan memasukkan nilai baru untuk bidang-bidang yang dipilih.
 
-#(def quicksort)
+### Function quicksort
 
-![Screenshot 2024-05-01 002034](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/548c23b0-e95f-4c5f-a55e-3a7b43c41ec5)
+```py
+def quicksort(arr, key=None, order='desc'):
+    if len(arr) <= 1:
+        return arr
+    else:
+        if key:
+            # akses pivot value pakai key function kalau memang dipakai
+            if callable(key):
+                pivot_value = key(arr[len(arr) // 2])  # pakai key function ke tuple
+                less = [x for x in arr if key(x) < pivot_value]
+                equal = [x for x in arr if key(x) == pivot_value]
+                greater = [x for x in arr if key(x) > pivot_value]
+            else:
+                pivot_value = arr[len(arr) // 2][key]  # ekstrak pakai key biasa kalau key-nya string
+                less = [x for x in arr if x[key] < pivot_value]
+                equal = [x for x in arr if x[key] == pivot_value]
+                greater = [x for x in arr if x[key] > pivot_value]
+        else:
+            pivot = arr[len(arr) // 2]
+            less = [x for x in arr if x < pivot]
+            equal = [x for x in arr if x == pivot]
+
+        if order == 'desc':
+            return quicksort(greater, key, order) + equal + quicksort(less, key, order)
+        else:
+            return quicksort(less, key, order) + equal + quicksort(greater, key, order)
+```
 
 Fungsi `quicksort()` mengimplementasikan algoritma quicksort untuk mengurutkan sebuah daftar (list) berdasarkan nilai-nilai elemennya. Berikut adalah penjelasan singkat tentang bagaimana fungsi ini bekerja:
 
@@ -833,9 +2298,55 @@ Fungsi `quicksort()` mengimplementasikan algoritma quicksort untuk mengurutkan s
 
 Fungsi ini dapat digunakan untuk mengurutkan daftar berdasarkan nilai-nilai elemennya, baik secara ascending maupun descending, dengan atau tanpa menggunakan kunci (key) untuk menentukan kriteria pengurutan.
 
-#(def jumpshearch)
+### Function jumpsearch
 
-![Screenshot 2024-05-01 002245](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/e9a5c561-6aa6-42ee-9a71-33ff792d82ad)
+```py
+def jumpsearch(entries, keyword):
+    # pecah entries per-kata jadi items, bikin list tuple yang isinya index entry sama items, cth: [(0: hi), (0: guys), (1: hello)]
+    items = []
+    for idx, entry_dict in enumerate(entries):
+        for key, entry in entry_dict.items():
+            for item in str(entry).lower().split():  # lower() = ubah ke lowercase. split() =  misah string jadi array
+                items.append((idx, item))
+
+    # urutkan items
+    quicksort(items, key=lambda x: x[1])
+
+    result = []
+    step = int(math.sqrt(len(items)))  # size untuk step, pakai akar dari panjang items
+    
+    # pecah keyword per-kata
+    # strip() = hapus spasi di awal dan akhir
+    targets = keyword.lower().strip().split()
+    for target in targets:
+        for i in range(len(items)):
+            current_index = i
+            if current_index < len(items):
+                current_item = items[current_index][1]
+            else:
+                break
+            
+            # maju sampai current_item lebih besar dari target
+            while current_item < target and current_index < len(items) - step:
+                current_index += step
+                if current_index < len(items):
+                    current_item = items[current_index][1]
+                else:
+                    break
+            
+            # mundur 1 langkah sampai current_item kurang atau sama dengan target
+            while current_item >= target and current_index >= 0:
+                if current_item == target:
+                    result.append(items[current_index][0])
+                current_index -= 1
+                if current_index >= 0 and current_index < len(items):
+                    current_item = items[current_index][1]
+                else:
+                    break
+    
+    # hilangin duplikat, return semua entry yang cocok
+    return [entries[i] for i in set(result)]
+```
 
 Fungsi `jumpsearch` mengimplementasikan algoritma pencarian Jump Search untuk mencari keyword dalam suatu daftar `entries`. Berikut adalah penjelasan singkat tentang cara kerja fungsi ini:
 
@@ -863,9 +2374,33 @@ Fungsi `jumpsearch` mengimplementasikan algoritma pencarian Jump Search untuk me
 
 Fungsi ini memberikan hasil pencarian dari daftar `entries` yang sesuai dengan kata kunci yang diberikan, dengan menghilangkan duplikat dan mengembalikan entri yang cocok.
 
-#(def colour)
+### Function color
 
-![Screenshot 2024-05-01 002522](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/f7a929fa-e743-4d57-bed8-08fd9df8ad30)
+```py
+def color(text, color_name):
+    # ANSI color escape
+    color_codes = {
+        'red': '\033[91m',
+        'green': '\033[92m',
+        'yellow': '\033[93m',
+        'blue': '\033[94m',
+        'purple': '\033[95m',
+        'cyan': '\033[96m',
+        'white': '\033[97m',
+        'orange': '\033[38;5;208m'
+    }
+
+    # cek color_name valid atau nggak
+    if color_name.lower() not in color_codes:
+        raise KeyError(f"Warna {color_name} gak didukung. Cuman ini yang ada: {', '.join(color_codes.keys())}")
+
+    # aplikasikan warna ke teks
+    color_code = color_codes[color_name.lower()]
+    reset_code = '\033[0m'  # ANSI escape untuk reset ke default
+    colored_text = f"{color_code}{text}{reset_code}"
+
+    return colored_text
+```
 
 Fungsi `color` digunakan untuk memberi warna pada teks menggunakan kode ANSI escape. Berikut adalah penjelasan singkat tentang cara kerja fungsi ini:
 
@@ -882,9 +2417,22 @@ Fungsi `color` digunakan untuk memberi warna pada teks menggunakan kode ANSI esc
 
 Fungsi ini memungkinkan untuk memberi warna pada teks dengan mudah hanya dengan menentukan nama warna yang diinginkan.
 
-#(def choices)
+### Function choices
 
-![Screenshot 2024-05-01 002740](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/f7ea56f1-f220-422b-8295-9e5d1e7661ba)
+```py
+def choices(options, re='num'):
+    for idx, option in enumerate(options, start=1):
+        print(f"[{color(idx, 'orange')}] {option}")
+    while True:
+        choice = inputhandler("\nMasukkan pilihan: ", "digit")
+        if choice.isdigit() and 1 <= int(choice) <= len(options):
+            if re == 'num':
+                return choice
+            elif re == 'opt':
+                return options[int(choice)-1]
+        else:
+            print(color("Pilihan tidak valid", "red"))
+```
 
 Fungsi `choices` digunakan untuk menampilkan opsi pilihan ke pengguna dan meminta mereka untuk memilih. Berikut adalah penjelasan singkat tentang cara kerja fungsi ini:
 
@@ -903,9 +2451,21 @@ Fungsi `choices` digunakan untuk menampilkan opsi pilihan ke pengguna dan memint
 
 Fungsi ini memungkinkan pengguna untuk memilih opsi dari daftar opsi yang diberikan dengan mudah dan memastikan bahwa pilihan mereka valid.
 
-#(def banner)
+### Function banner
 
-![Screenshot 2024-05-01 002929](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/4d2f85c5-6233-4908-a6f3-7e35ea19eb83)
+```py
+def banner(text):
+    # definisikan panjang banner
+    banner_length = 65
+    text_length = len(text)
+    # hitung berapa karakter '=' yang diperlukan
+    padding = banner_length - text_length
+    # dibagi jadi dua untuk kanan kiri
+    left_padding = padding // 2
+    right_padding = padding - left_padding
+    # tinggal dikalikan pakai jumlah kanan kiri
+    return f"{'=' * left_padding} {text} {'=' * right_padding}"
+```
 
 Fungsi `banner` digunakan untuk membuat teks menjadi bagian dari sebuah banner dengan garis pemisah di sekelilingnya. Berikut adalah penjelasan singkat tentang cara kerja fungsi ini:
 
@@ -929,9 +2489,29 @@ Fungsi `banner` digunakan untuk membuat teks menjadi bagian dari sebuah banner d
 
 Dengan menggunakan fungsi ini, pengguna dapat dengan mudah membuat teks mereka menonjol di dalam banner dengan garis pemisah yang konsisten di sekitarnya.
 
-#(def login)
+### Function login
 
-![Screenshot 2024-05-01 003217](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/8a1b73d2-c858-4368-aeb3-37fa7cb6b951)
+```py
+def login():
+    clear()
+    while True:
+        print(f"\n{banner('LOGIN')}")
+        pil = choices([
+            "Login admin",
+            "Login user",
+            "Login menggunakan akun perusahaan",
+            "Kembali"
+        ])
+
+        if pil == '1':
+            Admin.login()
+        elif pil == '2':
+            User.login()
+        elif pil == '3':
+            Perusahaan.login()
+        elif pil == '4':
+            break
+```
 
 Fungsi `login` bertujuan untuk memberikan opsi kepada pengguna untuk masuk ke dalam sistem dengan peran yang berbeda-beda. Berikut penjelasan singkat tentang cara kerja fungsi ini:
 
@@ -947,9 +2527,28 @@ Fungsi `login` bertujuan untuk memberikan opsi kepada pengguna untuk masuk ke da
 
 Dengan menggunakan fungsi `login`, pengguna diberikan kemudahan untuk memilih peran mereka dalam sistem dan masuk ke dalam akun yang sesuai dengan peran tersebut.
 
-#(def register)
+### Function register
 
-![Screenshot 2024-05-01 003403](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/cac0b807-3c00-44d7-9b70-8d1a2bdb5387)
+```py
+def register():
+    clear()
+    while True:
+        print(f"\n{banner('REGISTRASI')}")
+        pil = choices([
+            "Registrasi akun user",
+            "Registrasi akun perusahaan",
+            "Kembali"
+        ])
+
+        if pil == '1':
+            clear()
+            User.register()
+        elif pil == '2':
+            clear()
+            Perusahaan.register()
+        elif pil == '3':
+            break
+```
 
 Fungsi `register` digunakan untuk memberikan opsi kepada pengguna untuk mendaftar akun baru, baik sebagai pengguna (user) maupun perusahaan. Berikut adalah penjelasan singkat tentang cara kerja fungsi ini:
 
@@ -964,9 +2563,16 @@ Fungsi `register` digunakan untuk memberikan opsi kepada pengguna untuk mendafta
 
 Dengan menggunakan fungsi `register`, pengguna diberikan opsi untuk membuat akun baru sesuai dengan jenis akun yang mereka inginkan.
 
-#( sql,user data,admin data,perusahaan data)
+### sql,user data,admin data,perusahaan data
 
-![Screenshot 2024-05-01 003615](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/1223e410-0f50-4798-b9c2-16a65646141d)
+```
+sql = MySQLHandler('root', '', 'localhost', 'lowongankerja')
+
+# predefine untuk pas login biar gak error
+user_data = {}
+admin_data = {}
+perusahaan_data = {}
+```
 
 mendefinisikan variabel `sql` yang merupakan instance dari kelas `MySQLHandler`. 
 
@@ -974,10 +2580,28 @@ Variabel `sql` digunakan untuk berinteraksi dengan database MySQL. Dalam inisial
 
 Setelah itu, mendefinisikan beberapa variabel global, yaitu `user_data`, `admin_data`, dan `perusahaan_data`, yang awalnya kosong (`{}`). Variabel-variabel ini kemungkinan besar akan digunakan untuk menyimpan data pengguna, admin, dan perusahaan setelah mereka berhasil login. 
 
-#(While True)
+### Bagian menu utama
 
-![Screenshot 2024-05-01 004019](https://github.com/timothyyo/PA-B23-KELOMPOK3/assets/144904706/fa9bf4be-7e80-4263-8e15-78d17062b9fc)
+```py
+os.system('') # entah kenapa kalau gak pakai ini warna teksnya gak muncul di beberapa device
 
+while True:
+    clear()
+    print(f"\n{banner('PROGRAM LOWONGAN KERJA UNTUK SEMUA')}")
+    pil = choices([
+        "Login",
+        "Register",
+        "Keluar"
+    ])
+
+    if pil == '1':
+        login()
+    elif pil == '2':
+        register()
+    elif pil == '3':
+        break
+
+```
 Loop `while True` membuat program berjalan secara terus-menerus hingga kondisi di dalamnya tidak terpenuhi lagi. Di setiap iterasi dari loop ini, program akan membersihkan layar terminal, menampilkan judul program dengan menggunakan fungsi `banner`, dan menampilkan pilihan menu untuk pengguna.
 
 Pengguna dapat memilih antara tiga opsi:
