@@ -2840,12 +2840,39 @@ Pada menu keluar ini, program mengembalikan pengguna ke halaman login.
 
 ![keluar](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/b32142a3-2ea6-4d16-a8ea-520652d78c7d)
 
+## PERUSAHAAN
+Untuk login sebagai user, pada halaman login pilih 3 setelah itu masukkan email dan passwordnya.
 
+![loginperusahaan](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/9114cf72-2b13-43b0-9ed1-8a9cbf59c585)
 
+### MENU PERUSAHAAN
+Jika email dan password sesuai, program menampilkan menu utama Perusahaan yaitu, Cek Lamaran, Lihat Profil Perusahaan, Kelola Lowongan dan keluar.
 
+![menuperusahaan](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/7a8a8424-71e3-461a-8fdb-6606239b93a7)
 
+### MENU PERUSAHAAN - CEK LAMARAN
+Menu Cek Lamaran ini berfungsi untuk melihat lamaran yang melamar di Perusahaan tersebut. Dan mempunyai fitur Pilih, Urutkan, Cari, dan kembali.
 
+![ceklamaran](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/e064597c-51fb-443f-8e4a-b05ff71c0841)
 
+#### FITUR PILIH - CEK LAMARAN
+Fitur pilih dalam Cek Lamaran ini berfungsi untuk melihat lamaran user yang dipilih. Jika Perusahaan merasa cocok dengan pelamarnya, Perusahaan nantinya akan memberi pesan melalui Contact Person yang sudah tertera di lamaran user tersebut. Jika sudah selesai menerima lamaran, Perusahaan dapat menghapus lamaran tersebut. Jika tidak cocok Perusahaan bisa memberi pesan melalui Contact Person atau langsung menghapus lamaran tersebut.
 
+![pilihpelamar](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/b6286ac2-4f0e-4611-a44e-34352d75b687)
 
+#### FITUR URUTKAN - CEK LAMARAN
+Fitur urutkan dalam Cek Lamaran berguna untuk mengurutkan Lamaran yang masuk sesuai dengan kategori yang diinginkan, dan dapat diurutkan secara Ascending/Descending. Misal disini mengurutkan Nama pelamar secara Descending, program akan menampilkan urutan tersebut sesuai kategori dan pengurutannya.
 
+![urutkan](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/e2c14440-47f2-434b-b77c-f6643b1709e7)
+
+![urutkan2](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/4499745b-a800-4b0e-afea-582ab94be8e6)
+
+#### FITUR CARI - CEK LAMARAN
+Fitur Cari dalam Cek Lamaran berfungsi untuk mencari Lamaran yang diinginkan dengan mengetik keywordnya. Seperti contoh ini yaitu mencari Pelamar yang Budi Santoso dengan memasukkan keyword Santoso, program langsung menampilkan hasil pencarian yang sesuai dengan keyword.
+
+![cari](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/fb3cd9be-69c8-47bf-b729-e1ed6568ced1)
+
+### MENU PERUSAHAAN - KELUAR
+Pada menu keluar ini, program mengembalikan pengguna ke halaman login.
+
+![keluar](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/e32a2035-dd54-4202-8446-aa9a813e2dde)
