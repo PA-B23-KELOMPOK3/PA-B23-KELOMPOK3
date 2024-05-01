@@ -182,7 +182,7 @@ class Admin:
                     ])
                     if pil == '1':
                         fields = {
-                            "Username": ("username", 50),
+                            "Username": ("username", 50, "nospecial"),
                             "Password": ("password", 8)
                         }
                         edit('admin', admin_data, fields)
@@ -229,7 +229,7 @@ class Admin:
                                     if admin_data['jabatan'] != 'admin3':
                                         if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                             sql.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
-                                            # sql.commit()
+                                            sql.commit()
                                             clear()
                                             print("Berhasil menghapus lowongan.")
                                             break
@@ -246,7 +246,7 @@ class Admin:
                                 ])
                                 if pil == '1':
                                     sql.execute(f"UPDATE lowongan SET id_admin = {admin_data['id_admin']} WHERE id_lowongan = {job['id_lowongan']}")
-                                    # sql.commit()
+                                    sql.commit()
                                     clear()
                                     print(color("Lowongan berhasil disetujui", "green"))
                                     break
@@ -257,7 +257,7 @@ class Admin:
                                     if admin_data['jabatan'] != 'admin3':
                                         if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                             sql.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
-                                            # sql.commit()
+                                            sql.commit()
                                             clear()
                                             print("Berhasil menghapus lowongan.")
                                             break
@@ -336,7 +336,7 @@ class Admin:
                                 if admin_data['jabatan'] == 'admin1':
                                     if inputhandler(f"Apakah anda yakin ingin menghapus user ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                         sql.execute(f"delete from user where id_user = {user_data['id_user']}")
-                                        # sql.commit()
+                                        sql.commit()
                                         clear()
                                         print("Berhasil menghapus user.")
                                         break
@@ -400,7 +400,7 @@ class Admin:
                                 if admin_data['jabatan'] == 'admin1':
                                     if inputhandler(f"Apakah anda yakin ingin menghapus perusahaan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                         sql.execute(f"delete from perusahaan where id_perusahaan = {perusahaan_data['id_perusahaan']}")
-                                        # sql.commit()
+                                        sql.commit()
                                         print("Berhasil menghapus perusahaan.")
                                         clear()
                                         break
@@ -470,7 +470,7 @@ class Admin:
                                 if admin_data['jabatan'] != 'admin3':
                                     if inputhandler(f"Apakah anda yakin ingin menghapus lamaran ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                         sql.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
-                                        # sql.commit()
+                                        sql.commit()
                                         clear()
                                         print("Berhasil menghapus lamaran.")
                                         break
@@ -538,7 +538,7 @@ class User:
         email = inputhandler("Masukkan email anda: ", min=11, max=25)
         if email not in emails:
             password = inputhandler("Masukkan password: ", "pw", min=1, max=8)
-            nama = inputhandler("Masukkan nama anda: ", min=1, max=25)
+            nama = inputhandler("Masukkan nama anda: ", "nospecial", min=1, max=25)
             print("Pilih jenis kelamin anda:")
             jenis_kelamin = choices(["Laki-laki", "Perempuan"], "opt")
             no_telp = inputhandler("Masukkan nomor telepon anda: ", "digit", min=10, max=15)
@@ -547,7 +547,7 @@ class User:
             pengalaman = inputhandler("Masukkan pengalaman anda: ", min=5, max=500)
             keahlian = inputhandler("Masukkan keahlian anda: ", min=5, max=80)
             sql.execute(f"insert into user values(NULL, '{nama}', '{password}', '{email}', '{no_telp}', '{pendidikan}', '{pengalaman}', '{keahlian}', '{jenis_kelamin}', '{alamat}')")
-            # sql.commit()
+            sql.commit()
             sql.execute(f"SELECT * FROM user WHERE id_user = {sql.cursor.lastrowid}")
             row = sql.fetchone()
             columns = [column[0] for column in sql.description()]
@@ -670,12 +670,12 @@ class User:
                     ])
                     if pil == '1':
                         fields = {
-                            "Nama": ("nama", 25),
+                            "Nama": ("nama", 25, "nospecial"),
                             "Jenis kelamin": ("jenis_kelamin", 10),
                             "Alamat": ("alamat", 30),
                             "Email": ("email", 25),
                             "Password": ("password", 8),
-                            "Nomor telepon": ("no_telp", 15),
+                            "Nomor telepon": ("no_telp", 15, "int"),
                             "Pendidikan": ("pendidikan", 30),
                             "Pengalaman": ("pengalaman", 500),
                             "Keahlian": ("keahlian", 80)
@@ -766,7 +766,7 @@ class Perusahaan:
             no_telp = inputhandler("Masukkan nomor telepon perusahaan: ", "digit", min=10, max=15)
             alamat = inputhandler("Masukkan alamat perusahaan: ", min=11, max=30)
             sql.execute(f"insert into perusahaan values(NULL, '{nama_perusahaan}', '{password}', '{no_telp}', '{email}', '{alamat}')")
-            # sql.commit()
+            sql.commit()
             sql.execute(f"SELECT * FROM perusahaan WHERE id_perusahaan = {sql.cursor.lastrowid}")
             row = sql.fetchone()
             columns = [column[0] for column in sql.description()]
@@ -900,7 +900,7 @@ class Perusahaan:
                             elif pil == '2':
                                 if inputhandler(f"Apakah anda yakin ingin menghapus lamaran ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                     sql.execute(f"delete from lamaran where id_lamaran = {lamaran_data['id_lamaran']}")
-                                    # sql.commit()
+                                    sql.commit()
                                     print("Berhasil menghapus lamaran.")
                                     break
                                 else:
@@ -947,6 +947,7 @@ class Perusahaan:
                             "Nama perusahaan": ("nama_perusahaan", 50),
                             "Email perusahaan": ("email_perusahaan", 50),
                             "Password": ("password", 8),
+                            "Nomor telepon": ("no_telp", 15, "int"),
                             "Alamat perusahaan": ("alamat_perusahaan", 255),
                         }
                         edit('perusahaan', perusahaan_data, fields)
@@ -994,7 +995,7 @@ class Perusahaan:
                             elif pil == '3':
                                 if inputhandler(f"Apakah anda yakin ingin menghapus lowongan ini? [{color('y', 'orange')}/{color('n', 'orange')}]: ").lower() == 'y':
                                     sql.execute(f"delete from lowongan where id_lowongan = {job['id_lowongan']}")
-                                    # sql.commit()
+                                    sql.commit()
                                     clear()
                                     print("Berhasil menghapus lowongan.")
                                     break
@@ -1044,7 +1045,7 @@ class Perusahaan:
 
                         sql.execute(f"insert into lowongan values (NULL, '{perusahaan_data['id_perusahaan']}', NULL, '{klasifikasi}', '{tipe}', '{deskripsi}', '{posisi}', '{ketentuan}', '{gaji}')")
                         clear()
-                        # sql.commit()
+                        sql.commit()
                         print(color("Lowongan berhasil disubmit. Silahkan tunggu disetujui admin", "green"))
                     elif pil == '5':
                         clear()
@@ -1308,7 +1309,7 @@ class Lamaran:
         deskripsi = inputhandler("\nDeskripsi:\n", min=10, max=1500)
 
         sql.execute(f"insert into lamaran values (NULL, {job['id_perusahaan']}, {user_data['id_user']}, {job['id_lowongan']}, '{sumber}', '{pengalaman_relevan}', '{deskripsi}')")
-        # sql.commit()
+        sql.commit()
         
         print("Lamaran berhasil disubmit. Silahkan cek email anda secara berkala")
 
@@ -1318,16 +1319,21 @@ def inputhandler(prompt, inputtype="str", max=None, min=None):
     while True:
         try:
             if inputtype == "str":
-                userinput = input(prompt).strip().replace('\t', '').replace('\\','')
+                userinput = input(prompt).strip()
             elif inputtype == "int":
                 userinput = int(input(prompt))
             elif inputtype == "digit":
-                userinput = input(prompt).strip().replace('\t', '').replace('\\','')
+                userinput = input(prompt)
                 if not userinput.isdigit():
                     print("Input hanya bisa berupa angka\n")
                     continue
             elif inputtype == "pw":
                 userinput = pwinput(prompt).strip()
+            elif inputtype == "nospecial":
+                userinput = input(prompt).strip()
+                if any(char in "!@#$%^&*()+=[]{};:'\"<>,.?/~`" for char in userinput):
+                    print("Input tidak boleh mengandung karakter spesial\n")
+                    continue
             
             # jika parameter max dipakai (gak kosong) dan panjang input lebih dari max
             if max is not None and len(str(userinput)) > max:
@@ -1337,7 +1343,11 @@ def inputhandler(prompt, inputtype="str", max=None, min=None):
             if min is not None and len(str(userinput)) < min:
                 print(f"Input terlalu pendek. Minimum panjang adalah {min} karakter.\n")
                 continue
-                
+            
+            if '\t' in userinput or '\\' in userinput:
+                print("Input tidak boleh mengandung tab atau '\\'\n")
+                continue
+
             return userinput
         except KeyboardInterrupt:
             print("Terdeteksi interupsi\n")
@@ -1388,7 +1398,7 @@ def edit(table, old_data, fields):
         sql.execute(query)
     clear()
     print(color("Data berhasil diubah", "green"))
-    # sql.commit()
+    sql.commit()
 
 def quicksort(arr, key=None, order='desc'):
     if len(arr) <= 1:
@@ -1583,4 +1593,4 @@ while True:
         register()
     elif pil == '3':
         break
-    
+     
