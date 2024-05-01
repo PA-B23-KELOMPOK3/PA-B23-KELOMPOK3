@@ -2620,6 +2620,13 @@ Pengguna dapat memilih antara tiga opsi:
 
 Setelah pengguna memilih salah satu dari tiga opsi tersebut, program akan mengevaluasi pilihan pengguna dan menjalankan fungsi yang sesuai dengan pilihan tersebut. Proses ini akan berulang terus menerus selama pengguna tidak memilih untuk keluar dari program.
 
+## CARA PENGGUNAAN
+
+### Halaman Depan
+Ketika program dijalankan, akan muncul tampilan opsi untuk login bagi yang sudah mempunyai akun, registrasi bagi yang belum mempunyai akun dan keluar untuk menghentika program.
+
+![halamanawal](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/2e5f8ecc-762d-44ef-97c1-1a56b6febb2b)
+
 
 
 
