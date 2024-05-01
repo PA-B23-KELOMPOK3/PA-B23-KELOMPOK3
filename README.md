@@ -208,9 +208,9 @@ import os
 import math
 ```
 
-1. **`import os`**: Modul `os` memberikan alat untuk berinteraksi dengan sistem operasi, seperti mengelola file dan direktori, mengakses variabel lingkungan, dan menjalankan perintah shell.
+1. **`import os`**: Modul `os` memberikan alat untuk berinteraksi dengan sistem operasi, seperti mengelola file dan direktori, mengakses environment variable, dan menjalankan shell script. Di dalam program ini, modul `os` dipakai untuk memperbaiki ANSI escape di beberapa perangkat.
 
-2. **`import math`**: Modul `math` menyediakan fungsi matematika dasar, seperti perhitungan akar kuadrat, sinus, kosinus, dan logaritma.
+2. **`import math`**: Modul `math` menyediakan fungsi matematika dasar, seperti perhitungan akar kuadrat, sinus, kosinus, dan logaritma. Di program ini, modul `math` digunakan untuk menghitung akar kuadrat pada step di bagian fungsi `jumpsearch`.
 
 #### Modul external
 
