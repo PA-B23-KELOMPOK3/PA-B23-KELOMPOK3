@@ -2624,9 +2624,37 @@ Setelah pengguna memilih salah satu dari tiga opsi tersebut, program akan mengev
 
 ### Halaman Depan
 Ketika program dijalankan, akan muncul tampilan opsi untuk login bagi yang sudah mempunyai akun, registrasi bagi yang belum mempunyai akun dan keluar untuk menghentika program.
-
 ![halamanawal](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/2e5f8ecc-762d-44ef-97c1-1a56b6febb2b)
 
+- Login
 
+Jika memilih login, maka program akan menyediakan 3 opsi role yaitu admin, user dan Perusahaan. Pada opsi nomor 4, program akan kembali ke halaman utama.
+![opsilogin](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/35452d64-28d1-4867-892e-bf240b4e9715)
+
+- Registrasi
+
+Bagi User maupun Perusahaan yang belum memiliki akun, program menyediakan menu registrasi agar terdaftar dalam program lowongan kerja ini.
+![regist](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/3b3975ac-cec6-4117-9843-595c4eb9131f)
+
+Dalam menu registrasi, terdapat registrasi untuk user dan perusahaan
+![pilihanregist](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/ef93fc15-df64-4c27-a6ca-aae1db704a85)
+
+Contoh, ini adalah proses Registrasi user. Program meminta user untuk menginput data yang diperlukan untuk melengkapi profil.
+![prosesregistrasi](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/9f555675-068f-470b-bc16-2365413702b4)
+
+Jika data yang diinputkan Valid, program langsung mengarahkan ke menu halaman utama user.
+![registberhasil](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/81d8f733-89b2-490a-b6a2-ac452b936b5f)
+
+- Keluar
+  
+Untuk menghentikan program, pilih keluar.
+![keluar](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/87e482e4-1187-43bd-b8d2-0377cab3dd07)
+
+
+- Login Gagal
+
+Jika pengguna menginputkan email atau password atau keduanya yang salah, program akan menampilkan pemberitahuan seperti dibawah ini.
+
+![logingagal](https://github.com/PA-B23-KELOMPOK3/PA-B23-KELOMPOK3/assets/144436692/01762b7b-1812-4c9e-aaf2-8bebcd3be6c3)
 
 
